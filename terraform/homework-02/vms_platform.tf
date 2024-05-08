@@ -31,11 +31,11 @@ variable "vm_web_platform_id" {
 #   default = 20
 # }
 
-variable "vm_web_has_nat" {
-  type = bool
-  default = true
-  description = "Is NAT available"
-}
+# variable "vm_web_has_nat" {
+#   type = bool
+#   default = true
+#   description = "Is NAT available"
+# }
 
 variable "vm_web_is_preemptible" {
   type = bool
