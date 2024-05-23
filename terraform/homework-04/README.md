@@ -77,10 +77,10 @@ terraform apply -target module.mysql_5
 
 
 ## Задание 6.
-terraform apply -target module.s3_keys_6
-export AWS_PROFILE={...}
-terraform apply -target module.s3
+terraform apply -target module.s3_keys_6 \
+export AWS_PROFILE={...} \
+terraform apply -target module.s3 \
 ![скриншот терминала при создании S3 bucket с помощью yandex s3 модуля](./items/Task6.png)
 
-## Задания 7
+## Задание 7
 ![скриншот терминала выполнения задания №7](./items/Task7.png)

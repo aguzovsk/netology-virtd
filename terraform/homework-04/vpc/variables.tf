@@ -39,7 +39,7 @@ variable "subnets" {
   ]
 
   validation {
-    condition     = length(setsubtract(flatten(var.subnets[*].zone), ["ru-central1-a", "ru-central1-b", "ru-central1-c", "ru-central1-d"])) == 0
+    condition     = length(setsubtract(var.subnets[*].zone, ["ru-central1-a", "ru-central1-b", "ru-central1-c", "ru-central1-d"])) == 0
     error_message = "Some provided zones are not supported"
   }
 

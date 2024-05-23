@@ -78,18 +78,11 @@ module "s3" {
           "${local.bucket_name}/*"
         ]
         actions = [
-          "s3:PutObject",
-          "s3:GetObject",
-          "s3:ListBucket",
-          "s3:VersionId",
-          "s3:GetObjectVersion",
-          # "s3:CreateAccessPoint",
-          # "s3:GetAccessPointPolicy",
-          # "s3:DeleteAccessPoint"
+          "s3:*"
         ]
         principal = {
           type        = "CanonicalUser"
-          identifiers = [var.yc-user-id, "serviceAccount:${module.s3_keys_6.service_account_id}"]
+          identifiers = ["${var.yc-user-id}", "${module.s3_keys_6.service_account_id}"]
         }
       }
     ]
