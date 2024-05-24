@@ -18,3 +18,5 @@ personal.auto.tfvars
 
 # vs code settings
 .vscode/
+# checkov cache files
+.external_modules/

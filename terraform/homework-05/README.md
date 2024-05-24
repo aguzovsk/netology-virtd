@@ -3,7 +3,8 @@
 ## Задание 1.
 ```bash
 # run from netology-devops/terraform/homework-05 directory
-
+docker run --rm --tty --volume $(pwd)/task1:/tf bridgecrew/checkov \
+   --download-external-modules true --directory /tf
 ```
 сheckov:
 * Check: CKV_TF_1: "Ensure Terraform module sources use a commit hash"
@@ -11,7 +12,7 @@
 
 С флагом **--download-external-modules true**:
 * Check: CKV_YC_2: "Ensure compute instance does not have public IP."
-* Check: CKV_YC_4: "Ensure compute instance does not have serial console enabled."
+* <span style="color: green; font-weight: bold">PASSED:</span> Check: CKV_YC_4: "Ensure compute instance does not have serial console enabled."
 * Check: CKV_YC_11: "Ensure security group is assigned to network interface."
 
 _(Найдены только в папке demonstration1)_
@@ -107,7 +108,7 @@ docker run --rm -t -v "$(pwd)/homework-05/s3-tfstate:/tflint" ghcr.io/terraform-
 * storage.admin (можно не создавать, если он был передан в модуль как аргумент *bucket_admin*)
 * storage.uploader
 
-Не использую [terraform-yc-s3](https://github.com/terraform-yc-modules/terraform-yc-s3) модуль, т.к. не вижу особой необходимости, а он добавляет дополнительную зависимость — AWS CLI, хотя от этой зависимости не удалось отказаться в итоге. \
+Не использую [terraform-yc-s3](https://github.com/terraform-yc-modules/terraform-yc-s3) модуль, т.к. не вижу особой необходимости, а он добавляет дополнительную зависимость — AWS CLI, хотя от этой зависимости не удалось отказаться в итоге.
 
 ### Создание и конфигурация YDB
 Т.к. в YDB не поддерживается такое же разделение ролей как и в YC S3, то здесь я этого не делал. \
@@ -121,7 +122,7 @@ docker run --rm -t -v "$(pwd)/homework-05/s3-tfstate:/tflint" ghcr.io/terraform-
 \
 В YC CLI [v0.125.0] нет возможности создания таблицы (table) в YDB (можно создать только database). \
 Зато можно создать через AWS CLI, как это описано в [документации](https://yandex.cloud/en/docs/ydb/docapi/tools/aws-cli/create-table). 
-Что и было сделано через скрипт в [terraform_data](./s3-tfstate/main.tf#L67). \
+Что и было сделано через скрипт в [terraform_data](./s3-tfstate/main.tf#L83). \
 \
 Пример с YDB Document table [код](https://github.com/yandex-cloud-examples/yc-serverless-ydb-api/blob/main/main.tf#L28) 
 ([permalink](https://github.com/yandex-cloud-examples/yc-serverless-ydb-api/blob/c5bf360de6a07b8ba4b98e359a36f169d68ece09/main.tf#L28)) —
