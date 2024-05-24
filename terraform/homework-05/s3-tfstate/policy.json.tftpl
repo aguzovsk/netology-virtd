@@ -1,7 +1,7 @@
 {
   "Version": "2012-10-17",
   "Statement": [
-    %{if bucket_owner != null}
+    %{if bucket_owner != null && length(bucket_owner) > 0}
     {
       "Sid": "FullAccessToBucket",
       "Effect": "Allow",
@@ -15,7 +15,7 @@
       ]
     },
     %{~endif~}
-    %{if bucket_admin != null}
+    %{if bucket_admin != null && length(bucket_admin) > 0}
     {
       "Sid": "AccessToTheBucketButNotItsContent",
       "Effect": "Allow",
@@ -46,7 +46,7 @@
       "Effect": "Allow",
       "Principal": {
         "CanonicalUser": [
-          %{~ if bucket_admin != null ~}
+          %{~ if bucket_admin != null && length(bucket_admin) > 0 ~}
           "${bucket_admin}",
           %{~ endif ~}
           "${tfstate_sa}"

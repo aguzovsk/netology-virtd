@@ -1,5 +1,6 @@
 /*
-Terraform cannot work with YC S3 Buckets if those Actions are not set on the bucket level:
+Terraform Yandex provider cannot work with YC S3 Buckets if those permissions are not set
+on the bucket level for the entity on which behalf we operate:
   s3:ListBucket
   s3:GetBucketVersioning
   s3:GetBucketCORS
@@ -36,9 +37,13 @@ resource "yandex_storage_bucket" "tfstate" {
 
 
 resource "terraform_data" "final_info" {
+  # If not specified it may run before binding is in effect
+  depends_on = [yandex_ydb_database_iam_binding.editor]
+
   triggers_replace = [
-    yandex_iam_service_account_static_access_key.s3_sa_user.id,
-    var.is_aws_cli_installed
+    local.user_static_key.id,
+    var.is_aws_cli_installed,
+    yandex_ydb_database_serverless.ydb-lock-db.id
   ]
 
   input = {
@@ -46,7 +51,11 @@ resource "terraform_data" "final_info" {
     admin_info           = local.admin_info_file
     aws_profile          = var.aws_profile
     aws_credentials_file = local.aws_credentials_file
+    aws_config_file      = local.aws_config_file
   }
+  /*
+    I'm not using sed -i, since it is Linux
+  */
 
   provisioner "local-exec" {
     # Bash is required, sh cannot do "echo -e" (does not recognize -e option)
@@ -56,34 +65,44 @@ resource "terraform_data" "final_info" {
     command     = <<-EOT
       mkdir -p ${dirname(local.aws_credentials_file)}
       touch ${local.aws_credentials_file}
-      sed -e '/\[${var.aws_profile}\]/,+2d' < ${local.aws_credentials_file} > ${local.aws_credentials_file}
+      touch ${local.aws_config_file}
+      sed -i -e '/\[${var.aws_profile}\]/,+2d' ${local.aws_credentials_file}
+      sed -i -e '/\[profile ${var.aws_profile}\]/,+1d' ${local.aws_config_file}
 
       cat <<EOF >> ${local.aws_credentials_file}
       [${var.aws_profile}]
       aws_access_key_id = ${local.user_static_key.access_key}
-      aws_secret_access_key = ${local.user_static_key.secret_key}
+      aws_secret_access_key = ${nonsensitive(local.user_static_key.secret_key)}
       EOF
 
-      export AWS_PROFILE=${var.aws_profile}
-      echo -e "${local.user_static_key.access_key}\n${local.user_static_key.secret_key}\nru-central1\n\n" | aws configure
+      cat <<EOF >> ${local.aws_config_file}
+      [profile ${var.aws_profile}]
+      region = ru-central1
+      EOF
+
       aws dynamodb create-table \
-        --table-name ${local.lock_table_name} \
+        --table-name ${var.ydb_table_name} \
         --attribute-definitions AttributeName=LockID,AttributeType=S \
         --key-schema AttributeName=LockID,KeyType=HASH \
-        --endpoint ${yandex_ydb_database_serverless.ydb-lock-db.document_api_endpoint}
+        --endpoint ${yandex_ydb_database_serverless.ydb-lock-db.document_api_endpoint} \
+        --profile ${var.aws_profile}
 
 
       cat <<EOF > ${local.backend_info_file}
-      profile = "${var.aws_profile}"
-      dynamodb_endpoint = "${yandex_ydb_database_serverless.ydb-lock-db.document_api_endpoint}"
-      bucket = "${yandex_storage_bucket.tfstate.bucket}"
-      ${var.is_aws_cli_installed ? "dynamodb_table = \"${local.lock_table_name}\"" : "# dynamodb_table = SHOULD BE CREATED  BY YOURSELF"}
+      backend "s3" {
+        profile                     = "${var.aws_profile}"
+        dynamodb_endpoint           = "${yandex_ydb_database_serverless.ydb-lock-db.document_api_endpoint}"
+        ${var.is_aws_cli_installed ? "dynamodb_table = \"${var.ydb_table_name}\"" : "# dynamodb_table = SHOULD BE CREATED  BY YOURSELF"}
+        bucket                      = "${yandex_storage_bucket.tfstate.bucket}"
 
-      key                         = "terraform.tfstate"
-      endpoint                    = "storage.yandexcloud.net"
-      region                      = "ru-central1"
-      skip_region_validation      = true
-      skip_credentials_validation = true
+        key                         = "${var.path_to_tfstate}"
+        endpoint                    = "storage.yandexcloud.net"
+        region                      = "ru-central1"
+        skip_region_validation      = true
+        skip_credentials_validation = true
+        # skip_requesting_account_id  = true # This option is required for Terraform 1.6.1 or higher.
+        # skip_s3_checksum            = true # This option is required to describe backend for Terraform version 1.6.3 or higher.
+      }
       EOF
 
       cat <<EOF > ${local.admin_info_file}
@@ -100,8 +119,9 @@ resource "terraform_data" "final_info" {
     on_failure  = continue
     command     = <<-EOT
       rm ${self.input.backend_info} || true
-      rm ${self.input.backend_info} || true
-      sed -e '/\[${self.input.aws_profile}\]/,+2d' < ${self.input.aws_credentials_file} > ${self.input.aws_credentials_file}
+      rm ${self.input.admin_info} || true
+      sed -i -e '/\[${self.input.aws_profile}\]/,+2d' ${self.input.aws_credentials_file}
+      sed -i -e '/\[profile ${self.input.aws_profile}\]/,+1d' ${self.input.aws_config_file}
     EOT
   }
 }

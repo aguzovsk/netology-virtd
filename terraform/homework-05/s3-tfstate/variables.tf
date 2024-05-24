@@ -1,23 +1,26 @@
 variable "s3-name-suffix" {
   type        = string
-  description = "Add suffix to 'netology-devops-', so that name is unique"
+  description = "Add suffix to 's3-terraform-backend-netology-', so that name is unique"
 }
 
 variable "path_to_tfstate" {
-  type    = string
-  default = "terraform.tfstate"
+  type        = string
+  default     = "terraform.tfstate"
+  description = "Path to terraform.tfstate file within the S3 bucket."
 }
 
 
 variable "bucket_owner" {
   type        = string
   nullable    = true
+  default     = null
   description = "ID of user/service account, which will have full access to the created bucket. Put there your user's ID, so you can manage bucket from console"
 }
 
 variable "bucket_admin" {
   type        = string
   nullable    = true
+  default     = null
   description = "May be omitted. ID of service account, which will have full access to the bucket itself, but not its content"
 
   validation {
@@ -49,13 +52,13 @@ variable "versioning" {
 variable "s3_sa_user_name" {
   type        = string
   default     = "s3-terraform-sa-user"
-  description = "Name of the service account, which will "
+  description = "Name of the service account, which will upload data to the bucket"
 }
 
 variable "aws_profile" {
   type        = string
   default     = "yandex-s3-tfstate"
-  description = "AWS profile with given name will be created, or just simply credentials will be installed"
+  description = "AWS profile with given name will be created (with YC credentials, you can use it with Yandex cloud not AWS itself)"
 }
 
 variable "is_aws_cli_installed" {
@@ -64,12 +67,14 @@ variable "is_aws_cli_installed" {
 }
 
 variable "ydb_db_name" {
-  type    = string
-  default = "state-lock-db"
+  type        = string
+  default     = "state-lock-db"
+  description = "Name of the YDB database, where state lock table should be created."
 }
 
 variable "ydb_table_name" {
-  type    = string
-  default = "state-lock-table"
+  type        = string
+  default     = "aws-dynamodb-lock-table"
+  description = "Dependend on AWS CLI. Name of the YDB table, where lock will be stored. If no AWS CLI is installed you should create it yourself."
 }
 

@@ -1,6 +1,10 @@
 # Домашнее задание к занятию «Использование Terraform в команде»
 
 ## Задание 1.
+```bash
+# run from netology-devops/terraform/homework-05 directory
+
+```
 сheckov:
 * Check: CKV_TF_1: "Ensure Terraform module sources use a commit hash"
 * Check: CKV_TF_2: "Ensure Terraform module sources use a tag with a version number"
@@ -14,11 +18,21 @@ _(Найдены только в папке demonstration1)_
 
 ```bash
 # run from netology-devops/terraform/homework-05 directory
-docker run --rm -it -v "$(pwd)/task1:/tflint" --entrypoint=/bin/sh  ghcr.io/terraform-linters/tflint -c "cd /tflint; tflint --recursive"
-# OR
-docker run --rm -it -v "$(pwd)/task1:/tflint" ghcr.io/terraform-linters/tflint "--chdir" "/tflint/src"; \
-docker run --rm -it -v "$(pwd)/task1:/tflint" ghcr.io/terraform-linters/tflint "--chdir" "/tflint/demonstration1"
+docker run --rm -t -v "$(pwd)/task1:/tflint" --workdir /tflint  ghcr.io/terraform-linters/tflint "--recursive"
 ```
+
+<details>
+<summary>Альтернативно</summary>
+
+```bash
+# run from netology-devops/terraform/homework-05 directory
+docker run --rm -t -v "$(pwd)/task1:/tflint" --entrypoint=/bin/sh  ghcr.io/terraform-linters/tflint -c "cd /tflint; tflint --recursive"
+# OR
+docker run --rm -t -v "$(pwd)/task1:/tflint" ghcr.io/terraform-linters/tflint "--chdir" "/tflint/src"; \
+docker run --rm -t -v "$(pwd)/task1:/tflint" ghcr.io/terraform-linters/tflint "--chdir" "/tflint/demonstration1"
+```
+</details>
+
 tflint:
 * Warning: Module source "git::https://github.com/udjin10/yandex_compute_instance.git?ref=main" uses a default branch as ref (main) (terraform_module_pinned_source)
 * Warning: Missing version constraint for provider "template" in `required_providers` (terraform_required_providers)
@@ -50,14 +64,30 @@ S3 Bucket и YDB создаются в коде (см. [Задание №7](#з
 
 ## Задание 3.
 Должно быть в pull-request ...
+
+```bash
+# run from netology-devops/terraform directory
+docker run --rm --tty --volume $(pwd)/homework-04:/tf bridgecrew/checkov \
+   --download-external-modules true --directory /tf
+docker run --rm --tty --volume $(pwd)/homework-05/s3-tfstate:/tf bridgecrew/checkov \
+   --download-external-modules true --directory /tf
+
+docker run --rm -v "$(pwd)/homework-04:/tflint" --workdir /tflint ghcr.io/terraform-linters/tflint "--recursive"
+docker run --rm -v "$(pwd)/homework-05/s3-tfstate:/tflint" --workdir /tflint ghcr.io/terraform-linters/tflint
+```
+
+<details>
+<summary>Альтернативно</summary>
+
 ```bash
 # run from netology-devops/terraform directory
 checkov -d homework-04
 checkov -d homework-05/s3-tfstate/
 
-docker run --rm -it -v "$(pwd)/homework-04:/tflint" --entrypoint=/bin/sh  ghcr.io/terraform-linters/tflint -c "cd /tflint; tflint --recursive"
-docker run --rm -it -v "$(pwd)/homework-05/s3-tfstate:/tflint" ghcr.io/terraform-linters/tflint "--chdir" "/tflint"
+docker run --rm -t -v "$(pwd)/homework-04:/tflint" --entrypoint=/bin/sh  ghcr.io/terraform-linters/tflint -c "cd /tflint; tflint --recursive"
+docker run --rm -t -v "$(pwd)/homework-05/s3-tfstate:/tflint" ghcr.io/terraform-linters/tflint "--chdir" "/tflint"
 ```
+</details>
 
 ## Задание 4+5.
 <details>
@@ -77,17 +107,26 @@ docker run --rm -it -v "$(pwd)/homework-05/s3-tfstate:/tflint" ghcr.io/terraform
 * storage.admin (можно не создавать, если он был передан в модуль как аргумент *bucket_admin*)
 * storage.uploader
 
+Не использую [terraform-yc-s3](https://github.com/terraform-yc-modules/terraform-yc-s3) модуль, т.к. не вижу особой необходимости, а он добавляет дополнительную зависимость — AWS CLI, хотя от этой зависимости не удалось отказаться в итоге. \
+
 ### Создание и конфигурация YDB
+Т.к. в YDB не поддерживается такое же разделение ролей как и в YC S3, то здесь я этого не делал. \
+\
 Невозможно создать **Document table** из terraform. Yandex Provider [v0.119.0](https://terraform-provider.yandexcloud.net/Resources/ydb_table) поддерживает создание только YDB Row Tables. \
 В документации есть только primary_key, но нет partition_key, разве что подразумевается, что это одно и тоже.
 (актуально для yandex [v0.199.0](https://registry.terraform.io/providers/yandex-cloud/yandex/0.119.0/docs/resources/ydb_table)) \
 \
-Делал попытки ([см.код.](./s3-tfstate/ydb.tf#L41)) "мимкрировать" под Document table, подставляя нужные аттрибуты (которые скопировал при **terraform import**), но не получилось. 
+Делал попытки ([см.код.](./s3-tfstate/ydb.tf#L41)) "мимикрировать" под Document table, подставляя нужные аттрибуты (которые скопировал при **terraform import**), но не получилось. 
 Выдаёт ошибку: "Document API table cannot be modified from YQL query" и прочие. \
 \
 В YC CLI [v0.125.0] нет возможности создания таблицы (table) в YDB (можно создать только database). \
 Зато можно создать через AWS CLI, как это описано в [документации](https://yandex.cloud/en/docs/ydb/docapi/tools/aws-cli/create-table). 
 Что и было сделано через скрипт в [terraform_data](./s3-tfstate/main.tf#L67). \
+\
+Пример с YDB Document table [код](https://github.com/yandex-cloud-examples/yc-serverless-ydb-api/blob/main/main.tf#L28) 
+([permalink](https://github.com/yandex-cloud-examples/yc-serverless-ydb-api/blob/c5bf360de6a07b8ba4b98e359a36f169d68ece09/main.tf#L28)) —
+используется такой же подход как и у меня (через скрипт + AWS CLI).
+
 <details>
 <summary>Ошибки при "мимикрировании"</summary>
 
@@ -104,8 +143,6 @@ YC provider не может даже удалить Document YDB table. \
 ![](./items/Task7-row-table.png)
 + Row-based YDB таблицу нельзя использовать для terraform state lock
 </details>
-
-Т.к. в YDB не поддерживается такое же разделение ролей как и в YC S3, то здесь я этого не делал.
 
 
 ### Работа с Yandex S3 с включенным версионированием

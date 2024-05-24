@@ -49,6 +49,7 @@ variable "two_xor_booleans" {
 
   # default = {
   #   Dunkan = true
+  #   Connor = true
   # }
   # default = {
   #   Dunkan = false
@@ -58,16 +59,36 @@ variable "two_xor_booleans" {
   #   Dunkan = true
   #   Connor = false
   # }
-  default = {
-    Dunkan = false
-    Connor = true
-  }
+  # default = {
+  #   Dunkan = false
+  #   Connor = true
+  # }
 
-  description = "Is object contains 2 xor values? (https://en.wikipedia.org/wiki/XOR_gate)"
+  # default = {
+  #   Dunkan = true
+  # }
+  # default = {
+  #   Dunkan = false
+  # }
+  # default = {
+  #   Connor = true
+  # }
+  # default = {
+  #   Connor = false
+  # }
+
+  default = {}
+
+  description = "Both values are not true and false at the same time"
 
   validation {
-    condition = (var.two_xor_booleans.Dunkan && !var.two_xor_booleans.Connor ||
-    !var.two_xor_booleans.Dunkan && var.two_xor_booleans.Connor)
-    error_message = "Provided boolean values within the object do not return TRUE on XOR operation"
+    condition     = !((var.two_xor_booleans.Dunkan == var.two_xor_booleans.Connor) && (var.two_xor_booleans.Dunkan != null))
+    error_message = "Negation + AND: Provided values don't are both true or false at the same time"
+  }
+
+  validation {
+    # Same as above
+    condition     = var.two_xor_booleans.Dunkan != var.two_xor_booleans.Connor || var.two_xor_booleans.Dunkan == null
+    error_message = "ALTERNATIVE: Provided values don't are both true or false at the same time"
   }
 }
