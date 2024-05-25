@@ -1,7 +1,7 @@
 {
   "Version": "2012-10-17",
   "Statement": [
-    %{if bucket_owner != null && length(bucket_owner) > 0}
+    %{if can(coalesce(bucket_owner))}
     {
       "Sid": "FullAccessToBucket",
       "Effect": "Allow",
@@ -15,7 +15,7 @@
       ]
     },
     %{~endif~}
-    %{if bucket_admin != null && length(bucket_admin) > 0}
+    %{if can(coalesce(bucket_admin))}
     {
       "Sid": "AccessToTheBucketButNotItsContent",
       "Effect": "Allow",
@@ -46,10 +46,9 @@
       "Effect": "Allow",
       "Principal": {
         "CanonicalUser": [
-          %{~ if bucket_admin != null && length(bucket_admin) > 0 ~}
           "${bucket_admin}",
-          %{~ endif ~}
-          "${tfstate_sa}"
+          "${bucket_user}",
+          "${bucket_viewer}"
         ]
       },
       "Action": [
@@ -64,10 +63,10 @@
       ]
     },
     {
-      "Sid": "AccessToGivenItem",
+      "Sid": "UserItemAccess",
       "Effect": "Allow",
       "Principal": {
-        "CanonicalUser": ["${tfstate_sa}"]
+        "CanonicalUser": ["${bucket_user}"]
       },
       "Action": [
         "s3:GetObject",
@@ -87,10 +86,10 @@
       ]
     },
     {
-      "Sid": "UserBucketAccess",
+      "Sid": "UserBucketAccessRequiresConfigurerRights",
       "Effect": "Allow",
       "Principal": {
-        "CanonicalUser": ["${tfstate_sa}"]
+        "CanonicalUser": ["${bucket_user}"]
       },
       "Action": [
         "s3:PutBucketVersioning",
@@ -99,6 +98,20 @@
       ],
       "Resource": [
         "arn:aws:s3:::${bucket_name}"
+      ]
+    },
+    {
+      "Sid": "ViewerItemAccess",
+      "Effect": "Allow",
+      "Principal": {
+        "CanonicalUser": ["${bucket_viewer}"]
+      },
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion"
+      ],
+      "Resource": [
+        "arn:aws:s3:::${bucket_name}/${item}"
       ]
     }
   ]

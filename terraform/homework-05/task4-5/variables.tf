@@ -42,44 +42,17 @@ variable "lowercase_words" {
 }
 
 variable "two_xor_booleans" {
+  /*
+    Helpful: https://en.wikipedia.org/wiki/De_Morgan%27s_laws
+  */
   type = object({
     Dunkan = optional(bool)
     Connor = optional(bool)
   })
 
-  # default = {
-  #   Dunkan = true
-  #   Connor = true
-  # }
-  # default = {
-  #   Dunkan = false
-  #   Connor = false
-  # }
-  # default = {
-  #   Dunkan = true
-  #   Connor = false
-  # }
-  # default = {
-  #   Dunkan = false
-  #   Connor = true
-  # }
-
-  # default = {
-  #   Dunkan = true
-  # }
-  # default = {
-  #   Dunkan = false
-  # }
-  # default = {
-  #   Connor = true
-  # }
-  # default = {
-  #   Connor = false
-  # }
-
   default = {}
 
-  description = "Both values are not true and false at the same time"
+  description = "Both values are not true or false at the same time"
 
   validation {
     condition     = !((var.two_xor_booleans.Dunkan == var.two_xor_booleans.Connor) && (var.two_xor_booleans.Dunkan != null))
@@ -91,4 +64,52 @@ variable "two_xor_booleans" {
     condition     = var.two_xor_booleans.Dunkan != var.two_xor_booleans.Connor || var.two_xor_booleans.Dunkan == null
     error_message = "ALTERNATIVE: Provided values don't are both true or false at the same time"
   }
+}
+
+variable "two_xors" {
+  type = list(object({
+    Dunkan = optional(bool)
+    Connor = optional(bool)
+  }))
+
+  description = "Only 2 first values within the list should return false on check."
+
+  default = [
+    {
+      Dunkan = true
+      Connor = true
+    },
+    {
+      Dunkan = false
+      Connor = false
+    },
+    {
+      Dunkan = true
+      Connor = false
+    },
+    {
+      Dunkan = false
+      Connor = true
+    },
+    {
+      Dunkan = true
+    },
+    {
+      Dunkan = false
+    },
+    {
+      Connor = true
+    },
+    {
+      Connor = false
+    },
+    {}
+  ]
+}
+
+locals {
+  first_check = [for two_xor_booleans in var.two_xors :
+  !((two_xor_booleans.Dunkan == two_xor_booleans.Connor) && (two_xor_booleans.Dunkan != null))]
+  second_check = [for two_xor_booleans in var.two_xors :
+  two_xor_booleans.Dunkan != two_xor_booleans.Connor || two_xor_booleans.Dunkan == null]
 }

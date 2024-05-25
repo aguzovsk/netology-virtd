@@ -32,6 +32,8 @@ resource "yandex_mdb_mysql_cluster" "foo" {
     hour = 12
   }
 
+  security_group_ids = [yandex_vpc_security_group.example.id]
+
   dynamic "host" {
     for_each = toset(range(local.hosts_no))
     content {

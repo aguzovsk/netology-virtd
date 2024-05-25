@@ -64,31 +64,131 @@ S3 Bucket и YDB создаются в коде (см. [Задание №7](#з
 </details>
 
 ## Задание 3.
-Должно быть в pull-request ...
+
+### Checkov homework-04
 
 ```bash
 # run from netology-devops/terraform directory
 docker run --rm --tty --volume $(pwd)/homework-04:/tf bridgecrew/checkov \
    --download-external-modules true --directory /tf
-docker run --rm --tty --volume $(pwd)/homework-05/s3-tfstate:/tf bridgecrew/checkov \
-   --download-external-modules true --directory /tf
-
-docker run --rm -v "$(pwd)/homework-04:/tflint" --workdir /tflint ghcr.io/terraform-linters/tflint "--recursive"
-docker run --rm -v "$(pwd)/homework-05/s3-tfstate:/tflint" --workdir /tflint ghcr.io/terraform-linters/tflint
 ```
 
 <details>
-<summary>Альтернативно</summary>
+<summary>Скриншоты</summary>
+
+![checkov homework-04 screenshot](./items/Task3-checkov-04-errors.png)
+![checkov homework-04 screenshot no errors](./items/Task3-checkov-04-corrected.png)
+</details>
+
+Ошибки (некоторые файлы могут быть пропущены):
+* Check: CKV_YC_2: "Ensure compute instance does not have public IP." \
+Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/bc-aws-2-40
+    + resource: module.vm.module.analytics.yandex_compute_instance.vm[0]  \
+    Calling File: /other/1_cloud_init/main.tf:20-37
+    + resource: module.vm.module.marketing.yandex_compute_instance.vm[0] \
+    Calling File: /other/1_cloud_init/main.tf:1-18
+* Check: CKV_YC_11: "Ensure security group is assigned to network interface."
+    + resource: module.vm.module.analytics.yandex_compute_instance.vm[0] \
+    Calling File: /other/1_cloud_init/main.tf:20-37
+    + resource: module.vm.module.marketing.yandex_compute_instance.vm[0] \
+    Calling File: /other/1_cloud_init/main.tf:1-18
+* Check: CKV_TF_1: "Ensure Terraform module sources use a commit hash" \
+Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/supply-chain-policies/terraform-policies/ensure-terraform-module-sources-use-git-url-with-commit-hash-revision
+    + File: /other/1_cloud_init/main.tf:1-20
+    + File: /other/main.tf:57-90
+* Check: CKV_TF_2: "Ensure Terraform module sources use a tag with a version number"
+    + Calling File: /other/main.tf:10-16
+* Check: CKV_YC_1: "Ensure security group is assigned to database cluster." \
+    + File: /other/5_mysql/modules/mysql_cluster/main.tf:17-46
+* Check: CKV_SECRET_6: "Base64 High Entropy String" \
+Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/secrets-policies/secrets-policy-index/git-secrets-6
+    + File: /other/7_vault/terraform.tf:4-5 \
+    Ошибка была подавлена, т.к. данный токен использовался в учебных целях
+    #checkov:skip=CKV_SECRET_6:Base64 High Entropy String
+
+### Checkov homework-05/s3-tfstate
 
 ```bash
 # run from netology-devops/terraform directory
-checkov -d homework-04
-checkov -d homework-05/s3-tfstate/
 
-docker run --rm -t -v "$(pwd)/homework-04:/tflint" --entrypoint=/bin/sh  ghcr.io/terraform-linters/tflint -c "cd /tflint; tflint --recursive"
-docker run --rm -t -v "$(pwd)/homework-05/s3-tfstate:/tflint" ghcr.io/terraform-linters/tflint "--chdir" "/tflint"
+docker run --rm --tty --volume $(pwd)/homework-05/s3-tfstate:/tf bridgecrew/checkov \
+   --download-external-modules true --directory /tf
 ```
+
+<details>
+<summary>Скриншоты</summary>
+
+![checkov homework-05 screenshot](./items/Task3-checkov-05-errors.png)
+![checkov homework-05 screenshot no errors](./items/Task3-checkov-05-corrected.png)
++ **terraform apply**: KMS SSE
+![KMS SSE applied](./items/Task3-checkov-05-s3-sse-applied.png)
 </details>
+
+Ошибки:
+* Check: CKV_YC_3: "Ensure storage bucket is encrypted."
+    + File: /main.tf:11-36
+
+### TFLint homework-04 + homework-05/s3-tfstate
+
+```bash
+# run from netology-devops/terraform directory
+
+docker run --rm -v "$(pwd)/homework-04:/tflint" --workdir /tflint ghcr.io/terraform-linters/tflint --recursive
+docker run --rm -v "$(pwd)/homework-05/s3-tfstate:/tflint" --workdir /tflint ghcr.io/terraform-linters/tflint --recursive
+```
+
+<details>
+<summary>Скриншоты</summary>
+
+![homework-04 errors](./items/Task3-tflint-04-errors.png)
+![s3 module errors](./items/Task3-tflint-05-errors.png)
+![no tflint errors](./items/Task3-tflint-correct.png)
+</details>
+
+### Результат
+
+Согласно **checkov** были добавлены Security Group, вместо ветки на github для remote-модулей используется hash commit'а и другие мелочи.
+Таке согласно рекомендациям было включено шифрование в Yandex S3. В [Задании 7](#задание-7) были произведены изменения.\
+\
+Был запущен модуль для хранения remote-state (homework-05/s3-tfstate). В нём хранит state модуль vpc (homework-04/vpc) используя один service account,
+а считывает данные из этого state, с помощью terraform_remote_state, другой модуль (homework-04/other/1_cloud_init), используя другой service account.
+
+<details>
+<summary>Скриншоты</summary>
+
+* Отдельный root-модуль vpc использует remote state S3\
+На скриншоте показано, как terraform делает lock release
+![terraform apply vpc with lock released](./items/Task3-final-vpc.png)
+
+* terraform apply -target module.vm\
+Запущен модуль из homework-04/other, который считывает информацию о подсетях с помощью terraform_remote_state из Yandex S3\
+Согласно **checkov** также в модуль была добавлена Security Group
+![terraform apply vms, with fetching data from remote state](./items/Task3-final-vms.png)
+</details>
+
+### Off-topic
+
+<details>
+<summary>coalesce bug</summary>
+
+В ходе разработки был найден bug, **terraform console**: (v1.5.7):\
+\> coalesce(null, "", {a = null, b = ""}, "some")\
+""\
+\> coalesce(null, "")\
+<span style="color: red; font-weight: bold">Error:</span> Error in function call\
+\> coalesce(null, "", "some")\
+"some"\
+\> coalesce(null, "", "some", {a = null, b = ""})\
+""\
+\> coalesce(null, "", "some", {})\
+""\
+> coalesce(null, "", "some", [])\
+""
+
+![coalesce-bug](./items/console-coalesce-bug.png)
+</details>
+
+
 
 ## Задание 4+5.
 <details>
@@ -104,11 +204,16 @@ docker run --rm -t -v "$(pwd)/homework-05/s3-tfstate:/tflint" ghcr.io/terraform-
 ### Создание и конфигурация S3
 Поскольку создание S3 bucket происходит в коде, а также здесь даются права, то создающий S3 bucket должен обладать, как минимум **storage.admin** правами доступа. 
 Поэтому нужно хотя бы минимальное разделение ролей. \
-Создаются 2 service account:
-* storage.admin (можно не создавать, если он был передан в модуль как аргумент *bucket_admin*)
-* storage.uploader
+Используется 3 Service Account:
+* storage.admin — создаёт S3 bucket даёт права доступа и настраивает его
+* storage.editor (можно и uploader, но не может удалять файлы) (код: user)\
+Хранит свой terraform state в Yandex S3
+* storage.viewer — может просматривать Yandex S3, но не может туда записывать.\
+Используется для считывая с помощью terraform_remote_state data source
 
-Не использую [terraform-yc-s3](https://github.com/terraform-yc-modules/terraform-yc-s3) модуль, т.к. не вижу особой необходимости, а он добавляет дополнительную зависимость — AWS CLI, хотя от этой зависимости не удалось отказаться в итоге.
+Не использую [terraform-yc-s3](https://github.com/terraform-yc-modules/terraform-yc-s3) модуль, т.к. не вижу особой необходимости, а он добавляет дополнительную зависимость — AWS CLI, хотя от этой зависимости не удалось отказаться в итоге.\
+\
+Включено шифрование Yandex S3 bucket: SSE-KMS симметричным ключом AES-192.
 
 ### Создание и конфигурация YDB
 Т.к. в YDB не поддерживается такое же разделение ролей как и в YC S3, то здесь я этого не делал. \
@@ -122,7 +227,7 @@ docker run --rm -t -v "$(pwd)/homework-05/s3-tfstate:/tflint" ghcr.io/terraform-
 \
 В YC CLI [v0.125.0] нет возможности создания таблицы (table) в YDB (можно создать только database). \
 Зато можно создать через AWS CLI, как это описано в [документации](https://yandex.cloud/en/docs/ydb/docapi/tools/aws-cli/create-table). 
-Что и было сделано через скрипт в [terraform_data](./s3-tfstate/main.tf#L83). \
+Что и было сделано через скрипт в [terraform_data](./s3-tfstate/main.tf#L68). \
 \
 Пример с YDB Document table [код](https://github.com/yandex-cloud-examples/yc-serverless-ydb-api/blob/main/main.tf#L28) 
 ([permalink](https://github.com/yandex-cloud-examples/yc-serverless-ydb-api/blob/c5bf360de6a07b8ba4b98e359a36f169d68ece09/main.tf#L28)) —
@@ -204,6 +309,36 @@ aws --endpoint-url=https://storage.yandexcloud.net/ \
    --key {terraform.tfstate} \
    --version-id {0006190E456DBCFA}
 ```
+
+Удалить все версии Yandex S3 bcuket object (должен быть установлен jq):
+```bash
+aws --endpoint-url=https://storage.yandexcloud.net/ \
+   --profile {profile-name} \
+   s3api list-object-versions \
+   --bucket {bucket-name} \
+   | jq '.DeleteMarkers[], .Versions[] | {Key, VersionId} | "\(.Key | @sh) \(.VersionId | @sh)"' | \
+sed s/\"//g | awk '{system( \
+"aws --endpoint-url=https://storage.yandexcloud.net/ \
+   --profile {profile-name} \
+   s3api delete-object \
+   --bucket {bucket-name} \
+   --key " $1 " \
+   --version-id " $2 \
+)}'
+```
+
+<details>
+<summary>Объяснение</summary>
+
+1. aws s3api list-object-versions скачиваем версии
+2. jq:
+    * Из json объекта выбираем поля-массивы DeleteMarkers и Versions и объединяем их
+    * Каждый элемент в объединённом массиве содержит поля Key и VersionId, которые нам нужны
+    * используем встроенную функцию @sh для экранирования полей и для каждого объекта делаем строку
+3. sed - убираем кавычки которые нам нужны были для построения строк внутри jq
+4. awk:
+С помощью system вызываем bash-statement 
+</details>
 
 * Удалив верcии объекта можно удалить bucket из Yandex Web-Console. Или так:
 ```bash

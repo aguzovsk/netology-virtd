@@ -20,7 +20,7 @@ resource "yandex_ydb_database_iam_binding" "editor" {
   # (https://yandex.cloud/en/docs/tutorials/infrastructure-management/terraform-state-lock#create-service-account)
 
   members = [
-    "serviceAccount:${yandex_iam_service_account.s3_sa_user.id}",
+    "serviceAccount:${local.user_id}",
   ]
 }
 
