@@ -65,37 +65,37 @@ terraform apply -target module.s3_keys_6
 export AWS_PROFILE=${aws_profile_identifier}
 terraform apply -target module.s3 
 */
-# module "s3" {
-#   source      = "git::https://github.com/terraform-yc-modules/terraform-yc-s3?ref=5d273da1143659bddad82d4dfde74a3cd9406396"
-#   bucket_name = local.bucket_name
-#   max_size    = 1073741824 # 1 GiB
+module "s3" {
+  source      = "git::https://github.com/terraform-yc-modules/terraform-yc-s3?ref=5d273da1143659bddad82d4dfde74a3cd9406396"
+  bucket_name = local.bucket_name
+  max_size    = 1073741824 # 1 GiB
 
-#   policy_console = {
-#     enabled = true
-#   }
+  policy_console = {
+    enabled = true
+  }
 
-#   versioning = {
-#     enabled = true
-#   }
+  versioning = {
+    enabled = true
+  }
 
-#   policy = {
-#     enabled = true
-#     statements = [
-#       {
-#         sid    = "rule-allow-only-yourself-to-deal-with-s3-bucket"
-#         effect = "Allow"
-#         resources = [
-#           local.bucket_name,
-#           "${local.bucket_name}/*"
-#         ]
-#         actions = [
-#           "s3:*"
-#         ]
-#         principal = {
-#           type        = "CanonicalUser"
-#           identifiers = [var.yc-user-id, module.s3_keys_6.service_account_id]
-#         }
-#       }
-#     ]
-#   }
-# }
+  policy = {
+    enabled = true
+    statements = [
+      {
+        sid    = "rule-allow-only-yourself-to-deal-with-s3-bucket"
+        effect = "Allow"
+        resources = [
+          local.bucket_name,
+          "${local.bucket_name}/*"
+        ]
+        actions = [
+          "s3:*"
+        ]
+        principal = {
+          type        = "CanonicalUser"
+          identifiers = [var.yc-user-id, module.s3_keys_6.service_account_id]
+        }
+      }
+    ]
+  }
+}

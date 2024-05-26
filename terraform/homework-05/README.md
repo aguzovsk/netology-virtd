@@ -275,7 +275,7 @@ YC provider не может даже удалить Document YDB table. \
 
 
 ### Работа с Yandex S3 с включенным версионированием
-Может возникнуть потребность вручную через Yandex Web-console удалить bucket. Но, если файл туда уже загружен, то удаяляя фал (объект) его через Yandex Web-Console (и Вы не приостановили версионирование преждевременно) Вы только добавляете маркер удаления.
+Может возникнуть потребность вручную через Yandex Web-console удалить bucket. Но, если файл туда уже загружен, то удаяляя фал (объект) его через Yandex Web-Console (и Вы не приостановили версионирование преждевременно) Вы только добавляете маркер удаления. (Можно сделать и через Web-консоль включив переключатеь (сверху UI))
 
 * Вывести версии объектов в S3 bucket:
 ```bash
@@ -333,7 +333,7 @@ aws --endpoint-url=https://storage.yandexcloud.net/ \
    --version-id {0006190E456DBCFA}
 ```
 
-Удалить все версии Yandex S3 bcuket object (должен быть установлен jq):
+Удалить все версии объектов Yandex S3 bucket object  storage (должен быть установлен jq):
 ```bash
 aws --endpoint-url=https://storage.yandexcloud.net/ \
    --profile {profile-name} \
@@ -369,4 +369,38 @@ aws --endpoint-url=https://storage.yandexcloud.net/ \
    --profile {aws-profile-name} \
    s3api delete-bucket \
    --bucket {your-bucket-name}
+```
+
+### Работа с Yandex YDB через AWS CLI
+
+```bash
+export endpoint="${DOC_API_ENDPOINT}"
+
+aws dynamodb list-tables \
+  --endpoint $endpoint \
+  --profile ${AWS_PROFILE}
+
+aws dynamodb describe-table \
+  --endpoint $endpoint \
+  --profile ${AWS_PROFILE} \
+  --table-name ${YDB_TABLE_NAME}
+
+# Use SCAN operation only on small dataset and/or apply filter option
+# --filter-expression <value>
+aws dynamodb scan \
+  --endpoint $endpoint \
+  --profile ${AWS_PROFILE} \
+  --table-name ${YDB_TABLE_NAME}
+
+aws dynamodb get-item \
+  --endpoint $endpoint \
+  --profile ${AWS_PROFILE} \
+  --table-name ${YDB_TABLE_NAME} \
+  --key '{ "LockID": {"S": "${string}"}}'
+
+aws dynamodb delete-item \
+  --endpoint $endpoint \
+  --profile ${AWS_PROFILE} \
+  --table-name {YDB_TABLE_NAME} \
+  --key '{ "LockID": {"S": "string"}}'
 ```
