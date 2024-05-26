@@ -60,11 +60,14 @@ resource "terraform_data" "dynamodb_table" {
     doc_api_endpoint = yandex_ydb_database_serverless.ydb-lock-db.document_api_endpoint
     access_key       = local.user_static_key.access_key
     secret_key       = local.user_static_key.secret_key
+    aws_cli          = var.is_aws_cli_installed
   }
 
   provisioner "local-exec" {
-    when    = create
-    command = <<EOT
+    when       = create
+    on_failure = continue
+    command    = <<EOT
+      ${!var.is_aws_cli_installed} || \
       aws dynamodb create-table \
         --table-name ${var.ydb_table_name} \
         --attribute-definitions AttributeName=LockID,AttributeType=S \
@@ -80,6 +83,7 @@ resource "terraform_data" "dynamodb_table" {
     command    = <<EOT
       export AWS_ACCESS_KEY_ID=${self.input.access_key}
       export AWS_SECRET_ACCESS_KEY=${nonsensitive(self.input.secret_key)}
+      ${!self.input.aws_cli} || \
       aws dynamodb delete-table \
         --table-name ${self.input.table_name} \
         --endpoint ${self.input.doc_api_endpoint} \

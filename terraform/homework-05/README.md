@@ -190,7 +190,7 @@ docker run --rm -v "$(pwd)/homework-05/s3-tfstate:/tflint" --workdir /tflint ghc
 
 ### Дополнение:
 
-Обновление до terraform v1.8.4:
+Обновление до terraform v1.8.4, тест:
 1. Запущен homework-05/s3-tfstate как remote state s3 backend
 2. Запущен homework-04/vpc как отдельный root-модуль с remote state backend из предыдущего пункта
 3. Запущен homework-04/other, кроме (были закоментированы в коде):
@@ -229,10 +229,10 @@ docker run --rm -v "$(pwd)/homework-05/s3-tfstate:/tflint" --workdir /tflint ghc
 Поэтому нужно хотя бы минимальное разделение ролей. \
 Используется 3 Service Account:
 * storage.admin — создаёт S3 bucket даёт права доступа и настраивает его
-* storage.editor (можно и uploader, но не может удалять файлы) (код: user)\
+* storage.uploader (в коде как user)\
 Хранит свой terraform state в Yandex S3
 * storage.viewer — может просматривать Yandex S3, но не может туда записывать.\
-Используется для считывая с помощью terraform_remote_state data source
+Используется для считывания с помощью terraform_remote_state data source
 
 Не использую [terraform-yc-s3](https://github.com/terraform-yc-modules/terraform-yc-s3) модуль, т.к. не вижу особой необходимости, а он добавляет дополнительную зависимость — AWS CLI, хотя от этой зависимости не удалось отказаться в итоге.\
 \
@@ -241,16 +241,16 @@ docker run --rm -v "$(pwd)/homework-05/s3-tfstate:/tflint" --workdir /tflint ghc
 ### Создание и конфигурация YDB
 Т.к. в YDB не поддерживается такое же разделение ролей как и в YC S3, то здесь я этого не делал. \
 \
-Невозможно создать **Document table** из terraform. Yandex Provider [v0.119.0](https://terraform-provider.yandexcloud.net/Resources/ydb_table) поддерживает создание только YDB Row Tables. \
+Невозможно создать **Document table** из terraform. [Yandex Provider](https://terraform-provider.yandexcloud.net/Resources/ydb_table) v0.119.0  поддерживает создание только YDB Row Tables. \
 В документации есть только primary_key, но нет partition_key, разве что подразумевается, что это одно и тоже.
-(актуально для yandex [v0.199.0](https://registry.terraform.io/providers/yandex-cloud/yandex/0.119.0/docs/resources/ydb_table)) \
+(актуально для yandex [v0.119.0](https://registry.terraform.io/providers/yandex-cloud/yandex/0.119.0/docs/resources/ydb_table)) \
 \
 Делал попытки ([см.код.](./s3-tfstate/ydb.tf#L41)) "мимикрировать" под Document table, подставляя нужные аттрибуты (которые скопировал при **terraform import**), но не получилось. 
 Выдаёт ошибку: "Document API table cannot be modified from YQL query" и прочие. \
 \
 В YC CLI [v0.125.0] нет возможности создания таблицы (table) в YDB (можно создать только database). \
 Зато можно создать через AWS CLI, как это описано в [документации](https://yandex.cloud/en/docs/ydb/docapi/tools/aws-cli/create-table). 
-Что и было сделано через скрипт в [terraform_data](./s3-tfstate/main.tf#L68). \
+Что и было сделано через скрипт в [terraform_data](./s3-tfstate/main.tf#L71). \
 \
 Пример с YDB Document table [код](https://github.com/yandex-cloud-examples/yc-serverless-ydb-api/blob/main/main.tf#L28) 
 ([permalink](https://github.com/yandex-cloud-examples/yc-serverless-ydb-api/blob/c5bf360de6a07b8ba4b98e359a36f169d68ece09/main.tf#L28)) —
@@ -275,7 +275,7 @@ YC provider не может даже удалить Document YDB table. \
 
 
 ### Работа с Yandex S3 с включенным версионированием
-Может возникнуть потребность вручную через Yandex Web-console удалить bucket. Но, если файл туда уже загружен, то удаяляя фал (объект) его через Yandex Web-Console (и Вы не приостановили версионирование преждевременно) Вы только добавляете маркер удаления. (Можно сделать и через Web-консоль включив переключатеь (сверху UI))
+Может возникнуть потребность вручную через Yandex Web-console удалить bucket. Но, если файл туда уже загружен, то удаяляя фал (объект) его через Yandex Web-Console (и Вы не приостановили версионирование преждевременно) Вы только добавляете маркер удаления. (Можно сделать и через Web-консоль включив переключатеь (в верху UI))
 
 * Вывести версии объектов в S3 bucket:
 ```bash
@@ -402,5 +402,5 @@ aws dynamodb delete-item \
   --endpoint $endpoint \
   --profile ${AWS_PROFILE} \
   --table-name {YDB_TABLE_NAME} \
-  --key '{ "LockID": {"S": "string"}}'
+  --key '{ "LockID": {"S": "${string}"}}'
 ```

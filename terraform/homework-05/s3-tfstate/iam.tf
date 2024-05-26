@@ -23,7 +23,7 @@ resource "yandex_iam_service_account" "newly_created_s3_user" {
 
 resource "yandex_resourcemanager_folder_iam_member" "s3_sa_user" {
   folder_id = var.folder_id
-  role      = "storage.editor" # IF Deleteion of objects is not needed, storage.uploader may be used
+  role      = "storage.uploader"
   member    = "serviceAccount:${local.user_id}"
 }
 
