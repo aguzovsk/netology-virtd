@@ -75,12 +75,13 @@ resource "terraform_data" "dynamodb_table" {
   }
 
   provisioner "local-exec" {
-    when    = destroy
-    command = <<EOT
+    when       = destroy
+    on_failure = continue
+    command    = <<EOT
       export AWS_ACCESS_KEY_ID=${self.input.access_key}
       export AWS_SECRET_ACCESS_KEY=${nonsensitive(self.input.secret_key)}
       aws dynamodb delete-table \
-        --table-name ${self.input.table_name}
+        --table-name ${self.input.table_name} \
         --endpoint ${self.input.doc_api_endpoint} \
         --region ru-central1
     EOT
