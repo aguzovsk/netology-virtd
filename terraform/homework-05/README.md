@@ -188,6 +188,29 @@ docker run --rm -v "$(pwd)/homework-05/s3-tfstate:/tflint" --workdir /tflint ghc
 ![coalesce-bug](./items/console-coalesce-bug.png)
 </details>
 
+### Дополнение:
+
+Обновление до terraform v1.8.4:
+1. Запущен homework-05/s3-tfstate как remote state s3 backend
+2. Запущен homework-04/vpc как отдельный root-модуль с remote state backend из предыдущего пункта
+3. Запущен homework-04/other, кроме (были закоментированы в коде):
+    * 2_vpc (simple_vpc), т.к. уже создан VPC
+    * s3 module (terraform-yc-s3), т.к. ещё не сгенерирован static_key для service account
+4. После выполнения homework-04/other был сгенерирован static access key и был запущен s3 module (terraform-yc-s3) - раскоментирован.
+
+<details>
+<summary>Скриншот выполненного пункта 3.</summary>
+
+![full screenshot](./items/Task3-hw04-other-except-s3.png)
+</details>
+
+<details>
+<summary>Скриншот выполненного пункта 4.</summary>
+
+![screenshot](./items/Task3-hw04-other-s3.png)
+</details>
+
+Поведение **coalesce** такое же как и в v1.5.7 
 
 
 ## Задание 4+5.

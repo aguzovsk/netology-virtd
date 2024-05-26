@@ -124,18 +124,20 @@ resource "terraform_data" "user_setup" {
 
       cat <<EOF > ${local.user_info_file}
       backend "s3" {
+        endpoints = {
+          dynamodb = "${yandex_ydb_database_serverless.ydb-lock-db.document_api_endpoint}"
+          s3       = "https://storage.yandexcloud.net"
+        }
+
         profile                     = "${var.aws_profile_user}"
-        dynamodb_endpoint           = "${yandex_ydb_database_serverless.ydb-lock-db.document_api_endpoint}"
         ${var.is_aws_cli_installed ? "dynamodb_table = \"${var.ydb_table_name}\"" : "# dynamodb_table = SHOULD BE CREATED  BY YOURSELF"}
         bucket                      = "${yandex_storage_bucket.tfstate.bucket}"
-
         key                         = "${var.path_to_tfstate}"
-        endpoint                    = "storage.yandexcloud.net"
         region                      = "ru-central1"
         skip_region_validation      = true
         skip_credentials_validation = true
-        # skip_requesting_account_id  = true # This option is required for Terraform 1.6.1 or higher.
-        # skip_s3_checksum            = true # This option is required to describe backend for Terraform version 1.6.3 or higher.
+        skip_requesting_account_id  = true # This option is required for Terraform 1.6.1 or higher.
+        skip_s3_checksum            = true # This option is required to describe backend for Terraform version 1.6.3 or higher.
       }
       EOF
     EOT
@@ -192,15 +194,18 @@ resource "terraform_data" "viewer_setup" {
       data "terraform_remote_state" "example_name" {
         backend = "s3"
         config = {
+          endpoints = {
+            s3 = "https://storage.yandexcloud.net"
+          }
+
           profile                     = "${var.aws_profile_viewer}"
           bucket                      = "${yandex_storage_bucket.tfstate.bucket}"
 
           key                         = "${var.path_to_tfstate}"
-          endpoint                    = "storage.yandexcloud.net"
           region                      = "ru-central1"
           skip_region_validation      = true
           skip_credentials_validation = true
-          # skip_requesting_account_id  = true # This option is required for Terraform 1.6.1 or higher.
+          skip_requesting_account_id  = true # This option is required for Terraform 1.6.1 or higher.
           # skip_s3_checksum            = true # This option is required to describe backend for Terraform version 1.6.3 or higher.
         }
       }

@@ -56,7 +56,7 @@ variable "security_group_egress" {
 
 
 resource "yandex_vpc_security_group" "example" {
-  name       = "example_dynamic"
+  name       = "mysql_cluster_sg"
   network_id = var.network_id
 
   dynamic "ingress" {
