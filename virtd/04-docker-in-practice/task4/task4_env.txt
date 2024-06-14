@@ -1,0 +1,4 @@
+REPOSITORY=netology-devops
+BRANCH=virtd-docker-compose
+SUB_PATH=virtd/04-docker-in-practice
+YC_REGISTRY=crpmmsq6qng5c84uugl8

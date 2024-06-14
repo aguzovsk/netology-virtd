@@ -1,0 +1,30 @@
+FROM python:3.9-slim AS builder
+ARG src_folder=shvirtd-example-python
+WORKDIR /app
+
+# hadolint ignore=DL3008
+RUN apt-get update && apt-get upgrade -y && \
+  apt-get install -y --no-install-recommends curl && \
+  apt-get clean
+
+RUN python -m venv /app/venv
+ENV PATH="/app/venv/bin:$PATH"
+
+COPY $src_folder/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+
+
+FROM python:3.9-slim AS worker
+ARG src_folder
+WORKDIR /app
+
+RUN addgroup --system python && \
+    adduser --system --disabled-password  --ingroup python python && chown python:python /app
+USER python
+
+COPY --chown=python:python --from=builder /app/venv ./venv
+COPY --chown=python:python $src_folder/main.py .
+
+ENV PATH="/app/venv/bin:$PATH"
+CMD ["python", "main.py"]

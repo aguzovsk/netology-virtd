@@ -1,0 +1,6 @@
+# ignore python virtual environment
+venv*/
+# ignore task5 credentials
+task5_env.txt
+# ignore task7 working space for the time being
+task7/

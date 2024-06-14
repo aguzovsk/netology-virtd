@@ -1,0 +1,36 @@
+include:
+  - shvirtd-example-python/proxy.yaml
+services:
+  web:
+    image: cr.yandex/${YC_REGISTRY}/web-app-image:latest
+    container_name: web-app
+    restart: always
+    environment:
+      - DB_HOST=db
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_USER=${DB_USER}
+      - DB_NAME=${DB_NAME}
+    networks:
+      backend:
+        ipv4_address: 172.20.0.5
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: mysql:8
+    # For Task 5 purposes
+    command:
+      - "--mysql-native-password=ON"
+    restart: on-failure
+    container_name: db
+    networks:
+      backend:
+        ipv4_address: 172.20.0.10
+    env_file: shvirtd-example-python/.env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 2m
+      start_interval: 10s

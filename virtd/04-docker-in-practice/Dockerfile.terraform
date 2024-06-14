@@ -1,0 +1,6 @@
+# Run with DOCKER_BUILDKIT
+FROM hashicorp/terraform:latest AS initial
+RUN touch /bin/terraform
+
+FROM scratch
+COPY --from=initial /bin/terraform .
