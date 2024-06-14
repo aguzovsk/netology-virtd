@@ -3,6 +3,9 @@
 
 ## Задание 1.
 
+<details>
+<summary>Fork</summary>
+
 Сделал "Fork" через `git submodule` чтобы не нагромождать репозитории в GitHub аккаунте
 ```bash
 # from virtd/04-docker-in-practice
@@ -11,6 +14,10 @@ git submodule add git@github.com:netology-code/shvirtd-example-python.git
 # cd shvirtd-example-python
 # git checkout ecccb386d0ecaf0eaca8e993ed35473f7ad73f28
 ```
+</details>
+
+<details>
+<summary>Создание образа web-app</summary>
 
 ```bash
 docker build . \
@@ -24,7 +31,10 @@ docker build . \
 ```bash
 docker run --rm -i hadolint/hadolint < Dockerfile.python
 ```
+</details>
 
+<details>
+<summary>Запуск MySQL БД в контейнере</summary>
 
 В первом окне терминала
 ```bash
@@ -49,7 +59,10 @@ docker inspect db | jq '.[] | .Config.Env'
 Несмотря на то, что Flask запускается относительно долго, использую health check MySQL БД, т.к. первой командой в python-скрипте (main.py) идёт не запуск Flask, а присоединение к БД (mysql.connector.connect) и создание там таблицы, поэтому, чтобы не было ошибки присоединения к БД, жду её полного запуска.\
 [Docker docs healthcheck](https://docs.docker.com/reference/dockerfile/#healthcheck)\
 Mysql пример [health ckeck](https://github.com/docker-library/mysql/issues/930#issuecomment-1463541157)
+</details>
 
+<details>
+<summary>Запуск Python-приложения в virtual environment</summary>
 
 Установка Python (Ubuntu):
 ```bash
@@ -79,6 +92,7 @@ curl -X GET \
   --header "X-Forwarded-For: 256.256.256.256" \
   http://localhost:5000
 ```
+</details>
 
 
 ## Задание 2.
@@ -224,8 +238,6 @@ curl -X GET \
 
 ## Задание 4.
 
-TO DO: Remote context + 5th show sqldumps
-
 <details>
 <summary><h3>YC CLI VM</h3></summary>
 
@@ -292,20 +304,6 @@ yc vpc network delete --name $NETWORK_NAME
 ```
 </details>
 
-Remote context:
-
-```bash
-docker context ls
-docker context create yc-remote --docker "host=ssh://yc-user@84.201.163.139"
-docker context ls
-docker --context yc-remote ps
-docker context use yc-remote
-docker ps -a
-echo "SHOW DATABASES; USE virtd; SHOW TABLES; SELECT * FROM requests;" | docker exec -i db mysql -uroot -pYtReWq4321
-docker context use default
-docker context remove yc-remote
-```
-
 Файлы:
 * [task4_init.sh](./task4/task4_init.sh)
 * [task4.sh](./task4/task4.sh)
@@ -328,6 +326,30 @@ docker context remove yc-remote
 * Результат SQL-запроса
 ![SQL query](./items/Task4-SQL.png)
 </details>
+
+<details>
+<summary><h3>Remote context</h3></summary>
+
+```bash
+docker context ls
+docker context create yc-remote --docker "host=ssh://yc-user@${IP_ADDRESS}"
+docker context ls
+docker --context yc-remote ps
+docker context use yc-remote
+docker ps -a
+echo "SHOW DATABASES; USE virtd; SHOW TABLES; SELECT * FROM requests;" | docker exec -i db mysql -uroot -pYtReWq4321
+docker context use default
+docker context remove yc-remote
+```
+
+<details>
+<summary>Скриншот</summary>
+
+![remote-context](./items/Task4-remote-context.png)
+</details>
+
+</details>
+
 
 <details>
 <summary><h3>Misc</h3></summary>
