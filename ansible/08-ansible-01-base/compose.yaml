@@ -1,0 +1,33 @@
+services:
+  centos:
+    image: centos/python-38-centos7:latest
+    container_name: centos7
+    # network_mode: host
+    networks:
+    - internal-net
+    command: &indefinite_run
+    - "tail"
+    - "-f"
+    - "/dev/null"
+  ubuntu:
+    build:
+      context: .
+      dockerfile: Dockerfile.ubuntu
+    container_name: ubuntu
+    # network_mode: host
+    networks:
+    - internal-net
+    command: *indefinite_run
+  fedora:
+    image: fedora:latest
+    container_name: my-fedora
+    networks:
+    - internal-net
+    command: *indefinite_run
+
+networks:
+  internal-net:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.23.0.0/24
