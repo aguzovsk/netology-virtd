@@ -1,0 +1,18 @@
+---
+# handlers file for lighthouse-role\
+- name: Reload nginx
+  become: true
+  ansible.builtin.service:
+    name: nginx
+    enabled: true
+    state: reloaded
+  listen: reload nginx
+- name: Ensure nginx service is active
+  become: true
+  ansible.builtin.service:
+    name: nginx
+    state: started
+  listen: reload nginx
+  when: ansible_distribution != "Alpine"
+  # Works incorrectly on Alpine - tries to start again
+  

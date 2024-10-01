@@ -1,0 +1,42 @@
+---
+# tasks file for lighthouse-role
+- name: Install required packages [nginx, git]
+  become: true
+  ansible.builtin.package:
+    name:
+      - git
+      - nginx
+      - vim
+    state: present
+
+- name: Create folder for lighthouse
+  become: true
+  ansible.builtin.file:
+    path: "{{ lighthouse_dir }}"
+    state: directory
+    owner: "{{ lighthouse_user }}"
+    group: "{{ lighthouse_user }}"
+    mode: "751"
+
+- name: Clone Lighthouse repository
+  ansible.builtin.git:
+    repo: https://github.com/VKCOM/lighthouse.git
+    dest: "{{ lighthouse_dir }}"
+
+- name: Ensure default OS directory and user structure exists
+  become: true
+  ansible.builtin.import_tasks: nginx-os-default.yaml
+
+- name: Copy nginx.conf
+  become: true
+  ansible.builtin.template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+
+
+- name: Copy nginx configuration lighthouse for nginx
+  # become: true
+  ansible.builtin.template:
+    src: lighthouse-nginx.conf
+    dest: /etc/nginx/conf.d/lighthouse-nginx.conf
+  notify: reload nginx

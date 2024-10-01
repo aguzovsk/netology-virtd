@@ -1,0 +1,6 @@
+---
+# defaults file for lighthouse-role
+lighthouse_user: "{{ ansible_user }}"
+lighthouse_dir: /opt/lighthouse
+nginx_port: 8090
+nginx_user: nginx

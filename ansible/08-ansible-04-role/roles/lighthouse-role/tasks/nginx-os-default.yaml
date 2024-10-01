@@ -1,0 +1,28 @@
+# Nginx on Alpine OS will not create it
+- name: Ensure /etc/nginx/conf.d exists and is writable
+  become: true
+  ansible.builtin.file:
+    path: /etc/nginx/conf.d
+    state: directory
+    mode: "777"
+
+# NOTE: Debian and Ubuntu OS does not create nginx user
+# So, we must ensure that it exists
+- name: Ensure nginx group exists
+  become: true
+  ansible.builtin.group:
+    name: "{{ nginx_user }}"
+    system: true
+    state: present
+
+
+- name: Create nginx user
+  become: true
+  ansible.builtin.user:
+    create_home: false
+    group: "{{ nginx_user }}"
+    name: "{{ nginx_user }}"
+    system: true
+    password_lock: true
+    shell: /sbin/nologin
+    state: present
