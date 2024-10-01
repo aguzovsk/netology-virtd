@@ -1,0 +1,11 @@
+---
+  %{~ for group_name, group_data in groups ~}
+${group_name}:
+  hosts:
+  %{~ for idx, ipv4 in group_data.ips ~}
+    ${group_name}-${format("%02d", idx + 1)}:
+      ansible_host: ${ipv4}
+      ansible_ssh_user: ${group_data.user}
+      ansible_ssh_private_key_file: ${group_data.ssh_key_path}
+  %{~ endfor ~}
+  %{~ endfor ~}

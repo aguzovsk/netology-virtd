@@ -1,0 +1,58 @@
+---
+- name: "[Play] Install Clickhouse"
+  hosts: clickhouse
+  handlers:
+    - name: restart clickhouse
+      become: true
+      ansible.builtin.service:
+        name: clickhouse-server
+        state: restarted
+  pre_tasks:
+    - name: Set up TLS for Clickhouse
+      become: true
+      ansible.builtin.import_tasks: "tasks/clickhouse-tls.yaml"
+  roles:
+    - role: clickhouse
+  tasks:
+    - name: "[Config] Add caConfig to config.xml"
+      become: true
+      ansible.builtin.lineinfile:
+        path: /etc/clickhouse-server/config.d/config.xml
+        search_string: '^\s*<caConfig>'
+        insertafter: '^(\s*)<dhParamsFile>'
+        line: "\t\t<caConfig>{{ cert_path }}/ca_cert.crt</caConfig>"
+      # Be aware, it will always invoke handler,
+      # since clickhouse role will always regenerate config file,
+      # regardless of whether input data (vars) were changed or not.
+      notify: restart clickhouse
+
+    - name: "Create table in clickhouse"
+      ansible.builtin.command: |
+        clickhouse-client -q "CREATE TABLE logs.datadog (
+          appname String NOT NULL,
+          facility String NOT NULL,
+          hostname String NOT NULL,
+          message String NOT NULL,
+          msgid String NOT NULL,
+          procid UInt32 NOT NULL,
+          severity Enum8('debug' = 1, 'info', 'notice', 'warning', 'err', 'crit', 'alert', 'emerg'),
+          timestamp DateTime64 NOT NULL,
+          version UInt8 NOT NULL
+        ) ENGINE Log"
+      register: create_table
+      failed_when: create_table.rc != 0 and create_table.rc != 57
+      changed_when: create_table.rc == 0
+
+
+- name: "[Play] Install vector"
+  hosts: vector
+  vars:
+    clickhouse_port: 8443
+    clickhouse_connection: "https"
+  roles:
+    - role: vector-role
+
+- name: "[Play] Install Lighthouse"
+  hosts: lighthouse
+  roles:
+    - role: lighthouse-role

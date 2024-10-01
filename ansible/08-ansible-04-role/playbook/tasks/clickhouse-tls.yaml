@@ -1,0 +1,124 @@
+---
+- name: Create clickhouse group
+  ansible.builtin.group:
+    name: clickhouse
+    system: true
+    state: present
+
+
+- name: Create clickhouse user
+  ansible.builtin.user:
+    create_home: false
+    group: clickhouse
+    name: clickhouse
+    system: true
+    password_lock: true
+    shell: /bin/false
+    state: present
+
+- name: Create directory for server certificates
+  ansible.builtin.file:
+    path: "{{ cert_path }}"
+    state: directory
+    mode: "755"
+    owner: clickhouse
+    group: clickhouse
+    force: true
+# - name: Create directory for client certificates
+- name: Copy Diffie-Helman .pem file
+  ansible.builtin.copy:
+    src: dhparam.pem
+    dest: "{{ cert_path }}"
+    owner: clickhouse
+    group: clickhouse
+
+
+- name: Install python3-cryptography
+  ansible.builtin.package:
+    name: python3-cryptography
+
+- name: "[CA] — Generate Certificate Authority private key"
+  community.crypto.openssl_privatekey:
+    path: "{{ cert_path }}/ca_private.key"
+
+- name: "[CA] — Create certificate signing request (CSR) for CA certificate"
+  community.crypto.openssl_csr_pipe:
+    privatekey_path: "{{ cert_path }}/ca_private.key"
+    common_name: Clickhouse private CA
+    use_common_name_for_san: false
+    basic_constraints: # must be specified
+      - 'CA:TRUE'
+    key_usage:
+      - keyCertSign
+    key_usage_critical: true
+  register: ca_csr
+  check_mode: false
+
+- name: "[CA] — Create self-signed CA certificate from CSR"
+  community.crypto.x509_certificate:
+    path: "{{ cert_path }}/{{ ca_cert_name }}.crt"
+    csr_content: "{{ ca_csr.csr }}"
+    privatekey_path: "{{ cert_path }}/ca_private.key"
+    provider: selfsigned
+
+- name: "[CA] — Copy CA certificate to master host"
+  ansible.builtin.fetch:
+    src:  "{{ cert_path }}/{{ ca_cert_name }}.crt"
+    dest: "{{ master_ca_cert_root }}" # group_vars: all
+- name: "[CA] — Hard link CA certificate to ansible_user"
+  ansible.builtin.file:
+    src:  "{{ cert_path }}/{{ ca_cert_name }}.crt"
+    path: "/home/{{ ansible_user }}/ca_cert.crt"
+    state: "hard"
+
+- name: "[User] — Create clickhouse-client directory"
+  ansible.builtin.file:
+    state: directory
+    path: "/home/{{ ansible_user }}/.clickhouse-client"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "755"
+- name: "[User] — Configure clickhouse-client TSL connection"
+  ansible.builtin.copy:
+    src: clickhouse-client.xml
+    dest: "/home/{{ ansible_user }}/.clickhouse-client/config.xml"
+
+- name: "[Server] – Generate Server private key (RSA 4096 bit)"
+  community.crypto.openssl_privatekey:
+    path: "{{ cert_path }}/server.key"
+    type: RSA
+    size: 4096
+  no_log: true
+
+- name: "[Server] — Create server Certificate Signing Request"
+  community.crypto.openssl_csr_pipe:
+    privatekey_path: "{{ cert_path }}/server.key"
+    common_name: "{{ ansible_hostname }}"
+    subject_alt_name:
+      - "IP:{{ ansible_host }}"
+      - "IP:127.0.1.1"
+      - "IP:127.0.0.1"
+      - "DNS:{{ inventory_hostname }}"
+      - "DNS:{{ ansible_fqdn }}"
+  register: server_csr
+  check_mode: false
+
+- name: "[Server] — Create server signed certificate"
+  community.crypto.x509_certificate:
+    path: "{{ cert_path }}/server.crt"
+    privatekey_path: "{{ cert_path }}/server.key"
+    csr_content: "{{ server_csr.csr }}"
+    provider: ownca
+    ownca_path: "{{ cert_path }}/{{ ca_cert_name }}.crt"
+    ownca_privatekey_path: "{{ cert_path }}/ca_private.key"
+    ownca_not_after: +365d  # valid for one year
+    ownca_not_before: "-1d"  # valid since yesterday
+    # ownca_privatekey_passphrase: "{{ secret_ca_passphrase }}"
+
+- name: "[Server + CA] Change keys ownership"
+  ansible.builtin.file:
+    path: "{{ cert_path }}"
+    owner: clickhouse
+    group: clickhouse
+    recurse: true
+

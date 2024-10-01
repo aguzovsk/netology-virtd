@@ -1,0 +1,77 @@
+# network:
+#   version: 2
+#   ethernets:
+#     eth0: # Only eth0 is working with LXD, regardless of profile/device
+#       dhcp4: no
+#       addresses:
+#       - ${ip_address}
+#       # Deprecated in 22.4 and scheduled to be removed in 27.4
+#       # Debian 13 will not work with it, despite only warning
+#       # gateway4: ${gateway_and_dns}
+#       routes:
+#       - to: 0.0.0.0/0
+#         via: ${gateway_and_dns}
+#       # set-name: my-net-interface # doesn't work
+#       %{~ if os == "debian" || os == "opensuse" ~}
+#       nameservers:
+#         addresses:
+#         - ${gateway_and_dns}
+#         search:
+#           - .
+#       %{~ endif ~}
+
+# Fedora 40 need version 1 + interface name + enp5s0 + nameserver must be set
+network:
+  version: 1
+  config:
+    - type: physical
+      name: enp5s0 # virtual machines use this interface
+      subnets:
+        - type: dhcp6
+        - type: static
+          ipv4: true
+          address: ${ip_address}
+          # netmask: ${cidrnetmask(ip_address)}
+          # gateway: ${gateway_and_dns}
+          control: auto
+          dns_nameservers:
+            - ${gateway_and_dns}
+          dns_search:
+            - .
+          routes:
+            - gateway: ${gateway_and_dns}
+              netmask: ${cidrnetmask(ip_address)}
+              network: ${cidrsubnet(ip_address, 0, 0)}
+            - gateway: ${gateway_and_dns}
+              netmask: 0.0.0.0
+              network: 0.0.0.0/0
+    - type: physical
+      name: eth0 # alpine vm use this interface
+      subnets:
+        - type: dhcp6
+        - type: static
+          ipv4: true
+          address: ${ip_address}
+          # netmask: ${cidrnetmask(ip_address)}
+          # gateway: ${gateway_and_dns}
+          control: auto
+          dns_nameservers:
+            - ${gateway_and_dns}
+          dns_search:
+            - .
+          routes:
+            - gateway: ${gateway_and_dns}
+              netmask: ${cidrnetmask(ip_address)}
+              network: ${cidrsubnet(ip_address, 0, 0)}
+            - gateway: ${gateway_and_dns}
+              netmask: 0.0.0.0
+              network: 0.0.0.0/0
+         
+    # - type: route
+    #   destination: 0.0.0.0/0
+    #   gateway: ${gateway_and_dns}
+    # - type: nameserver
+    #   address:
+    #     - ${gateway_and_dns}
+    #   search:
+    #     - .

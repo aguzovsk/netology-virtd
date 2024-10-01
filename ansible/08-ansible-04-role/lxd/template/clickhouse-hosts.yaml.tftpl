@@ -1,0 +1,4 @@
+clickhouse_hosts:
+  %{~ for ipv4 in clickhouse_ips ~}
+  - ${ipv4}
+  %{~ endfor ~}

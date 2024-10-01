@@ -1,0 +1,22 @@
+<!--
+Can be either:
+1. ./clickhouse-client.xml (i.e. folder from whenre we call clickhouse-client)
+2. ~/.clickhouse-client/config.xml
+-->
+
+<config>
+    <secure>1</secure>
+    <openSSL>
+        <client>
+            <loadDefaultCAFile>true</loadDefaultCAFile>
+            <caConfig>./ca_cert.crt</caConfig>
+            <cacheSessions>true</cacheSessions>
+            <disableProtocols>sslv2,sslv3</disableProtocols>
+            <preferServerCiphers>true</preferServerCiphers>
+            <verification_mode>strict</verification_mode>
+            <invalidCertificateHandler>
+                <name>RejectCertificateHandler</name>
+            </invalidCertificateHandler>
+        </client>
+    </openSSL>
+</config>

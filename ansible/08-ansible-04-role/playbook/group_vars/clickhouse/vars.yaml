@@ -1,0 +1,36 @@
+# cert_path: "/etc/clickhouse-server/certs"
+# clickhouse_repo_key: "https://packages.clickhouse.com/rpm/lts/repodata/repomd.xml.key"
+clickhouse_listen_host:
+  - "::"
+clickhouse_users_custom:
+  - { name: "vector",
+    password_sha256_hex: "2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b",
+    networks: { 192.168.61.0/24 },
+    profile: "default",
+    quota: "default",
+    dbs: [ logs ] ,
+    comment: "user for vector logs" }
+  - { name: "lighthouse",
+    password_sha256_hex: "2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b",
+    networks: { 192.168.61.0/24 },
+    profile: "default",
+    # profile: "readonly", # --> is not suitable for Lighthouse, you will get errors
+    # got status 500, error text: Code: 164. DB::Exception: Cannot modify 'readonly' setting in readonly mode. (READONLY) 
+    quota: "default",
+    dbs: [ logs ] ,
+    comment: "user for lighthouse logs" }
+clickhouse_dbs_custom:
+  - name: logs
+clickhouse_ssl_server:
+  certificate_file: "{{ cert_path }}/server.crt"
+  private_key_file: "{{ cert_path }}/server.key"
+  dh_params_file: "{{ cert_path }}/dhparam.pem"
+  verification_mode: "none"
+  load_default_ca_file: "true"
+  cache_sessions: "true"
+  disable_protocols: "sslv2,sslv3"
+  prefer_server_ciphers: "true"
+  ca_config: "{{ cert_path }}/ca-cert.crt"
+clickhouse_https_port: 8443
+clickhouse_tcp_secure_port: 9440
+clickhouse_interserver_https: 9010

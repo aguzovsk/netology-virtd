@@ -1,0 +1,59 @@
+---
+clickhouse:
+  hosts:
+    clickhouse-01:
+      ansible_host: 192.168.61.11
+      ansible_ssh_user: some
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub
+lighthouse:
+  hosts:
+    lighthouse-01:
+      ansible_host: 192.168.61.41
+      ansible_ssh_user: lighthouse
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub
+    lighthouse-02:
+      ansible_host: 192.168.61.42
+      ansible_ssh_user: lighthouse
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub
+    lighthouse-03:
+      ansible_host: 192.168.61.43
+      ansible_ssh_user: lighthouse
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub
+    lighthouse-04:
+      ansible_host: 192.168.61.44
+      ansible_ssh_user: lighthouse
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub
+    lighthouse-05:
+      ansible_host: 192.168.61.45
+      ansible_ssh_user: lighthouse
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub
+    lighthouse-06:
+      ansible_host: 192.168.61.46
+      ansible_ssh_user: lighthouse
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub
+vector:
+  hosts:
+    vector-01:
+      ansible_host: 192.168.61.21
+      ansible_ssh_user: vector
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub
+    vector-02:
+      ansible_host: 192.168.61.22
+      ansible_ssh_user: vector
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub
+    vector-03:
+      ansible_host: 192.168.61.23
+      ansible_ssh_user: vector
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub
+    vector-04:
+      ansible_host: 192.168.61.24
+      ansible_ssh_user: vector
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub
+    vector-05:
+      ansible_host: 192.168.61.25
+      ansible_ssh_user: vector
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub
+    vector-06:
+      ansible_host: 192.168.61.26
+      ansible_ssh_user: vector
+      ansible_ssh_private_key_file: ~/.ssh/yandex-vm.pub

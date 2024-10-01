@@ -1,0 +1,4 @@
+ca_cert_name: "ca_cert"
+cert_path: "/etc/clickhouse-server/certs"
+master_ca_cert_root: "~/clickhouse-tls"
+master_ca_cert_path:  "{{ master_ca_cert_root }}/clickhouse-01/{{ cert_path }}/{{ ca_cert_name }}.crt"
