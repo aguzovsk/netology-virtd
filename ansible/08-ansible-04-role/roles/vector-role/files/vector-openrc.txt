@@ -1,0 +1,7 @@
+#!/sbin/openrc-run
+
+command="/bin/vector"
+command_args="--config-dir /etc/vector"
+pidfile="/run/datadog-vector.pid"
+command_background=true
+capabilities="cap_net_bind_service"

@@ -1,0 +1,22 @@
+---
+save_at: /opt/binaries
+vector_user: "{{ ansible_user }}"
+clickhouse_connection: http
+clickhouse_port: 8123
+clickhouse_db: "logs"
+clickhouse_table: "datadog"
+clickhouse_user: "{{ ansible_user }}"
+vector_version: latest
+
+
+arch_classic:
+  x86_64: amd64
+  amd64: amd64
+  aarch64: arm64
+  arm64: arm64
+
+arch_reverse:
+  x86_64: x86_64
+  amd64: x86_64
+  aarch64: aarch64
+  arm64: aarch64

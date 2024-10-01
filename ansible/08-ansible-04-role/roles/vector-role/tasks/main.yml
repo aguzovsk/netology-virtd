@@ -1,0 +1,54 @@
+---
+# tasks file for vector-role
+- name: Assert necessary variables are set
+  ansible.builtin.fail:
+    msg: "Variable {{ item }} has not been provided!"
+  when: vars[item] is undefined
+  loop:
+    - clickhouse_hosts
+    - clickhouse_connection
+    - clickhouse_port
+    - clickhouse_db
+    - clickhouse_table
+    - clickhouse_user
+    - clickhouse_password
+
+- name: Create download folder
+  become: true
+  ansible.builtin.file:
+    path: "{{ save_at }}"
+    state: directory
+    mode: "755"
+    owner: "{{ vector_user }}" # "{{ ansible_user_id }}"
+    group: "{{ vector_user }}"
+
+- name: Install vector
+  ansible.builtin.include_tasks: "install/{{ ansible_os_family }}.yaml"
+
+- name: Copy Clickhouse CA (Certificate Authority) certificate
+  become: true
+  ansible.builtin.copy:
+    src: "{{ master_ca_cert_path }}"
+    dest: "/etc/vector/ca_cert.crt"
+    owner: "{{ vector_user }}"
+    group: "{{ vector_user }}"
+    mode: "444"
+  when: master_ca_cert_path is defined
+
+- name: Change vector directory permission
+  become: true
+  ansible.builtin.file:
+    path: /etc/vector
+    state: directory
+    mode: "751"
+    owner: "{{ vector_user }}"
+    owner: "{{ vector_user }}"
+
+- name: Configuring Vector using template
+  ansible.builtin.template:
+    src: vector.yaml.j2
+    dest: /etc/vector/vector.yaml
+    owner: "{{ vector_user }}"
+    group: "{{ vector_user }}"
+    mode: "644"
+  notify: Start vector service

@@ -1,0 +1,55 @@
+#                                    __   __  __
+#                                    \ \ / / / /
+#                                     \ V / / /
+#                                      \_/  \/
+#
+#                                    V E C T O R
+#                                   Configuration
+#
+# ------------------------------------------------------------------------------
+# Website: https://vector.dev
+# Docs: https://vector.dev/docs
+# Chat: https://chat.vector.dev
+# ------------------------------------------------------------------------------
+
+# Change this to use a non-default directory for Vector data storage:
+# data_dir: "/var/lib/vector"
+
+# Random Syslog-formatted logs
+sources:
+  dummy_logs:
+    type: "demo_logs"
+    format: "syslog"
+    interval: 12
+
+# Parse Syslog logs
+# See the Vector Remap Language reference for more info: https://vrl.dev
+transforms:
+  parse_logs:
+    type: "remap"
+    inputs: ["dummy_logs"]
+    source: |
+      . = parse_syslog!(.message)
+      . |= set!(value: ., path: ["hostname"], data: get_hostname!())
+      .timestamp = format_timestamp!(.timestamp, "%F %T%.3f")
+
+sinks:
+{% for clc_host in clickhouse_hosts %}
+  clickhouse-{{ loop.index }}:
+    type: clickhouse
+    inputs:
+      - parse_logs
+    endpoint: {{ clickhouse_connection }}://{{ clc_host }}:{{ clickhouse_port }}
+    database: {{ clickhouse_db }}
+    table: {{ clickhouse_table }}
+    batch:
+      timeout_secs: 12
+    auth:
+      strategy: "basic"
+      user: {{ clickhouse_user }}
+      password: {{ clickhouse_password }}
+    {% if master_ca_cert_path is defined -%}
+    tls:
+      ca_file: /etc/vector/ca_cert.crt
+    {% endif %}
+{% endfor %}
