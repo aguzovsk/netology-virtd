@@ -1,0 +1,2331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="../../../../css-styles/terminal.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>lighthouse-role: molecule test -s generic-podman</title>
+</head>
+<body class="terminal-body">
+  <pre class="terminal-pre terminal-line ubuntu-mono-regular">
+(venv-12) <font color="#26A269"><b>user@xyz</b></font>:<font color="#12488B"><b>lighthouse-role</b></font>$ molecule test -s generic-podman
+<font color="#C01C28">WARNING </font> Driver podman does not provide a schema.
+<font color="#12488B">INFO    </font> generic-podman scenario test matrix: dependency, destroy, syntax, create, prepare, converge, idempotence, verify, cleanup, destroy
+<font color="#12488B">INFO    </font> Performing prerun with <font color="#A2734C">role_name_check</font>=<font color="#2AA1B3"><b>1</b></font><font color="#A2734C">...</font>
+<font color="#C01C28">WARNING </font> Computed fully qualified role name of lighthouse-role does not follow current galaxy requirements.
+Please edit meta/main.yml and assure we can correctly determine full role name:
+
+galaxy_info:
+role_name: my_name  # if absent directory name hosting role is used instead
+namespace: my_galaxy_namespace  # if absent, author is used instead
+
+Namespace: <font color="#2A7BDE"><u style="text-decoration-style:solid">https://galaxy.ansible.com/docs/contributing/namespaces.html#galaxy-namespace-limitations</u></font>
+Role: <font color="#2A7BDE"><u style="text-decoration-style:solid">https://galaxy.ansible.com/docs/contributing/creating_role.html#role-names</u></font>
+
+As an alternative, you can add <font color="#26A269">&apos;role-name&apos;</font> to either skip_list or warn_list.
+
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">generic-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">dependency</font>
+Starting galaxy role install process
+- clickhouse (1.13) is already installed, skipping.
+- vector-role (ansible-vector-role) is already installed, skipping.
+<font color="#12488B">INFO    </font> Dependency completed successfully.
+<font color="#C01C28">WARNING </font> Skipping, missing the requirements file.
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">generic-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">destroy</font>
+<font color="#12488B">INFO    </font> Sanity checks: <font color="#26A269">&apos;podman&apos;</font>
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Destroy molecule instance(s)] ********************************************
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;capabilities&apos;: [&apos;CAP_SYS_NICE&apos;], &apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;extra_opts&apos;: [&apos;--pids-limit=-1&apos;, &apos;--memory=2G&apos;, &apos;--memory-swap=4G&apos;, &apos;--ipc=private&apos;], &apos;groups&apos;: [&apos;clickhouse&apos;], &apos;image&apos;: &apos;debian:latest&apos;, &apos;ip&apos;: &apos;192.168.62.210&apos;, &apos;name&apos;: &apos;clickhouse-generic-podman-lighthouse&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;subnet&apos;: &apos;192.168.62.208/28&apos;, &apos;systemd&apos;: &apos;always&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;vector&apos;], &apos;hostname&apos;: &apos;lighthouse-generator-generic-podman&apos;, &apos;image&apos;: &apos;registry.access.redhat.com/ubi9/ubi-init&apos;, &apos;ip&apos;: &apos;192.168.62.211&apos;, &apos;name&apos;: &apos;lighthouse-generator-generic-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;pre_build_image&apos;: True, &apos;systemd&apos;: &apos;always&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-tumbleweed-podman&apos;, &apos;image&apos;: &apos;opensuse/tumbleweed:latest&apos;, &apos;ip&apos;: &apos;192.168.62.213&apos;, &apos;name&apos;: &apos;lighthouse-tumbleweed-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-ubuntu-podman&apos;, &apos;image&apos;: &apos;ubuntu:latest&apos;, &apos;ip&apos;: &apos;192.168.62.214&apos;, &apos;name&apos;: &apos;lighthouse-ubuntu-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-stream9-podman&apos;, &apos;image&apos;: &apos;quay.io/centos/centos:stream9&apos;, &apos;ip&apos;: &apos;192.168.62.216&apos;, &apos;name&apos;: &apos;lighthouse-stream9-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-debian-podman&apos;, &apos;image&apos;: &apos;debian:latest&apos;, &apos;ip&apos;: &apos;192.168.62.217&apos;, &apos;name&apos;: &apos;lighthouse-debian-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-leap-podman&apos;, &apos;image&apos;: &apos;opensuse/leap:latest&apos;, &apos;ip&apos;: &apos;192.168.62.218&apos;, &apos;name&apos;: &apos;lighthouse-leap-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;})</font>
+
+TASK [Wait for instance(s) deletion to complete] *******************************
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j489938240157.929330&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j489938240157.929330&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;capabilities&apos;: [&apos;CAP_SYS_NICE&apos;], &apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;extra_opts&apos;: [&apos;--pids-limit=-1&apos;, &apos;--memory=2G&apos;, &apos;--memory-swap=4G&apos;, &apos;--ipc=private&apos;], &apos;groups&apos;: [&apos;clickhouse&apos;], &apos;image&apos;: &apos;debian:latest&apos;, &apos;ip&apos;: &apos;192.168.62.210&apos;, &apos;name&apos;: &apos;clickhouse-generic-podman-lighthouse&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;subnet&apos;: &apos;192.168.62.208/28&apos;, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j570682543222.929355&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j570682543222.929355&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;vector&apos;], &apos;hostname&apos;: &apos;lighthouse-generator-generic-podman&apos;, &apos;image&apos;: &apos;registry.access.redhat.com/ubi9/ubi-init&apos;, &apos;ip&apos;: &apos;192.168.62.211&apos;, &apos;name&apos;: &apos;lighthouse-generator-generic-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;pre_build_image&apos;: True, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j798086227670.929394&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j798086227670.929394&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-tumbleweed-podman&apos;, &apos;image&apos;: &apos;opensuse/tumbleweed:latest&apos;, &apos;ip&apos;: &apos;192.168.62.213&apos;, &apos;name&apos;: &apos;lighthouse-tumbleweed-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j838713167195.929434&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j838713167195.929434&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-ubuntu-podman&apos;, &apos;image&apos;: &apos;ubuntu:latest&apos;, &apos;ip&apos;: &apos;192.168.62.214&apos;, &apos;name&apos;: &apos;lighthouse-ubuntu-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j795078208901.929475&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j795078208901.929475&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-stream9-podman&apos;, &apos;image&apos;: &apos;quay.io/centos/centos:stream9&apos;, &apos;ip&apos;: &apos;192.168.62.216&apos;, &apos;name&apos;: &apos;lighthouse-stream9-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j454283283182.929516&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j454283283182.929516&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-debian-podman&apos;, &apos;image&apos;: &apos;debian:latest&apos;, &apos;ip&apos;: &apos;192.168.62.217&apos;, &apos;name&apos;: &apos;lighthouse-debian-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j223218651308.929556&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j223218651308.929556&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-leap-podman&apos;, &apos;image&apos;: &apos;opensuse/leap:latest&apos;, &apos;ip&apos;: &apos;192.168.62.218&apos;, &apos;name&apos;: &apos;lighthouse-leap-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+
+TASK [Delete podman network dedicated to this scenario] ************************
+<font color="#26A269">ok: [localhost] =&gt; (item=clickhouse-generic-podman-lighthouse: lighthouse-podman-generic)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-generator-generic-podman: lighthouse-podman-generic)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-tumbleweed-podman: lighthouse-podman-generic)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-ubuntu-podman: lighthouse-podman-generic)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-stream9-podman: lighthouse-podman-generic)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-debian-podman: lighthouse-podman-generic)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-leap-podman: lighthouse-podman-generic)</font>
+
+PLAY RECAP *********************************************************************
+<font color="#A2734C">localhost</font>                  : <font color="#26A269">ok=3   </font> <font color="#A2734C">changed=2   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">generic-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">syntax</font>
+
+playbook: /home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/lighthouse-role/molecule/resources/playbooks/converge.yml
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">generic-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">create</font>
+
+PLAY [Create] ******************************************************************
+
+TASK [Log into a container registry] *******************************************
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=&quot;clickhouse-generic-podman-lighthouse registry username: None specified&quot;) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=&quot;lighthouse-generator-generic-podman registry username: None specified&quot;) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=&quot;lighthouse-tumbleweed-podman registry username: None specified&quot;) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=&quot;lighthouse-ubuntu-podman registry username: None specified&quot;) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=&quot;lighthouse-stream9-podman registry username: None specified&quot;) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=&quot;lighthouse-debian-podman registry username: None specified&quot;) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=&quot;lighthouse-leap-podman registry username: None specified&quot;) </font>
+<font color="#2AA1B3">skipping: [localhost]</font>
+
+TASK [Check presence of custom Dockerfiles] ************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=Dockerfile: ../resources/Dockerfile.j2)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=Dockerfile: None specified)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=Dockerfile: ../resources/Dockerfile.j2)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=Dockerfile: ../resources/Dockerfile.j2)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=Dockerfile: ../resources/Dockerfile.j2)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=Dockerfile: ../resources/Dockerfile.j2)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=Dockerfile: ../resources/Dockerfile.j2)</font>
+
+TASK [Create Dockerfiles from image names] *************************************
+<font color="#A2734C">changed: [localhost] =&gt; (item=&quot;Dockerfile: ../resources/Dockerfile.j2; Image: debian:latest&quot;)</font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=&quot;Dockerfile: None specified; Image: registry.access.redhat.com/ubi9/ubi-init&quot;) </font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=&quot;Dockerfile: ../resources/Dockerfile.j2; Image: opensuse/tumbleweed:latest&quot;)</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=&quot;Dockerfile: ../resources/Dockerfile.j2; Image: ubuntu:latest&quot;)</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=&quot;Dockerfile: ../resources/Dockerfile.j2; Image: quay.io/centos/centos:stream9&quot;)</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=&quot;Dockerfile: ../resources/Dockerfile.j2; Image: debian:latest&quot;)</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=&quot;Dockerfile: ../resources/Dockerfile.j2; Image: opensuse/leap:latest&quot;)</font>
+
+TASK [Discover local Podman images] ********************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=clickhouse-generic-podman-lighthouse)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-generator-generic-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-tumbleweed-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-ubuntu-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-stream9-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-debian-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-leap-podman)</font>
+
+TASK [Build an Ansible compatible image] ***************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=debian:latest)</font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=registry.access.redhat.com/ubi9/ubi-init) </font>
+<font color="#26A269">ok: [localhost] =&gt; (item=opensuse/tumbleweed:latest)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=ubuntu:latest)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=quay.io/centos/centos:stream9)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=debian:latest)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=opensuse/leap:latest)</font>
+
+TASK [Determine the CMD directives] ********************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=&quot;clickhouse-generic-podman-lighthouse command: /sbin/init&quot;)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=&quot;lighthouse-generator-generic-podman command: /sbin/init&quot;)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=&quot;lighthouse-tumbleweed-podman command: /sbin/init&quot;)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=&quot;lighthouse-ubuntu-podman command: /sbin/init&quot;)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=&quot;lighthouse-stream9-podman command: /sbin/init&quot;)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=&quot;lighthouse-debian-podman command: /sbin/init&quot;)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=&quot;lighthouse-leap-podman command: /sbin/init&quot;)</font>
+
+TASK [Discover local podman networks] ******************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=clickhouse-generic-podman-lighthouse: lighthouse-podman-generic)</font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=lighthouse-generator-generic-podman: lighthouse-podman-generic) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=lighthouse-tumbleweed-podman: lighthouse-podman-generic) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=lighthouse-ubuntu-podman: lighthouse-podman-generic) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=lighthouse-stream9-podman: lighthouse-podman-generic) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=lighthouse-debian-podman: lighthouse-podman-generic) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=lighthouse-leap-podman: lighthouse-podman-generic) </font>
+
+TASK [Create podman network dedicated to this scenario] ************************
+<font color="#A2734C">changed: [localhost]</font>
+
+TASK [Create molecule instance(s)] *********************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=clickhouse-generic-podman-lighthouse)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-generator-generic-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-tumbleweed-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-ubuntu-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-stream9-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-debian-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-leap-podman)</font>
+
+TASK [Wait for instance(s) creation to complete] *******************************
+<font color="#A2734C">changed: [localhost] =&gt; (item=clickhouse-generic-podman-lighthouse)</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=lighthouse-generator-generic-podman)</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=lighthouse-tumbleweed-podman)</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=lighthouse-ubuntu-podman)</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=lighthouse-stream9-podman)</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=lighthouse-debian-podman)</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=lighthouse-leap-podman)</font>
+
+PLAY RECAP *********************************************************************
+<font color="#A2734C">localhost</font>                  : <font color="#26A269">ok=9   </font> <font color="#A2734C">changed=3   </font> unreachable=0    failed=0    <font color="#2AA1B3">skipped=1   </font> rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">generic-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">prepare</font>
+
+PLAY [Prepare users and groups] ************************************************
+
+TASK [ansible.builtin.set_fact] ************************************************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+<font color="#26A269">ok: [lighthouse-generator-generic-podman]</font>
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+
+TASK [ansible.builtin.debug] ***************************************************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse] =&gt; {</font>
+<font color="#26A269">    &quot;msg&quot;: &quot;clickhouse-generic-podman-lighthouse: gname=some&quot;</font>
+<font color="#26A269">}</font>
+<font color="#26A269">ok: [lighthouse-generator-generic-podman] =&gt; {</font>
+<font color="#26A269">    &quot;msg&quot;: &quot;lighthouse-generator-generic-podman: gname=vector&quot;</font>
+<font color="#26A269">}</font>
+<font color="#26A269">ok: [lighthouse-debian-podman] =&gt; {</font>
+<font color="#26A269">    &quot;msg&quot;: &quot;lighthouse-debian-podman: gname=lighthouse&quot;</font>
+<font color="#26A269">}</font>
+<font color="#26A269">ok: [lighthouse-leap-podman] =&gt; {</font>
+<font color="#26A269">    &quot;msg&quot;: &quot;lighthouse-leap-podman: gname=lighthouse&quot;</font>
+<font color="#26A269">}</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman] =&gt; {</font>
+<font color="#26A269">    &quot;msg&quot;: &quot;lighthouse-stream9-podman: gname=lighthouse&quot;</font>
+<font color="#26A269">}</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman] =&gt; {</font>
+<font color="#26A269">    &quot;msg&quot;: &quot;lighthouse-tumbleweed-podman: gname=lighthouse&quot;</font>
+<font color="#26A269">}</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman] =&gt; {</font>
+<font color="#26A269">    &quot;msg&quot;: &quot;lighthouse-ubuntu-podman: gname=lighthouse&quot;</font>
+<font color="#26A269">}</font>
+
+TASK [Ensure ansible group is present] *****************************************
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#A2734C">changed: [lighthouse-generator-generic-podman]</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+
+TASK [Ensure ansible user is created] ******************************************
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#A2734C">changed: [lighthouse-debian-podman]</font>
+<font color="#A2734C">changed: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+<font color="#A2734C">changed: [lighthouse-generator-generic-podman]</font>
+
+TASK [install required packages] ***********************************************
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#A2734C">changed: [lighthouse-generator-generic-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+
+TASK [Ensure sudoers folder exists] ********************************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0750&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0755&quot;,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d&quot;
+  }
+
+<font color="#A2734C">changed: [lighthouse-tumbleweed-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0750&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0755&quot;,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d&quot;
+  }
+
+<font color="#A2734C">changed: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0750&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0755&quot;,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d&quot;
+  }
+
+<font color="#A2734C">changed: [lighthouse-generator-generic-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0750&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0755&quot;,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d&quot;
+  }
+
+<font color="#A2734C">changed: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [Ensure ansible sudoers file exists] **************************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,6 +1,6 @@</font>
+  {
+<font color="#C01C28">-    &quot;atime&quot;: 1730997819.0,</font>
+<font color="#C01C28">-    &quot;mtime&quot;: 1730997819.0,</font>
+<font color="#26A269">+    &quot;atime&quot;: 1730999966.9774282,</font>
+<font color="#26A269">+    &quot;mtime&quot;: 1730999966.9774282,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d/ansible&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;file&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;touch&quot;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-ubuntu-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,6 +1,6 @@</font>
+  {
+<font color="#C01C28">-    &quot;atime&quot;: 1730997818.0,</font>
+<font color="#C01C28">-    &quot;mtime&quot;: 1730997818.0,</font>
+<font color="#26A269">+    &quot;atime&quot;: 1730999967.2131817,</font>
+<font color="#26A269">+    &quot;mtime&quot;: 1730999967.2131817,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d/ansible&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;file&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;touch&quot;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-tumbleweed-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,6 +1,6 @@</font>
+  {
+<font color="#C01C28">-    &quot;atime&quot;: 1730997816.0,</font>
+<font color="#C01C28">-    &quot;mtime&quot;: 1730997816.0,</font>
+<font color="#26A269">+    &quot;atime&quot;: 1730999967.1112256,</font>
+<font color="#26A269">+    &quot;mtime&quot;: 1730999967.1112256,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d/ansible&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;file&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;touch&quot;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-debian-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,6 +1,6 @@</font>
+  {
+<font color="#C01C28">-    &quot;atime&quot;: 1730997822.0,</font>
+<font color="#C01C28">-    &quot;mtime&quot;: 1730997822.0,</font>
+<font color="#26A269">+    &quot;atime&quot;: 1730999967.2557786,</font>
+<font color="#26A269">+    &quot;mtime&quot;: 1730999967.2557786,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d/ansible&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;file&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;touch&quot;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-leap-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,6 +1,6 @@</font>
+  {
+<font color="#C01C28">-    &quot;atime&quot;: 1730997816.0,</font>
+<font color="#C01C28">-    &quot;mtime&quot;: 1730997816.0,</font>
+<font color="#26A269">+    &quot;atime&quot;: 1730999967.1067696,</font>
+<font color="#26A269">+    &quot;mtime&quot;: 1730999967.1067696,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d/ansible&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;file&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;touch&quot;</font>
+  }
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,6 +1,6 @@</font>
+  {
+<font color="#C01C28">-    &quot;atime&quot;: 1730997821.0,</font>
+<font color="#C01C28">-    &quot;mtime&quot;: 1730997821.0,</font>
+<font color="#26A269">+    &quot;atime&quot;: 1730999966.9179952,</font>
+<font color="#26A269">+    &quot;mtime&quot;: 1730999966.9179952,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d/ansible&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;file&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;touch&quot;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-stream9-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,6 +1,6 @@</font>
+  {
+<font color="#C01C28">-    &quot;atime&quot;: 1730999967.2596443,</font>
+<font color="#C01C28">-    &quot;mtime&quot;: 1730999967.2596443,</font>
+<font color="#26A269">+    &quot;atime&quot;: 1730999967.2607188,</font>
+<font color="#26A269">+    &quot;mtime&quot;: 1730999967.2607188,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d/ansible&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;absent&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;touch&quot;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-generator-generic-podman]</font>
+
+TASK [Ensure ansible group is in sudoers] **************************************
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#C01C28">--- before: /etc/sudoers.d/ansible (content)</font>
+<font color="#26A269">+++ after: /etc/sudoers.d/ansible (content)</font>
+<font color="#2AA1B3">@@ -1 +1,2 @@</font>
+  %lighthouse ALL=(ALL) NOPASSWD:ALL
+<font color="#26A269">+%some ALL=(ALL) NOPASSWD:ALL</font>
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#C01C28">--- before: /etc/sudoers.d/ansible (content)</font>
+<font color="#26A269">+++ after: /etc/sudoers.d/ansible (content)</font>
+<font color="#2AA1B3">@@ -0,0 +1 @@</font>
+<font color="#26A269">+%vector ALL=(ALL) NOPASSWD:ALL</font>
+
+<font color="#A2734C">changed: [lighthouse-generator-generic-podman]</font>
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+
+PLAY [Install Clickhouse] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Include OS Family Specific Variables] ***********************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : include_tasks] **********************************************
+<font color="#2AA1B3">included: /home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/clickhouse/tasks/precheck.yml for clickhouse-generic-podman-lighthouse</font>
+
+TASK [clickhouse : Requirements check | Checking sse4_2 support] ***************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Requirements check | Not supported distribution &amp;&amp; release] ***
+<font color="#2AA1B3">skipping: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : include_tasks] **********************************************
+<font color="#2AA1B3">included: /home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/clickhouse/tasks/params.yml for clickhouse-generic-podman-lighthouse</font>
+
+TASK [clickhouse : Set clickhouse_service_enable] ******************************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Set clickhouse_service_ensure] ******************************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : include_tasks] **********************************************
+<font color="#2AA1B3">included: /home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/clickhouse/tasks/install/apt.yml for clickhouse-generic-podman-lighthouse</font>
+
+TASK [clickhouse : Install by APT | Apt-key add repo key] **********************
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Install by APT | Remove old repo] ***************************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Install by APT | Repo installation] *************************
+<font color="#C01C28">--- before: /dev/null</font>
+<font color="#26A269">+++ after: /etc/apt/sources.list.d/packages_clickhouse_com_deb.list</font>
+<font color="#2AA1B3">@@ -0,0 +1 @@</font>
+<font color="#26A269">+deb https://packages.clickhouse.com/deb stable main</font>
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Install by APT | Package installation] **********************
+<font color="#2AA1B3">skipping: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Install by APT | Package installation] **********************
+Suggested packages:
+  clickhouse-common-static-dbg
+The following NEW packages will be installed:
+  clickhouse-client clickhouse-common-static clickhouse-server
+0 upgraded, 3 newly installed, 0 to remove and 0 not upgraded.
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Hold specified version during APT upgrade | Package installation] ***
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after: /etc/apt/preferences.d/fixed-clickhouse-client</font>
+<font color="#2AA1B3">@@ -0,0 +1,3 @@</font>
+<font color="#26A269">+Package: clickhouse-client</font>
+<font color="#26A269">+Pin: release a=now</font>
+<font color="#26A269">+Pin-Priority: 1001</font>
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse] =&gt; (item=clickhouse-client)</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after: /etc/apt/preferences.d/fixed-clickhouse-server</font>
+<font color="#2AA1B3">@@ -0,0 +1,3 @@</font>
+<font color="#26A269">+Package: clickhouse-server</font>
+<font color="#26A269">+Pin: release a=now</font>
+<font color="#26A269">+Pin-Priority: 1001</font>
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse] =&gt; (item=clickhouse-server)</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after: /etc/apt/preferences.d/fixed-clickhouse-common-static</font>
+<font color="#2AA1B3">@@ -0,0 +1,3 @@</font>
+<font color="#26A269">+Package: clickhouse-common-static</font>
+<font color="#26A269">+Pin: release a=now</font>
+<font color="#26A269">+Pin-Priority: 1001</font>
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse] =&gt; (item=clickhouse-common-static)</font>
+
+TASK [clickhouse : include_tasks] **********************************************
+<font color="#2AA1B3">included: /home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/clickhouse/tasks/configure/sys.yml for clickhouse-generic-podman-lighthouse</font>
+
+TASK [clickhouse : Check clickhouse config, data and logs] *********************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse] =&gt; (item=/var/log/clickhouse-server)</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0700&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0770&quot;,</font>
+      &quot;path&quot;: &quot;/etc/clickhouse-server&quot;
+  }
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse] =&gt; (item=/etc/clickhouse-server)</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,7 +1,7 @@</font>
+  {
+<font color="#C01C28">-    &quot;group&quot;: 0,</font>
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#C01C28">-    &quot;owner&quot;: 0,</font>
+<font color="#26A269">+    &quot;group&quot;: 996,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0770&quot;,</font>
+<font color="#26A269">+    &quot;owner&quot;: 996,</font>
+      &quot;path&quot;: &quot;/var/lib/clickhouse/tmp/&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;absent&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;directory&quot;</font>
+  }
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse] =&gt; (item=/var/lib/clickhouse/tmp/)</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0700&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0770&quot;,</font>
+      &quot;path&quot;: &quot;/var/lib/clickhouse/&quot;
+  }
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse] =&gt; (item=/var/lib/clickhouse/)</font>
+
+TASK [clickhouse : Config | Create config.d folder] ****************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0500&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0770&quot;,</font>
+      &quot;path&quot;: &quot;/etc/clickhouse-server/config.d&quot;
+  }
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Config | Create users.d folder] *****************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0500&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0770&quot;,</font>
+      &quot;path&quot;: &quot;/etc/clickhouse-server/users.d&quot;
+  }
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Config | Generate system config] ****************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-933047hwpat8uy/tmp_ngxxi_c/config.j2</font>
+<font color="#2AA1B3">@@ -0,0 +1,382 @@</font>
+<font color="#26A269">+&lt;?xml version=&quot;1.0&quot;?&gt;</font>
+<font color="#26A269">+&lt;!--</font>
+<font color="#26A269">+ -</font>
+<font color="#26A269">+ - Ansible managed: Do NOT edit this file manually!</font>
+<font color="#26A269">+ -</font>
+<font color="#26A269">+--&gt; </font>
+<font color="#26A269">+&lt;clickhouse&gt;</font>
+<font color="#26A269">+    &lt;logger&gt;</font>
+<font color="#26A269">+        &lt;!-- Possible levels: https://github.com/pocoproject/poco/blob/develop/Foundation/include/Poco/Logger.h#L105 --&gt;</font>
+<font color="#26A269">+        &lt;level&gt;trace&lt;/level&gt;</font>
+<font color="#26A269">+        &lt;log&gt;/var/log/clickhouse-server/clickhouse-server.log&lt;/log&gt;</font>
+<font color="#26A269">+        &lt;errorlog&gt;/var/log/clickhouse-server/clickhouse-server.err.log&lt;/errorlog&gt;</font>
+<font color="#26A269">+        &lt;size&gt;1000M&lt;/size&gt;</font>
+<font color="#26A269">+        &lt;count&gt;10&lt;/count&gt;</font>
+<font color="#26A269">+    &lt;/logger&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;http_port&gt;8123&lt;/http_port&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;tcp_port&gt;9000&lt;/tcp_port&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Used with https_port and tcp_port_secure. Full ssl options list: https://github.com/ClickHouse-Extras/poco/blob/master/NetSSL_OpenSSL/include/Poco/Net/SSLManager.h#L71 --&gt;</font>
+<font color="#26A269">+    &lt;openSSL&gt;</font>
+<font color="#26A269">+        &lt;server&gt; &lt;!-- Used for https server AND secure tcp port --&gt;</font>
+<font color="#26A269">+            &lt;!-- openssl req -subj &quot;/CN=localhost&quot; -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout /etc/clickhouse-server/server.key -out /etc/clickhouse-server/server.crt --&gt;</font>
+<font color="#26A269">+            &lt;certificateFile&gt;/etc/clickhouse-server/server.crt&lt;/certificateFile&gt;</font>
+<font color="#26A269">+            &lt;privateKeyFile&gt;/etc/clickhouse-server/server.key&lt;/privateKeyFile&gt;</font>
+<font color="#26A269">+            &lt;!-- openssl dhparam -out /etc/clickhouse-server/dhparam.pem 4096 --&gt;</font>
+<font color="#26A269">+            &lt;dhParamsFile&gt;/etc/clickhouse-server/dhparam.pem&lt;/dhParamsFile&gt;</font>
+<font color="#26A269">+            &lt;verificationMode&gt;none&lt;/verificationMode&gt;</font>
+<font color="#26A269">+            &lt;loadDefaultCAFile&gt;true&lt;/loadDefaultCAFile&gt;</font>
+<font color="#26A269">+            &lt;cacheSessions&gt;true&lt;/cacheSessions&gt;</font>
+<font color="#26A269">+            &lt;disableProtocols&gt;sslv2,sslv3&lt;/disableProtocols&gt;</font>
+<font color="#26A269">+            &lt;preferServerCiphers&gt;true&lt;/preferServerCiphers&gt;</font>
+<font color="#26A269">+        &lt;/server&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+        &lt;client&gt; &lt;!-- Used for connecting to https dictionary source --&gt;</font>
+<font color="#26A269">+            &lt;loadDefaultCAFile&gt;true&lt;/loadDefaultCAFile&gt;</font>
+<font color="#26A269">+            &lt;cacheSessions&gt;true&lt;/cacheSessions&gt;</font>
+<font color="#26A269">+            &lt;disableProtocols&gt;sslv2,sslv3&lt;/disableProtocols&gt;</font>
+<font color="#26A269">+            &lt;preferServerCiphers&gt;true&lt;/preferServerCiphers&gt;</font>
+<font color="#26A269">+            &lt;!-- Use for self-signed: &lt;verificationMode&gt;none&lt;/verificationMode&gt; --&gt;</font>
+<font color="#26A269">+            &lt;invalidCertificateHandler&gt;</font>
+<font color="#26A269">+                &lt;!-- Use for self-signed: &lt;name&gt;AcceptCertificateHandler&lt;/name&gt; --&gt;</font>
+<font color="#26A269">+                &lt;name&gt;RejectCertificateHandler&lt;/name&gt;</font>
+<font color="#26A269">+            &lt;/invalidCertificateHandler&gt;</font>
+<font color="#26A269">+        &lt;/client&gt;</font>
+<font color="#26A269">+    &lt;/openSSL&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Default root page on http[s] server. For example load UI from https://tabix.io/ when opening http://localhost:8123 --&gt;</font>
+<font color="#26A269">+    &lt;!--</font>
+<font color="#26A269">+    &lt;http_server_default_response&gt;&lt;![CDATA[&lt;html ng-app=&quot;SMI2&quot;&gt;&lt;head&gt;&lt;base href=&quot;http://ui.tabix.io/&quot;&gt;&lt;/head&gt;&lt;body&gt;&lt;div ui-view=&quot;&quot; class=&quot;content-ui&quot;&gt;&lt;/div&gt;&lt;script src=&quot;http://loader.tabix.io/master.js&quot;&gt;&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;]]&gt;&lt;/http_server_default_response&gt;</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Port for communication between replicas. Used for data exchange. --&gt;</font>
+<font color="#26A269">+    &lt;interserver_http_port&gt;9009&lt;/interserver_http_port&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Hostname that is used by other replicas to request this server.</font>
+<font color="#26A269">+         If not specified, than it is determined analoguous to &apos;hostname -f&apos; command.</font>
+<font color="#26A269">+         This setting could be used to switch replication to another network interface.</font>
+<font color="#26A269">+      --&gt;</font>
+<font color="#26A269">+    &lt;!--</font>
+<font color="#26A269">+    &lt;interserver_http_host&gt;example.clickhouse.com&lt;/interserver_http_host&gt;</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Listen specified host. use :: (wildcard IPv6 address), if you want to accept connections both with IPv4 and IPv6 from everywhere. --&gt;</font>
+<font color="#26A269">+    &lt;!-- &lt;listen_host&gt;::&lt;/listen_host&gt; --&gt;</font>
+<font color="#26A269">+    &lt;!-- Same for hosts with disabled ipv6: --&gt;</font>
+<font color="#26A269">+    &lt;!-- &lt;listen_host&gt;0.0.0.0&lt;/listen_host&gt; --&gt;</font>
+<font color="#26A269">+    &lt;listen_host&gt;0.0.0.0&lt;/listen_host&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;max_connections&gt;2048&lt;/max_connections&gt;</font>
+<font color="#26A269">+    &lt;keep_alive_timeout&gt;3&lt;/keep_alive_timeout&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Maximum number of concurrent queries. --&gt;</font>
+<font color="#26A269">+    &lt;max_concurrent_queries&gt;100&lt;/max_concurrent_queries&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Set limit on number of open files (default: maximum). This setting makes sense on Mac OS X because getrlimit() fails to retrieve</font>
+<font color="#26A269">+         correct maximum value. --&gt;</font>
+<font color="#26A269">+    &lt;!-- &lt;max_open_files&gt;262144&lt;/max_open_files&gt; --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Size of cache of uncompressed blocks of data, used in tables of MergeTree family.</font>
+<font color="#26A269">+         In bytes. Cache is single for server. Memory is allocated only on demand.</font>
+<font color="#26A269">+         Cache is used when &apos;use_uncompressed_cache&apos; user setting turned on (off by default).</font>
+<font color="#26A269">+         Uncompressed cache is advantageous only for very short queries and in rare cases.</font>
+<font color="#26A269">+      --&gt;</font>
+<font color="#26A269">+    &lt;uncompressed_cache_size&gt;8589934592&lt;/uncompressed_cache_size&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Approximate size of mark cache, used in tables of MergeTree family.</font>
+<font color="#26A269">+         In bytes. Cache is single for server. Memory is allocated only on demand.</font>
+<font color="#26A269">+         You should not lower this value.</font>
+<font color="#26A269">+      --&gt;</font>
+<font color="#26A269">+    &lt;mark_cache_size&gt;5368709120&lt;/mark_cache_size&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Path to data directory, with trailing slash. --&gt;</font>
+<font color="#26A269">+    &lt;path&gt;/var/lib/clickhouse/&lt;/path&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Path to temporary data for processing hard queries. --&gt;</font>
+<font color="#26A269">+    &lt;tmp_path&gt;/var/lib/clickhouse/tmp/&lt;/tmp_path&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Directory with user provided files that are accessible by &apos;file&apos; table function. --&gt;</font>
+<font color="#26A269">+    &lt;user_files_path&gt;/var/lib/clickhouse/user_files/&lt;/user_files_path&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Path to configuration file with users, access rights, profiles of settings, quotas. --&gt;</font>
+<font color="#26A269">+    &lt;users_config&gt;users.xml&lt;/users_config&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Default profile of settings. --&gt;</font>
+<font color="#26A269">+    &lt;default_profile&gt;default&lt;/default_profile&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- System profile of settings. This settings are used by internal processes (Buffer storage, Distibuted DDL worker and so on). --&gt;</font>
+<font color="#26A269">+    &lt;!-- &lt;system_profile&gt;default&lt;/system_profile&gt; --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Default database. --&gt;</font>
+<font color="#26A269">+    &lt;default_database&gt;default&lt;/default_database&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Server time zone could be set here.</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+         Time zone is used when converting between String and DateTime types,</font>
+<font color="#26A269">+          when printing DateTime in text formats and parsing DateTime from text,</font>
+<font color="#26A269">+          it is used in date and time related functions, if specific time zone was not passed as an argument.</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+         Time zone is specified as identifier from IANA time zone database, like UTC or Africa/Abidjan.</font>
+<font color="#26A269">+         If not specified, system time zone at server startup is used.</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+         Please note, that server could display time zone alias instead of specified name.</font>
+<font color="#26A269">+         Example: W-SU is an alias for Europe/Moscow and Zulu is an alias for UTC.</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+    &lt;!-- &lt;timezone&gt;Europe/Moscow&lt;/timezone&gt; --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- You can specify umask here (see &quot;man umask&quot;). Server will apply it on startup.</font>
+<font color="#26A269">+         Number is always parsed as octal. Default umask is 027 (other users cannot read logs, data files, etc; group can only read).</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+    &lt;!-- &lt;umask&gt;022&lt;/umask&gt; --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Perform mlockall after startup to lower first queries latency</font>
+<font color="#26A269">+          and to prevent clickhouse executable from being paged out under high IO load.</font>
+<font color="#26A269">+         Enabling this option is recommended but will lead to increased startup time for up to a few seconds.</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+    &lt;mlock_executable&gt;False&lt;/mlock_executable&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Configuration of clusters that could be used in Distributed tables.</font>
+<font color="#26A269">+         https://clickhouse.com/docs/en/engines/table-engines/special/distributed/</font>
+<font color="#26A269">+      --&gt;</font>
+<font color="#26A269">+    &lt;remote_servers incl=&quot;clickhouse_remote_servers&quot; /&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- If element has &apos;incl&apos; attribute, then for it&apos;s value will be used corresponding substitution from another file.</font>
+<font color="#26A269">+         By default, path to file with substitutions is /etc/metrika.xml. It could be changed in config in &apos;include_from&apos; element.</font>
+<font color="#26A269">+         Values for substitutions are specified in /clickhouse/name_of_substitution elements in that file.</font>
+<font color="#26A269">+      --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- ZooKeeper is used to store metadata about replicas, when using Replicated tables.</font>
+<font color="#26A269">+         Optional. If you don&apos;t use replicated tables, you could omit that.</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+         See https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/replication/</font>
+<font color="#26A269">+      --&gt;</font>
+<font color="#26A269">+    &lt;zookeeper incl=&quot;zookeeper-servers&quot; optional=&quot;true&quot; /&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Substitutions for parameters of replicated tables.</font>
+<font color="#26A269">+          Optional. If you don&apos;t use replicated tables, you could omit that.</font>
+<font color="#26A269">+         See https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/replication/#creating-replicated-tables</font>
+<font color="#26A269">+      --&gt;</font>
+<font color="#26A269">+    &lt;macros incl=&quot;macros&quot; optional=&quot;true&quot; /&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Reloading interval for embedded dictionaries, in seconds. Default: 3600. --&gt;</font>
+<font color="#26A269">+    &lt;builtin_dictionaries_reload_interval&gt;3600&lt;/builtin_dictionaries_reload_interval&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- If true, dictionaries are created lazily on first use. Otherwise they are initialised on server startup. Default: true --&gt;</font>
+<font color="#26A269">+    &lt;!-- See also: https://clickhouse.com/docs/en/operations/server-configuration-parameters/settings/#server_configuration_parameters-dictionaries_lazy_load --&gt;</font>
+<font color="#26A269">+    &lt;dictionaries_lazy_load&gt;True&lt;/dictionaries_lazy_load&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Maximum session timeout, in seconds. Default: 3600. --&gt;</font>
+<font color="#26A269">+    &lt;max_session_timeout&gt;3600&lt;/max_session_timeout&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Default session timeout, in seconds. Default: 60. --&gt;</font>
+<font color="#26A269">+    &lt;default_session_timeout&gt;60&lt;/default_session_timeout&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Sending data to Graphite for monitoring. Several sections can be defined. --&gt;</font>
+<font color="#26A269">+    &lt;!--</font>
+<font color="#26A269">+        interval - send every X second</font>
+<font color="#26A269">+        root_path - prefix for keys</font>
+<font color="#26A269">+        hostname_in_path - append hostname to root_path (default = true)</font>
+<font color="#26A269">+        metrics - send data from table system.metrics</font>
+<font color="#26A269">+        events - send data from table system.events</font>
+<font color="#26A269">+        asynchronous_metrics - send data from table system.asynchronous_metrics</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+    &lt;!--</font>
+<font color="#26A269">+    &lt;graphite&gt;</font>
+<font color="#26A269">+        &lt;host&gt;localhost&lt;/host&gt;</font>
+<font color="#26A269">+        &lt;port&gt;42000&lt;/port&gt;</font>
+<font color="#26A269">+        &lt;timeout&gt;0.1&lt;/timeout&gt;</font>
+<font color="#26A269">+        &lt;interval&gt;60&lt;/interval&gt;</font>
+<font color="#26A269">+        &lt;root_path&gt;one_min&lt;/root_path&gt;</font>
+<font color="#26A269">+        &lt;hostname_in_path&gt;true&lt;/hostname_in_path&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+        &lt;metrics&gt;true&lt;/metrics&gt;</font>
+<font color="#26A269">+        &lt;events&gt;true&lt;/events&gt;</font>
+<font color="#26A269">+        &lt;asynchronous_metrics&gt;true&lt;/asynchronous_metrics&gt;</font>
+<font color="#26A269">+    &lt;/graphite&gt;</font>
+<font color="#26A269">+    &lt;graphite&gt;</font>
+<font color="#26A269">+        &lt;host&gt;localhost&lt;/host&gt;</font>
+<font color="#26A269">+        &lt;port&gt;42000&lt;/port&gt;</font>
+<font color="#26A269">+        &lt;timeout&gt;0.1&lt;/timeout&gt;</font>
+<font color="#26A269">+        &lt;interval&gt;1&lt;/interval&gt;</font>
+<font color="#26A269">+        &lt;root_path&gt;one_sec&lt;/root_path&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+        &lt;metrics&gt;true&lt;/metrics&gt;</font>
+<font color="#26A269">+        &lt;events&gt;true&lt;/events&gt;</font>
+<font color="#26A269">+        &lt;asynchronous_metrics&gt;false&lt;/asynchronous_metrics&gt;</font>
+<font color="#26A269">+    &lt;/graphite&gt;</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Query log. Used only for queries with setting log_queries = 1. --&gt;</font>
+<font color="#26A269">+    &lt;query_log&gt;</font>
+<font color="#26A269">+        &lt;!-- What table to insert data. If table is not exist, it will be created.</font>
+<font color="#26A269">+             When query log structure is changed after system update,</font>
+<font color="#26A269">+              then old table will be renamed and new table will be created automatically.</font>
+<font color="#26A269">+        --&gt;</font>
+<font color="#26A269">+        &lt;database&gt;system&lt;/database&gt;</font>
+<font color="#26A269">+        &lt;table&gt;query_log&lt;/table&gt;</font>
+<font color="#26A269">+        &lt;!--</font>
+<font color="#26A269">+            PARTITION BY expr https://clickhouse.com/docs/en/table_engines/mergetree-family/custom_partitioning_key/</font>
+<font color="#26A269">+            Example:</font>
+<font color="#26A269">+                event_date</font>
+<font color="#26A269">+                toMonday(event_date)</font>
+<font color="#26A269">+                toYYYYMM(event_date)</font>
+<font color="#26A269">+                toStartOfHour(event_time)</font>
+<font color="#26A269">+        --&gt;</font>
+<font color="#26A269">+        &lt;partition_by&gt;toYYYYMM(event_date)&lt;/partition_by&gt;</font>
+<font color="#26A269">+        &lt;!-- Interval of flushing data. --&gt;</font>
+<font color="#26A269">+        &lt;flush_interval_milliseconds&gt;7500&lt;/flush_interval_milliseconds&gt;</font>
+<font color="#26A269">+    &lt;/query_log&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Query thread log. Has information about all threads participated in query execution.</font>
+<font color="#26A269">+         Used only for queries with setting log_query_threads = 1. --&gt;</font>
+<font color="#26A269">+    &lt;query_thread_log&gt;</font>
+<font color="#26A269">+        &lt;database&gt;system&lt;/database&gt;</font>
+<font color="#26A269">+        &lt;table&gt;query_thread_log&lt;/table&gt;</font>
+<font color="#26A269">+        &lt;partition_by&gt;toYYYYMM(event_date)&lt;/partition_by&gt;</font>
+<font color="#26A269">+        </font>
+<font color="#26A269">+        &lt;flush_interval_milliseconds&gt;7500&lt;/flush_interval_milliseconds&gt;</font>
+<font color="#26A269">+    &lt;/query_thread_log&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Uncomment if use part log.</font>
+<font color="#26A269">+         Part log contains information about all actions with parts in MergeTree tables (creation, deletion, merges, downloads).</font>
+<font color="#26A269">+    &lt;part_log&gt;</font>
+<font color="#26A269">+        &lt;database&gt;system&lt;/database&gt;</font>
+<font color="#26A269">+        &lt;table&gt;part_log&lt;/table&gt;</font>
+<font color="#26A269">+        &lt;flush_interval_milliseconds&gt;7500&lt;/flush_interval_milliseconds&gt;</font>
+<font color="#26A269">+    &lt;/part_log&gt;</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Parameters for embedded dictionaries, used in Yandex.Metrica.</font>
+<font color="#26A269">+         See https://clickhouse.com/docs/en/dicts/internal_dicts/</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Path to file with region hierarchy. --&gt;</font>
+<font color="#26A269">+    &lt;!-- &lt;path_to_regions_hierarchy_file&gt;/opt/geo/regions_hierarchy.txt&lt;/path_to_regions_hierarchy_file&gt; --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Path to directory with files containing names of regions --&gt;</font>
+<font color="#26A269">+    &lt;!-- &lt;path_to_regions_names_files&gt;/opt/geo/&lt;/path_to_regions_names_files&gt; --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Configuration of external dictionaries. See:</font>
+<font color="#26A269">+         https://clickhouse.com/docs/en/sql-reference/dictionaries/external-dictionaries/external-dicts</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+    &lt;dictionaries_config&gt;*_dictionary.xml&lt;/dictionaries_config&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Uncomment if you want data to be compressed 30-100% better.</font>
+<font color="#26A269">+         Don&apos;t do that if you just started using ClickHouse.</font>
+<font color="#26A269">+      --&gt;</font>
+<font color="#26A269">+    &lt;compression incl=&quot;clickhouse_compression&quot;&gt;</font>
+<font color="#26A269">+    &lt;!--</font>
+<font color="#26A269">+        &lt;!- - Set of variants. Checked in order. Last matching case wins. If nothing matches, lz4 will be used. - -&gt;</font>
+<font color="#26A269">+        &lt;case&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+            &lt;!- - Conditions. All must be satisfied. Some conditions may be omitted. - -&gt;</font>
+<font color="#26A269">+            &lt;min_part_size&gt;10000000000&lt;/min_part_size&gt;        &lt;!- - Min part size in bytes. - -&gt;</font>
+<font color="#26A269">+            &lt;min_part_size_ratio&gt;0.01&lt;/min_part_size_ratio&gt;   &lt;!- - Min size of part relative to whole table size. - -&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+            &lt;!- - What compression method to use. - -&gt;</font>
+<font color="#26A269">+            &lt;method&gt;zstd&lt;/method&gt;</font>
+<font color="#26A269">+        &lt;/case&gt;</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+    &lt;/compression&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Allow to execute distributed DDL queries (CREATE, DROP, ALTER, RENAME) on cluster.</font>
+<font color="#26A269">+         Works only if ZooKeeper is enabled. Comment it if such functionality isn&apos;t required. --&gt;</font>
+<font color="#26A269">+    &lt;distributed_ddl&gt;</font>
+<font color="#26A269">+        &lt;!-- Path in ZooKeeper to queue with DDL queries --&gt;</font>
+<font color="#26A269">+        &lt;path&gt;/clickhouse/task_queue/ddl&lt;/path&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+        &lt;!-- Settings from this profile will be used to execute DDL queries --&gt;</font>
+<font color="#26A269">+        &lt;!-- &lt;profile&gt;default&lt;/profile&gt; --&gt;</font>
+<font color="#26A269">+    &lt;/distributed_ddl&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Settings to fine tune MergeTree tables. See documentation in source code, in MergeTreeSettings.h --&gt;</font>
+<font color="#26A269">+        &lt;merge_tree&gt;</font>
+<font color="#26A269">+        &lt;/merge_tree&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Protection from accidental DROP.</font>
+<font color="#26A269">+         If size of a MergeTree table is greater than max_table_size_to_drop (in bytes) than table could not be dropped with any DROP query.</font>
+<font color="#26A269">+         If you want do delete one table and don&apos;t want to restart clickhouse-server, you could create special file &lt;clickhouse-path&gt;/flags/force_drop_table and make DROP once.</font>
+<font color="#26A269">+         By default max_table_size_to_drop is 50GB; max_table_size_to_drop=0 allows to DROP any tables.</font>
+<font color="#26A269">+         The same for max_partition_size_to_drop.</font>
+<font color="#26A269">+         Uncomment to disable protection.</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+    &lt;!-- &lt;max_table_size_to_drop&gt;0&lt;/max_table_size_to_drop&gt; --&gt;</font>
+<font color="#26A269">+    &lt;!-- &lt;max_partition_size_to_drop&gt;0&lt;/max_partition_size_to_drop&gt; --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Example of parameters for GraphiteMergeTree table engine --&gt;</font>
+<font color="#26A269">+    &lt;graphite_rollup_example&gt;</font>
+<font color="#26A269">+        &lt;pattern&gt;</font>
+<font color="#26A269">+            &lt;regexp&gt;click_cost&lt;/regexp&gt;</font>
+<font color="#26A269">+            &lt;function&gt;any&lt;/function&gt;</font>
+<font color="#26A269">+            &lt;retention&gt;</font>
+<font color="#26A269">+                &lt;age&gt;0&lt;/age&gt;</font>
+<font color="#26A269">+                &lt;precision&gt;3600&lt;/precision&gt;</font>
+<font color="#26A269">+            &lt;/retention&gt;</font>
+<font color="#26A269">+            &lt;retention&gt;</font>
+<font color="#26A269">+                &lt;age&gt;86400&lt;/age&gt;</font>
+<font color="#26A269">+                &lt;precision&gt;60&lt;/precision&gt;</font>
+<font color="#26A269">+            &lt;/retention&gt;</font>
+<font color="#26A269">+        &lt;/pattern&gt;</font>
+<font color="#26A269">+        &lt;default&gt;</font>
+<font color="#26A269">+            &lt;function&gt;max&lt;/function&gt;</font>
+<font color="#26A269">+            &lt;retention&gt;</font>
+<font color="#26A269">+                &lt;age&gt;0&lt;/age&gt;</font>
+<font color="#26A269">+                &lt;precision&gt;60&lt;/precision&gt;</font>
+<font color="#26A269">+            &lt;/retention&gt;</font>
+<font color="#26A269">+            &lt;retention&gt;</font>
+<font color="#26A269">+                &lt;age&gt;3600&lt;/age&gt;</font>
+<font color="#26A269">+                &lt;precision&gt;300&lt;/precision&gt;</font>
+<font color="#26A269">+            &lt;/retention&gt;</font>
+<font color="#26A269">+            &lt;retention&gt;</font>
+<font color="#26A269">+                &lt;age&gt;86400&lt;/age&gt;</font>
+<font color="#26A269">+                &lt;precision&gt;3600&lt;/precision&gt;</font>
+<font color="#26A269">+            &lt;/retention&gt;</font>
+<font color="#26A269">+        &lt;/default&gt;</font>
+<font color="#26A269">+    &lt;/graphite_rollup_example&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Exposing metrics data for scraping from Prometheus. --&gt;</font>
+<font color="#26A269">+    &lt;!--</font>
+<font color="#26A269">+        endpoint – HTTP endpoint for scraping metrics by prometheus server. Start from ‘/’.</font>
+<font color="#26A269">+        port – Port for endpoint.</font>
+<font color="#26A269">+        metrics – Flag that sets to expose metrics from the system.metrics table.</font>
+<font color="#26A269">+        events – Flag that sets to expose metrics from the system.events table.</font>
+<font color="#26A269">+        asynchronous_metrics – Flag that sets to expose current metrics values from the system.asynchronous_metrics table.</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+    &lt;!--</font>
+<font color="#26A269">+    &lt;prometheus&gt;</font>
+<font color="#26A269">+        &lt;endpoint&gt;/metrics&lt;/endpoint&gt;</font>
+<font color="#26A269">+        &lt;port&gt;8001&lt;/port&gt;</font>
+<font color="#26A269">+        &lt;metrics&gt;true&lt;/metrics&gt;</font>
+<font color="#26A269">+        &lt;events&gt;true&lt;/events&gt;</font>
+<font color="#26A269">+        &lt;asynchronous_metrics&gt;true&lt;/asynchronous_metrics&gt;</font>
+<font color="#26A269">+    &lt;/prometheus&gt;</font>
+<font color="#26A269">+    --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Directory in &lt;clickhouse-path&gt; containing schema files for various input formats.</font>
+<font color="#26A269">+         The directory will be created if it doesn&apos;t exist.</font>
+<font color="#26A269">+      --&gt;</font>
+<font color="#26A269">+    &lt;format_schema_path&gt;/var/lib/clickhouse//format_schemas/&lt;/format_schema_path&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Uncomment to disable ClickHouse internal DNS caching. --&gt;</font>
+<font color="#26A269">+    &lt;!-- &lt;disable_internal_dns_cache&gt;1&lt;/disable_internal_dns_cache&gt; --&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;kafka&gt;</font>
+<font color="#26A269">+    &lt;/kafka&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+&lt;/clickhouse&gt;</font>
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Config | Generate users config] *****************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-933047hwpat8uy/tmp83nyh_fm/users.j2</font>
+<font color="#2AA1B3">@@ -0,0 +1,89 @@</font>
+<font color="#26A269">+&lt;?xml version=&quot;1.0&quot;?&gt;</font>
+<font color="#26A269">+&lt;!--</font>
+<font color="#26A269">+ -</font>
+<font color="#26A269">+ - Ansible managed: Do NOT edit this file manually!</font>
+<font color="#26A269">+ -</font>
+<font color="#26A269">+--&gt; </font>
+<font color="#26A269">+&lt;clickhouse&gt;</font>
+<font color="#26A269">+   &lt;profiles&gt;</font>
+<font color="#26A269">+    &lt;!-- Profiles of settings. --&gt;</font>
+<font color="#26A269">+    &lt;!-- Default profiles. --&gt;</font>
+<font color="#26A269">+        &lt;default&gt;</font>
+<font color="#26A269">+            &lt;max_memory_usage&gt;10000000000&lt;/max_memory_usage&gt;</font>
+<font color="#26A269">+            &lt;use_uncompressed_cache&gt;0&lt;/use_uncompressed_cache&gt;</font>
+<font color="#26A269">+            &lt;load_balancing&gt;random&lt;/load_balancing&gt;</font>
+<font color="#26A269">+            &lt;max_partitions_per_insert_block&gt;100&lt;/max_partitions_per_insert_block&gt;</font>
+<font color="#26A269">+        &lt;/default&gt;</font>
+<font color="#26A269">+        &lt;readonly&gt;</font>
+<font color="#26A269">+            &lt;readonly&gt;1&lt;/readonly&gt;</font>
+<font color="#26A269">+        &lt;/readonly&gt;</font>
+<font color="#26A269">+        &lt;!-- Default profiles end. --&gt;</font>
+<font color="#26A269">+    &lt;!-- Custom profiles. --&gt;</font>
+<font color="#26A269">+        &lt;!-- Custom profiles end. --&gt;</font>
+<font color="#26A269">+    &lt;/profiles&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Users and ACL. --&gt;</font>
+<font color="#26A269">+    &lt;users&gt;</font>
+<font color="#26A269">+    &lt;!-- Default users. --&gt;</font>
+<font color="#26A269">+            &lt;!-- Default user for login if user not defined --&gt;</font>
+<font color="#26A269">+        &lt;default&gt;</font>
+<font color="#26A269">+                &lt;password&gt;&lt;/password&gt;</font>
+<font color="#26A269">+                &lt;networks incl=&quot;networks&quot; replace=&quot;replace&quot;&gt;</font>
+<font color="#26A269">+                &lt;ip&gt;::1&lt;/ip&gt;</font>
+<font color="#26A269">+                &lt;ip&gt;127.0.0.1&lt;/ip&gt;</font>
+<font color="#26A269">+                &lt;/networks&gt;</font>
+<font color="#26A269">+        &lt;profile&gt;default&lt;/profile&gt;</font>
+<font color="#26A269">+        &lt;quota&gt;default&lt;/quota&gt;</font>
+<font color="#26A269">+            &lt;/default&gt;</font>
+<font color="#26A269">+            &lt;!-- Example of user with readonly access --&gt;</font>
+<font color="#26A269">+        &lt;readonly&gt;</font>
+<font color="#26A269">+                &lt;password&gt;&lt;/password&gt;</font>
+<font color="#26A269">+                &lt;networks incl=&quot;networks&quot; replace=&quot;replace&quot;&gt;</font>
+<font color="#26A269">+                &lt;ip&gt;::1&lt;/ip&gt;</font>
+<font color="#26A269">+                &lt;ip&gt;127.0.0.1&lt;/ip&gt;</font>
+<font color="#26A269">+                &lt;/networks&gt;</font>
+<font color="#26A269">+        &lt;profile&gt;readonly&lt;/profile&gt;</font>
+<font color="#26A269">+        &lt;quota&gt;default&lt;/quota&gt;</font>
+<font color="#26A269">+            &lt;/readonly&gt;</font>
+<font color="#26A269">+        &lt;!-- Custom users. --&gt;</font>
+<font color="#26A269">+            &lt;!-- user for vector logs --&gt;</font>
+<font color="#26A269">+        &lt;vector&gt;</font>
+<font color="#26A269">+                &lt;password_sha256_hex&gt;2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b&lt;/password_sha256_hex&gt;</font>
+<font color="#26A269">+                &lt;networks incl=&quot;networks&quot; replace=&quot;replace&quot;&gt;</font>
+<font color="#26A269">+                &lt;ip&gt;192.168.62.0/24&lt;/ip&gt;</font>
+<font color="#26A269">+                &lt;/networks&gt;</font>
+<font color="#26A269">+        &lt;profile&gt;default&lt;/profile&gt;</font>
+<font color="#26A269">+        &lt;quota&gt;default&lt;/quota&gt;</font>
+<font color="#26A269">+                 &lt;allow_databases&gt;</font>
+<font color="#26A269">+                    &lt;database&gt;logs&lt;/database&gt;</font>
+<font color="#26A269">+                &lt;/allow_databases&gt;</font>
+<font color="#26A269">+                            &lt;/vector&gt;</font>
+<font color="#26A269">+            &lt;!-- user for lighthouse logs --&gt;</font>
+<font color="#26A269">+        &lt;lighthouse&gt;</font>
+<font color="#26A269">+                &lt;password_sha256_hex&gt;2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b&lt;/password_sha256_hex&gt;</font>
+<font color="#26A269">+                &lt;networks incl=&quot;networks&quot; replace=&quot;replace&quot;&gt;</font>
+<font color="#26A269">+                &lt;ip&gt;192.168.62.0/24&lt;/ip&gt;</font>
+<font color="#26A269">+                &lt;/networks&gt;</font>
+<font color="#26A269">+        &lt;profile&gt;default&lt;/profile&gt;</font>
+<font color="#26A269">+        &lt;quota&gt;default&lt;/quota&gt;</font>
+<font color="#26A269">+                 &lt;allow_databases&gt;</font>
+<font color="#26A269">+                    &lt;database&gt;logs&lt;/database&gt;</font>
+<font color="#26A269">+                &lt;/allow_databases&gt;</font>
+<font color="#26A269">+                            &lt;/lighthouse&gt;</font>
+<font color="#26A269">+        &lt;/users&gt;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    &lt;!-- Quotas. --&gt;</font>
+<font color="#26A269">+    &lt;quotas&gt;</font>
+<font color="#26A269">+        &lt;!-- Default quotas. --&gt;</font>
+<font color="#26A269">+        &lt;default&gt;</font>
+<font color="#26A269">+        &lt;interval&gt;</font>
+<font color="#26A269">+        &lt;duration&gt;3600&lt;/duration&gt;</font>
+<font color="#26A269">+        &lt;queries&gt;0&lt;/queries&gt;</font>
+<font color="#26A269">+        &lt;errors&gt;0&lt;/errors&gt;</font>
+<font color="#26A269">+        &lt;result_rows&gt;0&lt;/result_rows&gt;</font>
+<font color="#26A269">+        &lt;read_rows&gt;0&lt;/read_rows&gt;</font>
+<font color="#26A269">+        &lt;execution_time&gt;0&lt;/execution_time&gt;</font>
+<font color="#26A269">+    &lt;/interval&gt;</font>
+<font color="#26A269">+        &lt;/default&gt;</font>
+<font color="#26A269">+            &lt;/quotas&gt;</font>
+<font color="#26A269">+&lt;/clickhouse&gt;</font>
+
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Config | Generate remote_servers config] ********************
+<font color="#2AA1B3">skipping: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Config | Generate macros config] ****************************
+<font color="#2AA1B3">skipping: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Config | Generate zookeeper servers config] *****************
+<font color="#2AA1B3">skipping: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Config | Fix interserver_http_port and intersever_https_port collision] ***
+<font color="#2AA1B3">skipping: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Notify Handlers Now] ****************************************
+
+RUNNING HANDLER [clickhouse : Restart Clickhouse Service] **********************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : include_tasks] **********************************************
+<font color="#2AA1B3">included: /home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/clickhouse/tasks/service.yml for clickhouse-generic-podman-lighthouse</font>
+
+TASK [clickhouse : Ensure clickhouse-server.service is enabled: True and state: restarted] ***
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Wait for Clickhouse Server to Become Ready] *****************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : include_tasks] **********************************************
+<font color="#2AA1B3">included: /home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/clickhouse/tasks/configure/db.yml for clickhouse-generic-podman-lighthouse</font>
+
+TASK [clickhouse : Set ClickHose Connection String] ****************************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Gather list of existing databases] **************************
+<font color="#26A269">ok: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Config | Delete database config] ****************************
+<font color="#2AA1B3">skipping: [clickhouse-generic-podman-lighthouse] =&gt; (item={&apos;name&apos;: &apos;logs&apos;}) </font>
+<font color="#2AA1B3">skipping: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : Config | Create database config] ****************************
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse] =&gt; (item={&apos;name&apos;: &apos;logs&apos;})</font>
+
+TASK [clickhouse : include_tasks] **********************************************
+<font color="#2AA1B3">included: /home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/clickhouse/tasks/configure/dict.yml for clickhouse-generic-podman-lighthouse</font>
+
+TASK [clickhouse : Config | Generate dictionary config] ************************
+<font color="#2AA1B3">skipping: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [clickhouse : include_tasks] **********************************************
+<font color="#2AA1B3">skipping: [clickhouse-generic-podman-lighthouse]</font>
+
+TASK [Create table in clickhouse] **********************************************
+<font color="#A2734C">changed: [clickhouse-generic-podman-lighthouse]</font>
+
+PLAY [Install Datadog Vector] **************************************************
+
+TASK [Gathering Facts] *********************************************************
+<font color="#26A269">ok: [lighthouse-generator-generic-podman]</font>
+
+TASK [Retrieve driver name (docker/podman)] ************************************
+<font color="#26A269">ok: [lighthouse-generator-generic-podman]</font>
+
+TASK [Get clickhouse IP] *******************************************************
+<font color="#26A269">ok: [lighthouse-generator-generic-podman -&gt; localhost]</font>
+
+TASK [Remember Clickhouse IP (1 address)] **************************************
+<font color="#26A269">ok: [lighthouse-generator-generic-podman]</font>
+
+TASK [vector-role : Assert necessary variables are set] ************************
+<font color="#26A269">ok: [lighthouse-generator-generic-podman]</font>
+
+TASK [vector-role : Create download folder] ************************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,6 +1,6 @@</font>
+  {
+<font color="#C01C28">-    &quot;group&quot;: 0,</font>
+<font color="#C01C28">-    &quot;owner&quot;: 0,</font>
+<font color="#26A269">+    &quot;group&quot;: 1000,</font>
+<font color="#26A269">+    &quot;owner&quot;: 1000,</font>
+      &quot;path&quot;: &quot;/opt/binaries&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;absent&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;directory&quot;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-generator-generic-podman]</font>
+
+TASK [vector-role : Install vector] ********************************************
+<font color="#2AA1B3">included: /home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/vector-role/tasks/install/RedHat.yaml for lighthouse-generator-generic-podman</font>
+
+TASK [vector-role : ReadHat-based -- download vector package] ******************
+<font color="#A2734C">changed: [lighthouse-generator-generic-podman]</font>
+
+TASK [vector-role : RedHat-based -- Install vector package] ********************
+<font color="#A2734C">changed: [lighthouse-generator-generic-podman]</font>
+
+TASK [vector-role : Copy Clickhouse CA (Certificate Authority) certificate] ****
+<font color="#2AA1B3">skipping: [lighthouse-generator-generic-podman]</font>
+
+TASK [vector-role : Change vector directory permission] ************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,6 +1,6 @@</font>
+  {
+<font color="#C01C28">-    &quot;group&quot;: 0,</font>
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#C01C28">-    &quot;owner&quot;: 0,</font>
+<font color="#26A269">+    &quot;group&quot;: 1000,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0751&quot;,</font>
+<font color="#26A269">+    &quot;owner&quot;: 1000,</font>
+      &quot;path&quot;: &quot;/etc/vector&quot;
+  }
+
+<font color="#A2734C">changed: [lighthouse-generator-generic-podman]</font>
+
+TASK [vector-role : Configuring Vector using template] *************************
+<font color="#C01C28">--- before: /etc/vector/vector.yaml</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-933047hwpat8uy/tmpvrogdrpg/vector.yaml.j2</font>
+<font color="#2AA1B3">@@ -20,7 +20,7 @@</font>
+    dummy_logs:
+      type: &quot;demo_logs&quot;
+      format: &quot;syslog&quot;
+<font color="#C01C28">-    interval: 1</font>
+<font color="#26A269">+    interval: 3</font>
+
+  # Parse Syslog logs
+  # See the Vector Remap Language reference for more info: https://vrl.dev
+<font color="#2AA1B3">@@ -29,21 +29,22 @@</font>
+      type: &quot;remap&quot;
+      inputs: [&quot;dummy_logs&quot;]
+      source: |
+<font color="#C01C28">-      . = parse_syslog!(string!(.message))</font>
+<font color="#26A269">+      . = parse_syslog!(.message)</font>
+<font color="#26A269">+      . |= set!(value: ., path: [&quot;hostname&quot;], data: get_hostname!())</font>
+<font color="#26A269">+      .timestamp = format_timestamp!(.timestamp, &quot;%F %T%.3f&quot;)</font>
+
+<font color="#C01C28">-# Print parsed logs to stdout</font>
+  sinks:
+<font color="#C01C28">-  print:</font>
+<font color="#C01C28">-    type: &quot;console&quot;</font>
+<font color="#C01C28">-    inputs: [&quot;parse_logs&quot;]</font>
+<font color="#C01C28">-    encoding:</font>
+<font color="#C01C28">-      codec: &quot;json&quot;</font>
+<font color="#C01C28">-      json:</font>
+<font color="#C01C28">-        pretty: true</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-# Vector&apos;s GraphQL API (disabled by default)</font>
+<font color="#C01C28">-# Uncomment to try it out with the `vector top` command or</font>
+<font color="#C01C28">-# in your browser at http://localhost:8686</font>
+<font color="#C01C28">-# api:</font>
+<font color="#C01C28">-#   enabled: true</font>
+<font color="#C01C28">-#   address: &quot;127.0.0.1:8686&quot;</font>
+<font color="#26A269">+  clickhouse-1:</font>
+<font color="#26A269">+    type: clickhouse</font>
+<font color="#26A269">+    inputs:</font>
+<font color="#26A269">+      - parse_logs</font>
+<font color="#26A269">+    endpoint: http://192.168.62.210:8123</font>
+<font color="#26A269">+    database: logs</font>
+<font color="#26A269">+    table: datadog</font>
+<font color="#26A269">+    batch:</font>
+<font color="#26A269">+      timeout_secs: 1</font>
+<font color="#26A269">+    auth:</font>
+<font color="#26A269">+      strategy: &quot;basic&quot;</font>
+<font color="#26A269">+      user: vector</font>
+<font color="#26A269">+      password: secret</font>
+<font color="#26A269">+    </font>
+
+<font color="#A2734C">changed: [lighthouse-generator-generic-podman]</font>
+
+RUNNING HANDLER [vector-role : Start vector service] ***************************
+<font color="#A2734C">changed: [lighthouse-generator-generic-podman]</font>
+
+PLAY RECAP *********************************************************************
+<font color="#A2734C">clickhouse-generic-podman-lighthouse</font> : <font color="#26A269">ok=37  </font> <font color="#A2734C">changed=16  </font> unreachable=0    failed=0    <font color="#2AA1B3">skipped=9   </font> rescued=0    ignored=0
+<font color="#A2734C">lighthouse-debian-podman</font>   : <font color="#26A269">ok=8   </font> <font color="#A2734C">changed=2   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+<font color="#A2734C">lighthouse-generator-generic-podman</font> : <font color="#26A269">ok=20  </font> <font color="#A2734C">changed=12  </font> unreachable=0    failed=0    <font color="#2AA1B3">skipped=1   </font> rescued=0    ignored=0
+<font color="#A2734C">lighthouse-leap-podman</font>     : <font color="#26A269">ok=8   </font> <font color="#A2734C">changed=2   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+<font color="#A2734C">lighthouse-stream9-podman</font>  : <font color="#26A269">ok=8   </font> <font color="#A2734C">changed=2   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+<font color="#A2734C">lighthouse-tumbleweed-podman</font> : <font color="#26A269">ok=8   </font> <font color="#A2734C">changed=2   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+<font color="#A2734C">lighthouse-ubuntu-podman</font>   : <font color="#26A269">ok=8   </font> <font color="#A2734C">changed=2   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">generic-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">converge</font>
+
+PLAY [Install LightHouse on hosts] *********************************************
+
+TASK [Gathering Facts] *********************************************************
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+
+TASK [lighthouse-role : Install required packages [nginx, git]] ****************
+The following additional packages will be installed:
+  git-man less libbrotli1 libcbor0.8 libcurl3-gnutls libedit2 liberror-perl
+  libfido2-1 libgdbm-compat4 libnghttp2-14 libperl5.36 libpsl5 librtmp1
+  libsodium23 libssh2-1 libx11-6 libx11-data libxau6 libxcb1 libxdmcp6
+  libxext6 libxmuu1 netbase nginx-common openssh-client patch perl
+  perl-modules-5.36 publicsuffix vim-common vim-runtime xauth xxd
+Suggested packages:
+  gettext-base git-daemon-run | git-daemon-sysvinit git-doc git-email git-gui
+  gitk gitweb git-cvs git-mediawiki git-svn sensible-utils fcgiwrap nginx-doc
+  ssl-cert keychain libpam-ssh monkeysphere ssh-askpass ed diffutils-doc
+  perl-doc libterm-readline-gnu-perl | libterm-readline-perl-perl make
+  libtap-harness-archive-perl ctags vim-doc vim-scripts
+The following NEW packages will be installed:
+  git git-man less libbrotli1 libcbor0.8 libcurl3-gnutls libedit2
+  liberror-perl libfido2-1 libgdbm-compat4 libnghttp2-14 libperl5.36 libpsl5
+  librtmp1 libsodium23 libssh2-1 libx11-6 libx11-data libxau6 libxcb1
+  libxdmcp6 libxext6 libxmuu1 netbase nginx nginx-common openssh-client patch
+  perl perl-modules-5.36 publicsuffix vim vim-common vim-runtime xauth xxd
+0 upgraded, 36 newly installed, 0 to remove and 0 not upgraded.
+<font color="#A2734C">changed: [lighthouse-debian-podman]</font>
+The following additional packages will be installed:
+  git-man less libbrotli1 libbsd0 libcbor0.10 libcurl3t64-gnutls libedit2
+  liberror-perl libfido2-1 libgdbm-compat4t64 libgpm2 libnghttp2-14
+  libperl5.38t64 libpsl5t64 libpython3.12t64 librtmp1 libsodium23 libssh-4
+  libx11-6 libx11-data libxau6 libxcb1 libxdmcp6 libxext6 libxmuu1
+  nginx-common openssh-client patch perl perl-modules-5.38 publicsuffix
+  vim-common vim-runtime xauth xxd
+Suggested packages:
+  gettext-base git-daemon-run | git-daemon-sysvinit git-doc git-email git-gui
+  gitk gitweb git-cvs git-mediawiki git-svn gpm fcgiwrap nginx-doc ssl-cert
+  keychain libpam-ssh monkeysphere ssh-askpass ed diffutils-doc perl-doc
+  libterm-readline-gnu-perl | libterm-readline-perl-perl make
+  libtap-harness-archive-perl ctags vim-doc vim-scripts
+The following NEW packages will be installed:
+  git git-man less libbrotli1 libbsd0 libcbor0.10 libcurl3t64-gnutls libedit2
+  liberror-perl libfido2-1 libgdbm-compat4t64 libgpm2 libnghttp2-14
+  libperl5.38t64 libpsl5t64 libpython3.12t64 librtmp1 libsodium23 libssh-4
+  libx11-6 libx11-data libxau6 libxcb1 libxdmcp6 libxext6 libxmuu1 nginx
+  nginx-common openssh-client patch perl perl-modules-5.38 publicsuffix vim
+  vim-common vim-runtime xauth xxd
+0 upgraded, 38 newly installed, 0 to remove and 0 not upgraded.
+<font color="#A2734C">changed: [lighthouse-ubuntu-podman]</font>
+<font color="#A2734C">changed: [lighthouse-stream9-podman]</font>
+installed: busybox-less, fontconfig, git, git-core, libX11-6, libX11-data, libXau6, libXpm4, libaom3, libavif16, libbrotlicommon1, libbrotlidec1, libdav1d7, libdb-4_8, libexslt0, libfontconfig1, libfreetype6, libgd3, libgdbm6, libgdbm_compat4, libjbig2, libjpeg8, libpng16-16, librav1e0_7, libsha1detectcoll1, libsharpyuv0, libtiff6, libwebp7, libxcb1, libxslt1, libyuv0, nginx, perl, perl-Error, perl-Git, perl-base, vim, vim-data-common, xxd
+<font color="#A2734C">changed: [lighthouse-tumbleweed-podman]</font>
+installed: file, fontconfig, git, git-core, less, libX11-6, libX11-data, libXau6, libXpm4, libfontconfig1, libfreetype6, libgd3, libgdbm4, libjbig2, libjpeg8, libpng16-16, libsha1detectcoll1, libtiff5, libwebp7, libxcb1, libxslt1, nginx, perl, perl-Error, perl-Git, vim, vim-data-common, which
+<font color="#A2734C">changed: [lighthouse-leap-podman]</font>
+
+TASK [lighthouse-role : Create folder for lighthouse] **************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,7 +1,7 @@</font>
+  {
+<font color="#C01C28">-    &quot;group&quot;: 0,</font>
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#C01C28">-    &quot;owner&quot;: 0,</font>
+<font color="#26A269">+    &quot;group&quot;: 1000,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0751&quot;,</font>
+<font color="#26A269">+    &quot;owner&quot;: 1000,</font>
+      &quot;path&quot;: &quot;/opt/lighthouse&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;absent&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;directory&quot;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-tumbleweed-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,7 +1,7 @@</font>
+  {
+<font color="#C01C28">-    &quot;group&quot;: 0,</font>
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#C01C28">-    &quot;owner&quot;: 0,</font>
+<font color="#26A269">+    &quot;group&quot;: 1000,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0751&quot;,</font>
+<font color="#26A269">+    &quot;owner&quot;: 1000,</font>
+      &quot;path&quot;: &quot;/opt/lighthouse&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;absent&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;directory&quot;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-debian-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,7 +1,7 @@</font>
+  {
+<font color="#C01C28">-    &quot;group&quot;: 0,</font>
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#C01C28">-    &quot;owner&quot;: 0,</font>
+<font color="#26A269">+    &quot;group&quot;: 1000,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0751&quot;,</font>
+<font color="#26A269">+    &quot;owner&quot;: 1000,</font>
+      &quot;path&quot;: &quot;/opt/lighthouse&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;absent&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;directory&quot;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-leap-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,7 +1,7 @@</font>
+  {
+<font color="#C01C28">-    &quot;group&quot;: 0,</font>
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#C01C28">-    &quot;owner&quot;: 0,</font>
+<font color="#26A269">+    &quot;group&quot;: 1000,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0751&quot;,</font>
+<font color="#26A269">+    &quot;owner&quot;: 1000,</font>
+      &quot;path&quot;: &quot;/opt/lighthouse&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;absent&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;directory&quot;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-stream9-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,7 +1,7 @@</font>
+  {
+<font color="#C01C28">-    &quot;group&quot;: 0,</font>
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#C01C28">-    &quot;owner&quot;: 0,</font>
+<font color="#26A269">+    &quot;group&quot;: 1001,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0751&quot;,</font>
+<font color="#26A269">+    &quot;owner&quot;: 1001,</font>
+      &quot;path&quot;: &quot;/opt/lighthouse&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;absent&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;directory&quot;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-ubuntu-podman]</font>
+
+TASK [lighthouse-role : Clone Lighthouse repository] ***************************
+&gt;&gt; Newly checked out d701335c25cd1bb9b5155711190bad8ab852c2ce
+<font color="#A2734C">changed: [lighthouse-stream9-podman]</font>
+&gt;&gt; Newly checked out d701335c25cd1bb9b5155711190bad8ab852c2ce
+<font color="#A2734C">changed: [lighthouse-leap-podman]</font>
+&gt;&gt; Newly checked out d701335c25cd1bb9b5155711190bad8ab852c2ce
+<font color="#A2734C">changed: [lighthouse-tumbleweed-podman]</font>
+&gt;&gt; Newly checked out d701335c25cd1bb9b5155711190bad8ab852c2ce
+<font color="#A2734C">changed: [lighthouse-ubuntu-podman]</font>
+&gt;&gt; Newly checked out d701335c25cd1bb9b5155711190bad8ab852c2ce
+<font color="#A2734C">changed: [lighthouse-debian-podman]</font>
+
+TASK [lighthouse-role : Ensure /etc/nginx/conf.d exists and is writable] *******
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0777&quot;,</font>
+      &quot;path&quot;: &quot;/etc/nginx/conf.d&quot;
+  }
+
+<font color="#A2734C">changed: [lighthouse-tumbleweed-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0777&quot;,</font>
+      &quot;path&quot;: &quot;/etc/nginx/conf.d&quot;
+  }
+
+<font color="#A2734C">changed: [lighthouse-debian-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0777&quot;,</font>
+      &quot;path&quot;: &quot;/etc/nginx/conf.d&quot;
+  }
+
+<font color="#A2734C">changed: [lighthouse-ubuntu-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0777&quot;,</font>
+      &quot;path&quot;: &quot;/etc/nginx/conf.d&quot;
+  }
+
+<font color="#A2734C">changed: [lighthouse-stream9-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0777&quot;,</font>
+      &quot;path&quot;: &quot;/etc/nginx/conf.d&quot;
+  }
+
+<font color="#A2734C">changed: [lighthouse-leap-podman]</font>
+
+TASK [lighthouse-role : Ensure nginx group exists] *****************************
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#A2734C">changed: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#A2734C">changed: [lighthouse-ubuntu-podman]</font>
+
+TASK [lighthouse-role : Create nginx user] *************************************
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#A2734C">changed: [lighthouse-leap-podman]</font>
+<font color="#A2734C">changed: [lighthouse-debian-podman]</font>
+<font color="#A2734C">changed: [lighthouse-tumbleweed-podman]</font>
+<font color="#A2734C">changed: [lighthouse-ubuntu-podman]</font>
+
+TASK [lighthouse-role : Copy nginx.conf] ***************************************
+<font color="#C01C28">--- before: /etc/nginx/nginx.conf</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-964210gnxbqyt6/tmp0b2gay83/nginx.conf</font>
+<font color="#2AA1B3">@@ -1,83 +1,29 @@</font>
+<font color="#C01C28">-user www-data;</font>
+<font color="#C01C28">-worker_processes auto;</font>
+<font color="#C01C28">-pid /run/nginx.pid;</font>
+<font color="#C01C28">-error_log /var/log/nginx/error.log;</font>
+<font color="#C01C28">-include /etc/nginx/modules-enabled/*.conf;</font>
+<font color="#26A269">+user  nginx;</font>
+<font color="#26A269">+worker_processes  auto;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+error_log  /var/log/nginx/error.log notice;</font>
+<font color="#26A269">+pid        /var/run/nginx.pid;</font>
+<font color="#26A269">+</font>
+
+  events {
+<font color="#C01C28">-       worker_connections 768;</font>
+<font color="#C01C28">-       # multi_accept on;</font>
+<font color="#C01C28">-}</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-http {</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-       # Basic Settings</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       sendfile on;</font>
+<font color="#C01C28">-       tcp_nopush on;</font>
+<font color="#C01C28">-       types_hash_max_size 2048;</font>
+<font color="#C01C28">-       # server_tokens off;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       # server_names_hash_bucket_size 64;</font>
+<font color="#C01C28">-       # server_name_in_redirect off;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       include /etc/nginx/mime.types;</font>
+<font color="#C01C28">-       default_type application/octet-stream;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-       # SSL Settings</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE</font>
+<font color="#C01C28">-       ssl_prefer_server_ciphers on;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-       # Logging Settings</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       access_log /var/log/nginx/access.log;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-       # Gzip Settings</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       gzip on;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       # gzip_vary on;</font>
+<font color="#C01C28">-       # gzip_proxied any;</font>
+<font color="#C01C28">-       # gzip_comp_level 6;</font>
+<font color="#C01C28">-       # gzip_buffers 16 8k;</font>
+<font color="#C01C28">-       # gzip_http_version 1.1;</font>
+<font color="#C01C28">-       # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-       # Virtual Host Configs</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       include /etc/nginx/conf.d/*.conf;</font>
+<font color="#C01C28">-       include /etc/nginx/sites-enabled/*;</font>
+<font color="#26A269">+    worker_connections  1024;</font>
+  }
+
+
+<font color="#C01C28">-#mail {</font>
+<font color="#C01C28">-#      # See sample authentication script at:</font>
+<font color="#C01C28">-#      # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript</font>
+<font color="#C01C28">-#</font>
+<font color="#C01C28">-#      # auth_http localhost/auth.php;</font>
+<font color="#C01C28">-#      # pop3_capabilities &quot;TOP&quot; &quot;USER&quot;;</font>
+<font color="#C01C28">-#      # imap_capabilities &quot;IMAP4rev1&quot; &quot;UIDPLUS&quot;;</font>
+<font color="#C01C28">-#</font>
+<font color="#C01C28">-#      server {</font>
+<font color="#C01C28">-#              listen     localhost:110;</font>
+<font color="#C01C28">-#              protocol   pop3;</font>
+<font color="#C01C28">-#              proxy      on;</font>
+<font color="#C01C28">-#      }</font>
+<font color="#C01C28">-#</font>
+<font color="#C01C28">-#      server {</font>
+<font color="#C01C28">-#              listen     localhost:143;</font>
+<font color="#C01C28">-#              protocol   imap;</font>
+<font color="#C01C28">-#              proxy      on;</font>
+<font color="#C01C28">-#      }</font>
+<font color="#C01C28">-#}</font>
+<font color="#26A269">+http {</font>
+<font color="#26A269">+    include       /etc/nginx/mime.types;</font>
+<font color="#26A269">+    default_type  application/octet-stream;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</font>
+<font color="#26A269">+                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</font>
+<font color="#26A269">+                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    access_log  /var/log/nginx/access.log  main;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    sendfile           on;</font>
+<font color="#26A269">+    tcp_nopush         on;</font>
+<font color="#26A269">+    keepalive_timeout  65;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    include /etc/nginx/conf.d/*.conf;</font>
+<font color="#26A269">+}</font>
+
+<font color="#A2734C">changed: [lighthouse-ubuntu-podman]</font>
+<font color="#C01C28">--- before: /etc/nginx/nginx.conf</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-964210gnxbqyt6/tmph5xuxxmv/nginx.conf</font>
+<font color="#2AA1B3">@@ -1,83 +1,29 @@</font>
+<font color="#C01C28">-user www-data;</font>
+<font color="#C01C28">-worker_processes auto;</font>
+<font color="#C01C28">-pid /run/nginx.pid;</font>
+<font color="#C01C28">-error_log /var/log/nginx/error.log;</font>
+<font color="#C01C28">-include /etc/nginx/modules-enabled/*.conf;</font>
+<font color="#26A269">+user  nginx;</font>
+<font color="#26A269">+worker_processes  auto;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+error_log  /var/log/nginx/error.log notice;</font>
+<font color="#26A269">+pid        /var/run/nginx.pid;</font>
+<font color="#26A269">+</font>
+
+  events {
+<font color="#C01C28">-       worker_connections 768;</font>
+<font color="#C01C28">-       # multi_accept on;</font>
+<font color="#C01C28">-}</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-http {</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-       # Basic Settings</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       sendfile on;</font>
+<font color="#C01C28">-       tcp_nopush on;</font>
+<font color="#C01C28">-       types_hash_max_size 2048;</font>
+<font color="#C01C28">-       # server_tokens off;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       # server_names_hash_bucket_size 64;</font>
+<font color="#C01C28">-       # server_name_in_redirect off;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       include /etc/nginx/mime.types;</font>
+<font color="#C01C28">-       default_type application/octet-stream;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-       # SSL Settings</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE</font>
+<font color="#C01C28">-       ssl_prefer_server_ciphers on;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-       # Logging Settings</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       access_log /var/log/nginx/access.log;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-       # Gzip Settings</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       gzip on;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       # gzip_vary on;</font>
+<font color="#C01C28">-       # gzip_proxied any;</font>
+<font color="#C01C28">-       # gzip_comp_level 6;</font>
+<font color="#C01C28">-       # gzip_buffers 16 8k;</font>
+<font color="#C01C28">-       # gzip_http_version 1.1;</font>
+<font color="#C01C28">-       # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-       # Virtual Host Configs</font>
+<font color="#C01C28">-       ##</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-       include /etc/nginx/conf.d/*.conf;</font>
+<font color="#C01C28">-       include /etc/nginx/sites-enabled/*;</font>
+<font color="#26A269">+    worker_connections  1024;</font>
+  }
+
+
+<font color="#C01C28">-#mail {</font>
+<font color="#C01C28">-#      # See sample authentication script at:</font>
+<font color="#C01C28">-#      # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript</font>
+<font color="#C01C28">-#</font>
+<font color="#C01C28">-#      # auth_http localhost/auth.php;</font>
+<font color="#C01C28">-#      # pop3_capabilities &quot;TOP&quot; &quot;USER&quot;;</font>
+<font color="#C01C28">-#      # imap_capabilities &quot;IMAP4rev1&quot; &quot;UIDPLUS&quot;;</font>
+<font color="#C01C28">-#</font>
+<font color="#C01C28">-#      server {</font>
+<font color="#C01C28">-#              listen     localhost:110;</font>
+<font color="#C01C28">-#              protocol   pop3;</font>
+<font color="#C01C28">-#              proxy      on;</font>
+<font color="#C01C28">-#      }</font>
+<font color="#C01C28">-#</font>
+<font color="#C01C28">-#      server {</font>
+<font color="#C01C28">-#              listen     localhost:143;</font>
+<font color="#C01C28">-#              protocol   imap;</font>
+<font color="#C01C28">-#              proxy      on;</font>
+<font color="#C01C28">-#      }</font>
+<font color="#C01C28">-#}</font>
+<font color="#26A269">+http {</font>
+<font color="#26A269">+    include       /etc/nginx/mime.types;</font>
+<font color="#26A269">+    default_type  application/octet-stream;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</font>
+<font color="#26A269">+                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</font>
+<font color="#26A269">+                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    access_log  /var/log/nginx/access.log  main;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    sendfile           on;</font>
+<font color="#26A269">+    tcp_nopush         on;</font>
+<font color="#26A269">+    keepalive_timeout  65;</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+</font>
+<font color="#26A269">+    include /etc/nginx/conf.d/*.conf;</font>
+<font color="#26A269">+}</font>
+
+<font color="#A2734C">changed: [lighthouse-debian-podman]</font>
+<font color="#C01C28">--- before: /etc/nginx/nginx.conf</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-964210gnxbqyt6/tmpl5rn3xfh/nginx.conf</font>
+<font color="#2AA1B3">@@ -1,137 +1,29 @@</font>
+<font color="#C01C28">-#user nginx nginx;</font>
+<font color="#C01C28">-#worker_processes 1;</font>
+<font color="#C01C28">-#pcre_jit off;</font>
+<font color="#26A269">+user  nginx;</font>
+<font color="#26A269">+worker_processes  auto;</font>
+
+<font color="#C01C28">-# load_module /usr/lib64/nginx/modules/ngx_http_echo_module.so;</font>
+<font color="#C01C28">-# load_module /usr/lib64/nginx/modules/ngx_http_fancyindex_module.so;</font>
+<font color="#C01C28">-# load_module /usr/lib64/nginx/modules/ngx_http_geoip2_module.so;</font>
+<font color="#C01C28">-# load_module /usr/lib64/nginx/modules/ngx_http_image_filter_module.so;</font>
+<font color="#C01C28">-# load_module /usr/lib64/nginx/modules/ngx_http_lua_module.so;</font>
+<font color="#C01C28">-# load_module /usr/lib64/nginx/modules/ngx_http_perl_module.so;</font>
+<font color="#C01C28">-# load_module /usr/lib64/nginx/modules/ngx_http_xslt_filter_module.so;</font>
+<font color="#C01C28">-# load_module /usr/lib64/nginx/modules/ngx_mail_module.so;</font>
+<font color="#C01C28">-# load_module /usr/lib64/nginx/modules/ngx_stream_geoip2_module.so;</font>
+<font color="#C01C28">-# load_module /usr/lib64/nginx/modules/ngx_stream_module.so;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-#error_log  /var/log/nginx/error.log;</font>
+<font color="#C01C28">-#error_log  /var/log/nginx/error.log  notice;</font>
+<font color="#C01C28">-#error_log  /var/log/nginx/error.log  info;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-#pid        /run/nginx.pid;</font>
+<font color="#26A269">+error_log  /var/log/nginx/error.log notice;</font>
+<font color="#26A269">+pid        /var/run/nginx.pid;</font>
+
+
+  events {
+      worker_connections  1024;
+<font color="#C01C28">-    use epoll;</font>
+  }
+
+
+  http {
+<font color="#C01C28">-    include       mime.types;</font>
+<font color="#26A269">+    include       /etc/nginx/mime.types;</font>
+      default_type  application/octet-stream;
+
+<font color="#C01C28">-    #log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</font>
+<font color="#C01C28">-    #                  &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</font>
+<font color="#C01C28">-    #                  &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</font>
+<font color="#26A269">+    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</font>
+<font color="#26A269">+                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</font>
+<font color="#26A269">+                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</font>
+
+<font color="#C01C28">-    #access_log  /var/log/nginx/access.log  main;</font>
+<font color="#26A269">+    access_log  /var/log/nginx/access.log  main;</font>
+
+<font color="#C01C28">-    sendfile        on;</font>
+<font color="#C01C28">-    #tcp_nopush     on;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #keepalive_timeout  0;</font>
+<font color="#26A269">+    sendfile           on;</font>
+<font color="#26A269">+    tcp_nopush         on;</font>
+      keepalive_timeout  65;
+
+<font color="#C01C28">-    #gzip  on;</font>
+
+<font color="#C01C28">-    include conf.d/*.conf;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    server {</font>
+<font color="#C01C28">-        listen       80;</font>
+<font color="#C01C28">-        server_name  localhost;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        #charset koi8-r;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        #access_log  /var/log/nginx/host.access.log  main;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        location / {</font>
+<font color="#C01C28">-            root   /srv/www/htdocs/;</font>
+<font color="#C01C28">-            index  index.html index.htm;</font>
+<font color="#C01C28">-        }</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        #error_page  404              /404.html;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        # redirect server error pages to the static page /50x.html</font>
+<font color="#C01C28">-        #</font>
+<font color="#C01C28">-        error_page   500 502 503 504  /50x.html;</font>
+<font color="#C01C28">-        location = /50x.html {</font>
+<font color="#C01C28">-            root   /srv/www/htdocs/;</font>
+<font color="#C01C28">-        }</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        # proxy the PHP scripts to Apache listening on 127.0.0.1:80</font>
+<font color="#C01C28">-        #</font>
+<font color="#C01C28">-        #location ~ \.php$ {</font>
+<font color="#C01C28">-        #    proxy_pass   http://127.0.0.1;</font>
+<font color="#C01C28">-        #}</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</font>
+<font color="#C01C28">-        #</font>
+<font color="#C01C28">-        #location ~ \.php$ {</font>
+<font color="#C01C28">-        #    root   /srv/www/htdocs/;</font>
+<font color="#C01C28">-        #    fastcgi_pass   127.0.0.1:9000;</font>
+<font color="#C01C28">-        #    fastcgi_index  index.php;</font>
+<font color="#C01C28">-        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</font>
+<font color="#C01C28">-        #    include        fastcgi_params;</font>
+<font color="#C01C28">-        #}</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        # deny access to .htaccess files, if Apache&apos;s document root</font>
+<font color="#C01C28">-        # concurs with nginx&apos;s one</font>
+<font color="#C01C28">-        #</font>
+<font color="#C01C28">-        #location ~ /\.ht {</font>
+<font color="#C01C28">-        #    deny  all;</font>
+<font color="#C01C28">-        #}</font>
+<font color="#C01C28">-    }</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    # another virtual host using mix of IP-, name-, and port-based configuration</font>
+<font color="#C01C28">-    #</font>
+<font color="#C01C28">-    #server {</font>
+<font color="#C01C28">-    #    listen       8000;</font>
+<font color="#C01C28">-    #    listen       somename:8080;</font>
+<font color="#C01C28">-    #    server_name  somename  alias  another.alias;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #    location / {</font>
+<font color="#C01C28">-    #        root   /srv/www/htdocs/;</font>
+<font color="#C01C28">-    #        index  index.html index.htm;</font>
+<font color="#C01C28">-    #    }</font>
+<font color="#C01C28">-    #}</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    # HTTPS server</font>
+<font color="#C01C28">-    #</font>
+<font color="#C01C28">-    #server {</font>
+<font color="#C01C28">-    #    listen       443 ssl;</font>
+<font color="#C01C28">-    #    server_name  localhost;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #    ssl_certificate      cert.pem;</font>
+<font color="#C01C28">-    #    ssl_certificate_key  cert.key;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #    Allow TLS version 1.2 only, which is a recommended default these days</font>
+<font color="#C01C28">-    #    by international information security standards.</font>
+<font color="#C01C28">-    #    ssl_protocols        TLSv1.2;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #    ssl_session_cache    shared:SSL:1m;</font>
+<font color="#C01C28">-    #    ssl_session_timeout  5m;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #    ssl_ciphers  HIGH:!aNULL:!MD5;</font>
+<font color="#C01C28">-    #    ssl_prefer_server_ciphers  on;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #    location / {</font>
+<font color="#C01C28">-    #        root   /srv/www/htdocs/;</font>
+<font color="#C01C28">-    #        index  index.html index.htm;</font>
+<font color="#C01C28">-    #    }</font>
+<font color="#C01C28">-    #}</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    include vhosts.d/*.conf;</font>
+<font color="#C01C28">-</font>
+<font color="#26A269">+    include /etc/nginx/conf.d/*.conf;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-tumbleweed-podman]</font>
+<font color="#C01C28">--- before: /etc/nginx/nginx.conf</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-964210gnxbqyt6/tmp8xxmct48/nginx.conf</font>
+<font color="#2AA1B3">@@ -1,84 +1,29 @@</font>
+<font color="#C01C28">-# For more information on configuration, see:</font>
+<font color="#C01C28">-#   * Official English Documentation: http://nginx.org/en/docs/</font>
+<font color="#C01C28">-#   * Official Russian Documentation: http://nginx.org/ru/docs/</font>
+<font color="#26A269">+user  nginx;</font>
+<font color="#26A269">+worker_processes  auto;</font>
+
+<font color="#C01C28">-user nginx;</font>
+<font color="#C01C28">-worker_processes auto;</font>
+<font color="#C01C28">-error_log /var/log/nginx/error.log;</font>
+<font color="#C01C28">-pid /run/nginx.pid;</font>
+<font color="#26A269">+error_log  /var/log/nginx/error.log notice;</font>
+<font color="#26A269">+pid        /var/run/nginx.pid;</font>
+
+<font color="#C01C28">-# Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.</font>
+<font color="#C01C28">-include /usr/share/nginx/modules/*.conf;</font>
+
+  events {
+<font color="#C01C28">-    worker_connections 1024;</font>
+<font color="#26A269">+    worker_connections  1024;</font>
+  }
+
+<font color="#26A269">+</font>
+  http {
+<font color="#26A269">+    include       /etc/nginx/mime.types;</font>
+<font color="#26A269">+    default_type  application/octet-stream;</font>
+<font color="#26A269">+</font>
+      log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;
+                        &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;
+                        &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;
+
+      access_log  /var/log/nginx/access.log  main;
+
+<font color="#C01C28">-    sendfile            on;</font>
+<font color="#C01C28">-    tcp_nopush          on;</font>
+<font color="#C01C28">-    tcp_nodelay         on;</font>
+<font color="#C01C28">-    keepalive_timeout   65;</font>
+<font color="#C01C28">-    types_hash_max_size 4096;</font>
+<font color="#26A269">+    sendfile           on;</font>
+<font color="#26A269">+    tcp_nopush         on;</font>
+<font color="#26A269">+    keepalive_timeout  65;</font>
+
+<font color="#C01C28">-    include             /etc/nginx/mime.types;</font>
+<font color="#C01C28">-    default_type        application/octet-stream;</font>
+
+<font color="#C01C28">-    # Load modular configuration files from the /etc/nginx/conf.d directory.</font>
+<font color="#C01C28">-    # See http://nginx.org/en/docs/ngx_core_module.html#include</font>
+<font color="#C01C28">-    # for more information.</font>
+      include /etc/nginx/conf.d/*.conf;
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    server {</font>
+<font color="#C01C28">-        listen       80;</font>
+<font color="#C01C28">-        listen       [::]:80;</font>
+<font color="#C01C28">-        server_name  _;</font>
+<font color="#C01C28">-        root         /usr/share/nginx/html;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        # Load configuration files for the default server block.</font>
+<font color="#C01C28">-        include /etc/nginx/default.d/*.conf;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        error_page 404 /404.html;</font>
+<font color="#C01C28">-        location = /404.html {</font>
+<font color="#C01C28">-        }</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        error_page 500 502 503 504 /50x.html;</font>
+<font color="#C01C28">-        location = /50x.html {</font>
+<font color="#C01C28">-        }</font>
+<font color="#C01C28">-    }</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-# Settings for a TLS enabled server.</font>
+<font color="#C01C28">-#</font>
+<font color="#C01C28">-#    server {</font>
+<font color="#C01C28">-#        listen       443 ssl http2;</font>
+<font color="#C01C28">-#        listen       [::]:443 ssl http2;</font>
+<font color="#C01C28">-#        server_name  _;</font>
+<font color="#C01C28">-#        root         /usr/share/nginx/html;</font>
+<font color="#C01C28">-#</font>
+<font color="#C01C28">-#        ssl_certificate &quot;/etc/pki/nginx/server.crt&quot;;</font>
+<font color="#C01C28">-#        ssl_certificate_key &quot;/etc/pki/nginx/private/server.key&quot;;</font>
+<font color="#C01C28">-#        ssl_session_cache shared:SSL:1m;</font>
+<font color="#C01C28">-#        ssl_session_timeout  10m;</font>
+<font color="#C01C28">-#        ssl_ciphers PROFILE=SYSTEM;</font>
+<font color="#C01C28">-#        ssl_prefer_server_ciphers on;</font>
+<font color="#C01C28">-#</font>
+<font color="#C01C28">-#        # Load configuration files for the default server block.</font>
+<font color="#C01C28">-#        include /etc/nginx/default.d/*.conf;</font>
+<font color="#C01C28">-#</font>
+<font color="#C01C28">-#        error_page 404 /404.html;</font>
+<font color="#C01C28">-#            location = /40x.html {</font>
+<font color="#C01C28">-#        }</font>
+<font color="#C01C28">-#</font>
+<font color="#C01C28">-#        error_page 500 502 503 504 /50x.html;</font>
+<font color="#C01C28">-#            location = /50x.html {</font>
+<font color="#C01C28">-#        }</font>
+<font color="#C01C28">-#    }</font>
+<font color="#C01C28">-</font>
+  }
+<font color="#C01C28">-</font>
+
+<font color="#A2734C">changed: [lighthouse-stream9-podman]</font>
+<font color="#C01C28">--- before: /etc/nginx/nginx.conf</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-964210gnxbqyt6/tmp9h_xr7wf/nginx.conf</font>
+<font color="#2AA1B3">@@ -1,135 +1,29 @@</font>
+<font color="#26A269">+user  nginx;</font>
+<font color="#26A269">+worker_processes  auto;</font>
+
+<font color="#C01C28">-#user  nginx;</font>
+<font color="#C01C28">-worker_processes  1;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-# load_module lib64/nginx/modules/ngx_http_fancyindex_module.so;</font>
+<font color="#C01C28">-# load_module lib64/nginx/modules/ngx_http_headers_more_filter_module.so;</font>
+<font color="#C01C28">-# load_module lib64/nginx/modules/ngx_http_image_filter_module.so;</font>
+<font color="#C01C28">-# load_module lib64/nginx/modules/ngx_http_perl_module.so;</font>
+<font color="#C01C28">-# load_module lib64/nginx/modules/ngx_http_xslt_filter_module.so;</font>
+<font color="#C01C28">-# load_module lib64/nginx/modules/ngx_mail_module.so;</font>
+<font color="#C01C28">-# load_module lib64/nginx/modules/ngx_rtmp_module.so;</font>
+<font color="#C01C28">-# load_module lib64/nginx/modules/ngx_stream_module.so;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-#error_log  /var/log/nginx/error.log;</font>
+<font color="#C01C28">-#error_log  /var/log/nginx/error.log  notice;</font>
+<font color="#C01C28">-#error_log  /var/log/nginx/error.log  info;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-#pid        /var/run/nginx.pid;</font>
+<font color="#26A269">+error_log  /var/log/nginx/error.log notice;</font>
+<font color="#26A269">+pid        /var/run/nginx.pid;</font>
+
+
+  events {
+      worker_connections  1024;
+<font color="#C01C28">-    use epoll;</font>
+  }
+
+
+  http {
+<font color="#C01C28">-    include       mime.types;</font>
+<font color="#26A269">+    include       /etc/nginx/mime.types;</font>
+      default_type  application/octet-stream;
+
+<font color="#C01C28">-    #log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</font>
+<font color="#C01C28">-    #                  &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</font>
+<font color="#C01C28">-    #                  &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</font>
+<font color="#26A269">+    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</font>
+<font color="#26A269">+                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</font>
+<font color="#26A269">+                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</font>
+
+<font color="#C01C28">-    #access_log  /var/log/nginx/access.log  main;</font>
+<font color="#26A269">+    access_log  /var/log/nginx/access.log  main;</font>
+
+<font color="#C01C28">-    sendfile        on;</font>
+<font color="#C01C28">-    #tcp_nopush     on;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #keepalive_timeout  0;</font>
+<font color="#26A269">+    sendfile           on;</font>
+<font color="#26A269">+    tcp_nopush         on;</font>
+      keepalive_timeout  65;
+
+<font color="#C01C28">-    #gzip  on;</font>
+
+<font color="#C01C28">-    include conf.d/*.conf;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    server {</font>
+<font color="#C01C28">-        listen       80;</font>
+<font color="#C01C28">-        server_name  localhost;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        #charset koi8-r;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        #access_log  /var/log/nginx/host.access.log  main;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        location / {</font>
+<font color="#C01C28">-            root   /srv/www/htdocs/;</font>
+<font color="#C01C28">-            index  index.html index.htm;</font>
+<font color="#C01C28">-        }</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        #error_page  404              /404.html;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        # redirect server error pages to the static page /50x.html</font>
+<font color="#C01C28">-        #</font>
+<font color="#C01C28">-        error_page   500 502 503 504  /50x.html;</font>
+<font color="#C01C28">-        location = /50x.html {</font>
+<font color="#C01C28">-            root   /srv/www/htdocs/;</font>
+<font color="#C01C28">-        }</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        # proxy the PHP scripts to Apache listening on 127.0.0.1:80</font>
+<font color="#C01C28">-        #</font>
+<font color="#C01C28">-        #location ~ \.php$ {</font>
+<font color="#C01C28">-        #    proxy_pass   http://127.0.0.1;</font>
+<font color="#C01C28">-        #}</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</font>
+<font color="#C01C28">-        #</font>
+<font color="#C01C28">-        #location ~ \.php$ {</font>
+<font color="#C01C28">-        #    root           /srv/www/htdocs/;</font>
+<font color="#C01C28">-        #    fastcgi_pass   127.0.0.1:9000;</font>
+<font color="#C01C28">-        #    fastcgi_index  index.php;</font>
+<font color="#C01C28">-        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</font>
+<font color="#C01C28">-        #    include        fastcgi_params;</font>
+<font color="#C01C28">-        #}</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-        # deny access to .htaccess files, if Apache&apos;s document root</font>
+<font color="#C01C28">-        # concurs with nginx&apos;s one</font>
+<font color="#C01C28">-        #</font>
+<font color="#C01C28">-        #location ~ /\.ht {</font>
+<font color="#C01C28">-        #    deny  all;</font>
+<font color="#C01C28">-        #}</font>
+<font color="#C01C28">-    }</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    # another virtual host using mix of IP-, name-, and port-based configuration</font>
+<font color="#C01C28">-    #</font>
+<font color="#C01C28">-    #server {</font>
+<font color="#C01C28">-    #    listen       8000;</font>
+<font color="#C01C28">-    #    listen       somename:8080;</font>
+<font color="#C01C28">-    #    server_name  somename  alias  another.alias;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #    location / {</font>
+<font color="#C01C28">-    #        root   /srv/www/htdocs/;</font>
+<font color="#C01C28">-    #        index  index.html index.htm;</font>
+<font color="#C01C28">-    #    }</font>
+<font color="#C01C28">-    #}</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    # HTTPS server</font>
+<font color="#C01C28">-    #</font>
+<font color="#C01C28">-    #server {</font>
+<font color="#C01C28">-    #    listen       443 ssl;</font>
+<font color="#C01C28">-    #    server_name  localhost;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #    ssl_certificate      cert.pem;</font>
+<font color="#C01C28">-    #    ssl_certificate_key  cert.key;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #    Allow TLS version 1.2 only, which is a recommended default these days</font>
+<font color="#C01C28">-    #    by international information security standards.</font>
+<font color="#C01C28">-    #    ssl_protocols        TLSv1.2;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #    ssl_session_cache    shared:SSL:1m;</font>
+<font color="#C01C28">-    #    ssl_session_timeout  5m;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #    ssl_ciphers  HIGH:!aNULL:!MD5;</font>
+<font color="#C01C28">-    #    ssl_prefer_server_ciphers  on;</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    #    location / {</font>
+<font color="#C01C28">-    #        root   /srv/www/htdocs/;</font>
+<font color="#C01C28">-    #        index  index.html index.htm;</font>
+<font color="#C01C28">-    #    }</font>
+<font color="#C01C28">-    #}</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-    include vhosts.d/*.conf;</font>
+<font color="#C01C28">-</font>
+<font color="#26A269">+    include /etc/nginx/conf.d/*.conf;</font>
+  }
+
+<font color="#A2734C">changed: [lighthouse-leap-podman]</font>
+
+TASK [lighthouse-role : Copy nginx configuration lighthouse for nginx] *********
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-964210gnxbqyt6/tmpmjx2563v/lighthouse-nginx.conf</font>
+<font color="#2AA1B3">@@ -0,0 +1,5 @@</font>
+<font color="#26A269">+server {</font>
+<font color="#26A269">+  listen 8090;</font>
+<font color="#26A269">+  server_name lighthouse;</font>
+<font color="#26A269">+  root /opt/lighthouse;</font>
+<font color="#26A269">+}</font>
+
+<font color="#A2734C">changed: [lighthouse-stream9-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-964210gnxbqyt6/tmpllbozsc8/lighthouse-nginx.conf</font>
+<font color="#2AA1B3">@@ -0,0 +1,5 @@</font>
+<font color="#26A269">+server {</font>
+<font color="#26A269">+  listen 8090;</font>
+<font color="#26A269">+  server_name lighthouse;</font>
+<font color="#26A269">+  root /opt/lighthouse;</font>
+<font color="#26A269">+}</font>
+
+<font color="#A2734C">changed: [lighthouse-debian-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-964210gnxbqyt6/tmp3vfshff4/lighthouse-nginx.conf</font>
+<font color="#2AA1B3">@@ -0,0 +1,5 @@</font>
+<font color="#26A269">+server {</font>
+<font color="#26A269">+  listen 8090;</font>
+<font color="#26A269">+  server_name lighthouse;</font>
+<font color="#26A269">+  root /opt/lighthouse;</font>
+<font color="#26A269">+}</font>
+
+<font color="#A2734C">changed: [lighthouse-tumbleweed-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-964210gnxbqyt6/tmpekwu7g2h/lighthouse-nginx.conf</font>
+<font color="#2AA1B3">@@ -0,0 +1,5 @@</font>
+<font color="#26A269">+server {</font>
+<font color="#26A269">+  listen 8090;</font>
+<font color="#26A269">+  server_name lighthouse;</font>
+<font color="#26A269">+  root /opt/lighthouse;</font>
+<font color="#26A269">+}</font>
+
+<font color="#A2734C">changed: [lighthouse-leap-podman]</font>
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-964210gnxbqyt6/tmp2pkyhi1n/lighthouse-nginx.conf</font>
+<font color="#2AA1B3">@@ -0,0 +1,5 @@</font>
+<font color="#26A269">+server {</font>
+<font color="#26A269">+  listen 8090;</font>
+<font color="#26A269">+  server_name lighthouse;</font>
+<font color="#26A269">+  root /opt/lighthouse;</font>
+<font color="#26A269">+}</font>
+
+<font color="#A2734C">changed: [lighthouse-ubuntu-podman]</font>
+
+RUNNING HANDLER [lighthouse-role : Reload nginx] *******************************
+<font color="#A2734C">changed: [lighthouse-stream9-podman]</font>
+<font color="#A2734C">changed: [lighthouse-ubuntu-podman]</font>
+<font color="#A2734C">changed: [lighthouse-debian-podman]</font>
+<font color="#A2734C">changed: [lighthouse-tumbleweed-podman]</font>
+<font color="#A2734C">changed: [lighthouse-leap-podman]</font>
+
+RUNNING HANDLER [lighthouse-role : Ensure nginx service is active] *************
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+
+PLAY RECAP *********************************************************************
+<font color="#A2734C">lighthouse-debian-podman</font>   : <font color="#26A269">ok=11  </font> <font color="#A2734C">changed=9   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+<font color="#A2734C">lighthouse-leap-podman</font>     : <font color="#26A269">ok=11  </font> <font color="#A2734C">changed=8   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+<font color="#A2734C">lighthouse-stream9-podman</font>  : <font color="#26A269">ok=11  </font> <font color="#A2734C">changed=7   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+<font color="#A2734C">lighthouse-tumbleweed-podman</font> : <font color="#26A269">ok=11  </font> <font color="#A2734C">changed=8   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+<font color="#A2734C">lighthouse-ubuntu-podman</font>   : <font color="#26A269">ok=11  </font> <font color="#A2734C">changed=9   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">generic-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">idempotence</font>
+
+PLAY [Install LightHouse on hosts] *********************************************
+
+TASK [Gathering Facts] *********************************************************
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+
+TASK [lighthouse-role : Install required packages [nginx, git]] ****************
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+
+TASK [lighthouse-role : Create folder for lighthouse] **************************
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+
+TASK [lighthouse-role : Clone Lighthouse repository] ***************************
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+
+TASK [lighthouse-role : Ensure /etc/nginx/conf.d exists and is writable] *******
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+
+TASK [lighthouse-role : Ensure nginx group exists] *****************************
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+
+TASK [lighthouse-role : Create nginx user] *************************************
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+
+TASK [lighthouse-role : Copy nginx.conf] ***************************************
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+
+TASK [lighthouse-role : Copy nginx configuration lighthouse for nginx] *********
+<font color="#26A269">ok: [lighthouse-debian-podman]</font>
+<font color="#26A269">ok: [lighthouse-ubuntu-podman]</font>
+<font color="#26A269">ok: [lighthouse-leap-podman]</font>
+<font color="#26A269">ok: [lighthouse-tumbleweed-podman]</font>
+<font color="#26A269">ok: [lighthouse-stream9-podman]</font>
+
+PLAY RECAP *********************************************************************
+<font color="#26A269">lighthouse-debian-podman</font>   : <font color="#26A269">ok=9   </font> changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+<font color="#26A269">lighthouse-leap-podman</font>     : <font color="#26A269">ok=9   </font> changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+<font color="#26A269">lighthouse-stream9-podman</font>  : <font color="#26A269">ok=9   </font> changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+<font color="#26A269">lighthouse-tumbleweed-podman</font> : <font color="#26A269">ok=9   </font> changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+<font color="#26A269">lighthouse-ubuntu-podman</font>   : <font color="#26A269">ok=9   </font> changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> Idempotence completed successfully.
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">generic-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">verify</font>
+<font color="#12488B">INFO    </font> Running Ansible Verifier
+
+PLAY [Availability test routine for Lighthouse role] ***************************
+
+TASK [Prepare Molecule facts] **************************************************
+<font color="#26A269">ok: [localhost]</font>
+
+TASK [Podman. Gather information about LightHouse containers] ******************
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-tumbleweed-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-ubuntu-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-stream9-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-debian-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-leap-podman)</font>
+
+TASK [Find out LighHouse IPs] **************************************************
+<font color="#26A269">ok: [localhost]</font>
+
+TASK [Check endpoint availability] *********************************************
+<font color="#26A269">ok: [localhost -&gt; lighthouse-generator-generic-podman] =&gt; (item=192.168.62.213)</font>
+<font color="#26A269">ok: [localhost -&gt; lighthouse-generator-generic-podman] =&gt; (item=192.168.62.214)</font>
+<font color="#26A269">ok: [localhost -&gt; lighthouse-generator-generic-podman] =&gt; (item=192.168.62.216)</font>
+<font color="#26A269">ok: [localhost -&gt; lighthouse-generator-generic-podman] =&gt; (item=192.168.62.217)</font>
+<font color="#26A269">ok: [localhost -&gt; lighthouse-generator-generic-podman] =&gt; (item=192.168.62.218)</font>
+
+PLAY [End-to-end LightHouse test] **********************************************
+
+TASK [Instal lxml with pip] ****************************************************
+<font color="#26A269">ok: [localhost]</font>
+
+TASK [Retrieve information] ****************************************************
+<font color="#26A269">ok: [localhost]</font>
+
+TASK [Assert that driver name is docker or podman and splash_ip is defined] ****
+<font color="#26A269">ok: [localhost]</font>
+
+TASK [Get clickhouse IP] *******************************************************
+<font color="#26A269">ok: [localhost]</font>
+
+TASK [Podman. Gather information about LightHouse containers] ******************
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-tumbleweed-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-ubuntu-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-stream9-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-debian-podman)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-leap-podman)</font>
+
+TASK [Podman - Ensure Splash image was pulled] *********************************
+<font color="#26A269">ok: [localhost]</font>
+
+TASK [Find out IPs] ************************************************************
+<font color="#26A269">ok: [localhost]</font>
+
+TASK [Podman - Start scrapinghub Splash container] *****************************
+<font color="#A2734C">changed: [localhost]</font>
+
+TASK [Render Lighthouse Application] *******************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=192.168.62.213)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=192.168.62.214)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=192.168.62.216)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=192.168.62.217)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=192.168.62.218)</font>
+
+TASK [Test that Quantity is non-negative] **************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=192.168.62.213, quantity=36.)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=192.168.62.214, quantity=36.)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=192.168.62.216, quantity=37.)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=192.168.62.217, quantity=37.)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=192.168.62.218, quantity=38.)</font>
+
+PLAY RECAP *********************************************************************
+<font color="#A2734C">localhost</font>                  : <font color="#26A269">ok=14  </font> <font color="#A2734C">changed=1   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> Verifier completed successfully.
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">generic-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">cleanup</font>
+
+PLAY [Cleanup - remove scrapinghub Splash containers] **************************
+
+TASK [Set splash_name (name of Splash container)] ******************************
+<font color="#26A269">ok: [localhost]</font>
+
+TASK [Podman - Remove scrapinghub Splash container] ****************************
+<font color="#A2734C">changed: [localhost]</font>
+
+PLAY RECAP *********************************************************************
+<font color="#A2734C">localhost</font>                  : <font color="#26A269">ok=2   </font> <font color="#A2734C">changed=1   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">generic-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">destroy</font>
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Destroy molecule instance(s)] ********************************************
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;capabilities&apos;: [&apos;CAP_SYS_NICE&apos;], &apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;extra_opts&apos;: [&apos;--pids-limit=-1&apos;, &apos;--memory=2G&apos;, &apos;--memory-swap=4G&apos;, &apos;--ipc=private&apos;], &apos;groups&apos;: [&apos;clickhouse&apos;], &apos;image&apos;: &apos;debian:latest&apos;, &apos;ip&apos;: &apos;192.168.62.210&apos;, &apos;name&apos;: &apos;clickhouse-generic-podman-lighthouse&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;subnet&apos;: &apos;192.168.62.208/28&apos;, &apos;systemd&apos;: &apos;always&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;vector&apos;], &apos;hostname&apos;: &apos;lighthouse-generator-generic-podman&apos;, &apos;image&apos;: &apos;registry.access.redhat.com/ubi9/ubi-init&apos;, &apos;ip&apos;: &apos;192.168.62.211&apos;, &apos;name&apos;: &apos;lighthouse-generator-generic-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;pre_build_image&apos;: True, &apos;systemd&apos;: &apos;always&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-tumbleweed-podman&apos;, &apos;image&apos;: &apos;opensuse/tumbleweed:latest&apos;, &apos;ip&apos;: &apos;192.168.62.213&apos;, &apos;name&apos;: &apos;lighthouse-tumbleweed-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-ubuntu-podman&apos;, &apos;image&apos;: &apos;ubuntu:latest&apos;, &apos;ip&apos;: &apos;192.168.62.214&apos;, &apos;name&apos;: &apos;lighthouse-ubuntu-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-stream9-podman&apos;, &apos;image&apos;: &apos;quay.io/centos/centos:stream9&apos;, &apos;ip&apos;: &apos;192.168.62.216&apos;, &apos;name&apos;: &apos;lighthouse-stream9-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-debian-podman&apos;, &apos;image&apos;: &apos;debian:latest&apos;, &apos;ip&apos;: &apos;192.168.62.217&apos;, &apos;name&apos;: &apos;lighthouse-debian-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-leap-podman&apos;, &apos;image&apos;: &apos;opensuse/leap:latest&apos;, &apos;ip&apos;: &apos;192.168.62.218&apos;, &apos;name&apos;: &apos;lighthouse-leap-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;})</font>
+
+TASK [Wait for instance(s) deletion to complete] *******************************
+<font color="#171421"><b>FAILED - RETRYING: [localhost]: Wait for instance(s) deletion to complete (300 retries left).</b></font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j296350236445.1016572&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j296350236445.1016572&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;capabilities&apos;: [&apos;CAP_SYS_NICE&apos;], &apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;extra_opts&apos;: [&apos;--pids-limit=-1&apos;, &apos;--memory=2G&apos;, &apos;--memory-swap=4G&apos;, &apos;--ipc=private&apos;], &apos;groups&apos;: [&apos;clickhouse&apos;], &apos;image&apos;: &apos;debian:latest&apos;, &apos;ip&apos;: &apos;192.168.62.210&apos;, &apos;name&apos;: &apos;clickhouse-generic-podman-lighthouse&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;subnet&apos;: &apos;192.168.62.208/28&apos;, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#171421"><b>FAILED - RETRYING: [localhost]: Wait for instance(s) deletion to complete (300 retries left).</b></font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j378123534887.1016597&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j378123534887.1016597&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;vector&apos;], &apos;hostname&apos;: &apos;lighthouse-generator-generic-podman&apos;, &apos;image&apos;: &apos;registry.access.redhat.com/ubi9/ubi-init&apos;, &apos;ip&apos;: &apos;192.168.62.211&apos;, &apos;name&apos;: &apos;lighthouse-generator-generic-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;pre_build_image&apos;: True, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j917374665096.1016663&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j917374665096.1016663&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-tumbleweed-podman&apos;, &apos;image&apos;: &apos;opensuse/tumbleweed:latest&apos;, &apos;ip&apos;: &apos;192.168.62.213&apos;, &apos;name&apos;: &apos;lighthouse-tumbleweed-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j49030484772.1016730&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j49030484772.1016730&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-ubuntu-podman&apos;, &apos;image&apos;: &apos;ubuntu:latest&apos;, &apos;ip&apos;: &apos;192.168.62.214&apos;, &apos;name&apos;: &apos;lighthouse-ubuntu-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j960325804375.1016817&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j960325804375.1016817&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-stream9-podman&apos;, &apos;image&apos;: &apos;quay.io/centos/centos:stream9&apos;, &apos;ip&apos;: &apos;192.168.62.216&apos;, &apos;name&apos;: &apos;lighthouse-stream9-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j108173578981.1016922&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j108173578981.1016922&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-debian-podman&apos;, &apos;image&apos;: &apos;debian:latest&apos;, &apos;ip&apos;: &apos;192.168.62.217&apos;, &apos;name&apos;: &apos;lighthouse-debian-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j90645329311.1017072&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j90645329311.1017072&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;dockerfile&apos;: &apos;../resources/Dockerfile.j2&apos;, &apos;env&apos;: {&apos;ANSIBLE_USER&apos;: &apos;lighthouse&apos;}, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;lighthouse&apos;], &apos;hostname&apos;: &apos;lighthouse-leap-podman&apos;, &apos;image&apos;: &apos;opensuse/leap:latest&apos;, &apos;ip&apos;: &apos;192.168.62.218&apos;, &apos;name&apos;: &apos;lighthouse-leap-podman&apos;, &apos;network&apos;: &apos;lighthouse-podman-generic&apos;, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+
+TASK [Delete podman network dedicated to this scenario] ************************
+<font color="#A2734C">changed: [localhost] =&gt; (item=clickhouse-generic-podman-lighthouse: lighthouse-podman-generic)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-generator-generic-podman: lighthouse-podman-generic)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-tumbleweed-podman: lighthouse-podman-generic)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-ubuntu-podman: lighthouse-podman-generic)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-stream9-podman: lighthouse-podman-generic)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-debian-podman: lighthouse-podman-generic)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=lighthouse-leap-podman: lighthouse-podman-generic)</font>
+
+PLAY RECAP *********************************************************************
+<font color="#A2734C">localhost</font>                  : <font color="#26A269">ok=3   </font> <font color="#A2734C">changed=3   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> Pruning extra files from scenario ephemeral directory
+</pre>
+  </body>
+</html>

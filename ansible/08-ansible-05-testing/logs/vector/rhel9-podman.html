@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="../../../../css-styles/terminal.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>vector-role: molecule test -s rhel9-podman</title>
+</head>
+<body class="terminal-body">
+  <pre class="terminal-pre terminal-line ubuntu-mono-regular">
+(venv-12) <font color="#26A269"><b>user@xyz</b></font>:<font color="#12488B"><b>vector-role</b></font>$ molecule test -s rhel9-podman
+<font color="#C01C28">WARNING </font> Driver podman does not provide a schema.
+<font color="#12488B">INFO    </font> rhel9-podman scenario test matrix: destroy, syntax, create, prepare, converge, idempotence, verify, destroy
+<font color="#12488B">INFO    </font> Performing prerun with <font color="#A2734C">role_name_check</font>=<font color="#2AA1B3"><b>1</b></font><font color="#A2734C">...</font>
+<font color="#C01C28">WARNING </font> Computed fully qualified role name of netology.vector-role does not follow current galaxy requirements.
+Please edit meta/main.yml and assure we can correctly determine full role name:
+
+galaxy_info:
+role_name: my_name  # if absent directory name hosting role is used instead
+namespace: my_galaxy_namespace  # if absent, author is used instead
+
+Namespace: <font color="#2A7BDE"><u style="text-decoration-style:solid">https://old-galaxy.ansible.com/docs/contributing/namespaces.html#galaxy-namespace-limitations</u></font>
+Role: <font color="#2A7BDE"><u style="text-decoration-style:solid">https://old-galaxy.ansible.com/docs/contributing/creating_role.html#role-names</u></font>
+
+As an alternative, you can add <font color="#26A269">&apos;role-name&apos;</font> to either skip_list or warn_list.
+
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">rhel9-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">destroy</font>
+<font color="#12488B">INFO    </font> Sanity checks: <font color="#26A269">&apos;podman&apos;</font>
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Destroy molecule instance(s)] ********************************************
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/entrypoint.sh&apos;, &apos;env&apos;: {&apos;CLICKHOUSE_DB&apos;: &apos;logs&apos;}, &apos;extra_opts&apos;: [&apos;--memory=2G&apos;, &apos;--memory-swap=4G&apos;], &apos;groups&apos;: [&apos;none&apos;], &apos;image&apos;: &apos;docker.io/clickhouse/clickhouse-server:latest&apos;, &apos;ip&apos;: &apos;192.168.62.226&apos;, &apos;name&apos;: &apos;clickhouse-rhel9-podman-vector&apos;, &apos;network&apos;: &apos;vector-podman-rhel9&apos;, &apos;pre_build_image&apos;: True, &apos;subnet&apos;: &apos;192.168.62.224/28&apos;, &apos;volumes&apos;: [&apos;/home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/vector-role/molecule/resources/clickhouse-config/users.xml:/etc/clickhouse-server/users.d/users.xml&apos;, &apos;/home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/vector-role/molecule/resources/clickhouse-config/table.sh:/docker-entrypoint-initdb.d/table.sh&apos;]})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;vector&apos;], &apos;hostname&apos;: &apos;vector-ubi-rhel9-podman&apos;, &apos;image&apos;: &apos;registry.access.redhat.com/ubi9/ubi-init&apos;, &apos;ip&apos;: &apos;192.168.62.227&apos;, &apos;name&apos;: &apos;vector-ubi-rhel9-podman&apos;, &apos;network&apos;: &apos;vector-podman-rhel9&apos;, &apos;pre_build_image&apos;: True, &apos;systemd&apos;: &apos;always&apos;})</font>
+
+TASK [Wait for instance(s) deletion to complete] *******************************
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j142551028736.1057445&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j142551028736.1057445&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/entrypoint.sh&apos;, &apos;env&apos;: {&apos;CLICKHOUSE_DB&apos;: &apos;logs&apos;}, &apos;extra_opts&apos;: [&apos;--memory=2G&apos;, &apos;--memory-swap=4G&apos;], &apos;groups&apos;: [&apos;none&apos;], &apos;image&apos;: &apos;docker.io/clickhouse/clickhouse-server:latest&apos;, &apos;ip&apos;: &apos;192.168.62.226&apos;, &apos;name&apos;: &apos;clickhouse-rhel9-podman-vector&apos;, &apos;network&apos;: &apos;vector-podman-rhel9&apos;, &apos;pre_build_image&apos;: True, &apos;subnet&apos;: &apos;192.168.62.224/28&apos;, &apos;volumes&apos;: [&apos;/home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/vector-role/molecule/resources/clickhouse-config/users.xml:/etc/clickhouse-server/users.d/users.xml&apos;, &apos;/home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/vector-role/molecule/resources/clickhouse-config/table.sh:/docker-entrypoint-initdb.d/table.sh&apos;]}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j649388751353.1057470&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j649388751353.1057470&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;vector&apos;], &apos;hostname&apos;: &apos;vector-ubi-rhel9-podman&apos;, &apos;image&apos;: &apos;registry.access.redhat.com/ubi9/ubi-init&apos;, &apos;ip&apos;: &apos;192.168.62.227&apos;, &apos;name&apos;: &apos;vector-ubi-rhel9-podman&apos;, &apos;network&apos;: &apos;vector-podman-rhel9&apos;, &apos;pre_build_image&apos;: True, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+
+TASK [Delete podman network dedicated to this scenario] ************************
+<font color="#26A269">ok: [localhost] =&gt; (item=clickhouse-rhel9-podman-vector: vector-podman-rhel9)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=vector-ubi-rhel9-podman: vector-podman-rhel9)</font>
+
+PLAY RECAP *********************************************************************
+<font color="#A2734C">localhost</font>                  : <font color="#26A269">ok=3   </font> <font color="#A2734C">changed=2   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">rhel9-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">syntax</font>
+
+playbook: /home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/vector-role/molecule/resources/playbooks/converge.yml
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">rhel9-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">create</font>
+
+PLAY [Create] ******************************************************************
+
+TASK [Log into a container registry] *******************************************
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=&quot;clickhouse-rhel9-podman-vector registry username: None specified&quot;) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=&quot;vector-ubi-rhel9-podman registry username: None specified&quot;) </font>
+<font color="#2AA1B3">skipping: [localhost]</font>
+
+TASK [Check presence of custom Dockerfiles] ************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=Dockerfile: None specified)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=Dockerfile: None specified)</font>
+
+TASK [Create Dockerfiles from image names] *************************************
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=&quot;Dockerfile: None specified; Image: docker.io/clickhouse/clickhouse-server:latest&quot;) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=&quot;Dockerfile: None specified; Image: registry.access.redhat.com/ubi9/ubi-init&quot;) </font>
+<font color="#2AA1B3">skipping: [localhost]</font>
+
+TASK [Discover local Podman images] ********************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=clickhouse-rhel9-podman-vector)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=vector-ubi-rhel9-podman)</font>
+
+TASK [Build an Ansible compatible image] ***************************************
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=docker.io/clickhouse/clickhouse-server:latest) </font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=registry.access.redhat.com/ubi9/ubi-init) </font>
+<font color="#2AA1B3">skipping: [localhost]</font>
+
+TASK [Determine the CMD directives] ********************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=&quot;clickhouse-rhel9-podman-vector command: /entrypoint.sh&quot;)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=&quot;vector-ubi-rhel9-podman command: /sbin/init&quot;)</font>
+
+TASK [Discover local podman networks] ******************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=clickhouse-rhel9-podman-vector: vector-podman-rhel9)</font>
+<font color="#2AA1B3">skipping: [localhost] =&gt; (item=vector-ubi-rhel9-podman: vector-podman-rhel9) </font>
+
+TASK [Create podman network dedicated to this scenario] ************************
+<font color="#A2734C">changed: [localhost]</font>
+
+TASK [Create molecule instance(s)] *********************************************
+<font color="#26A269">ok: [localhost] =&gt; (item=clickhouse-rhel9-podman-vector)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=vector-ubi-rhel9-podman)</font>
+
+TASK [Wait for instance(s) creation to complete] *******************************
+<font color="#171421"><b>FAILED - RETRYING: [localhost]: Wait for instance(s) creation to complete (300 retries left).</b></font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=clickhouse-rhel9-podman-vector)</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item=vector-ubi-rhel9-podman)</font>
+
+PLAY RECAP *********************************************************************
+<font color="#A2734C">localhost</font>                  : <font color="#26A269">ok=7   </font> <font color="#A2734C">changed=2   </font> unreachable=0    failed=0    <font color="#2AA1B3">skipped=3   </font> rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">rhel9-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">prepare</font>
+<font color="#A347BA"><b>[WARNING]: Could not match supplied host pattern, ignoring: clickhouse</b></font>
+
+PLAY [Prepare users and groups] ************************************************
+
+TASK [ansible.builtin.set_fact] ************************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [Ensure ansible group is present] *****************************************
+<font color="#A2734C">changed: [vector-ubi-rhel9-podman]</font>
+
+TASK [Ensure ansible user is created] ******************************************
+<font color="#A2734C">changed: [vector-ubi-rhel9-podman]</font>
+
+TASK [install required packages] ***********************************************
+<font color="#A2734C">changed: [vector-ubi-rhel9-podman]</font>
+
+TASK [Ensure sudoers folder exists] ********************************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,4 +1,4 @@</font>
+  {
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0750&quot;,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0755&quot;,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d&quot;
+  }
+
+<font color="#A2734C">changed: [vector-ubi-rhel9-podman]</font>
+
+TASK [Ensure ansible sudoers file exists] **************************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,6 +1,6 @@</font>
+  {
+<font color="#C01C28">-    &quot;atime&quot;: 1731006114.5379694,</font>
+<font color="#C01C28">-    &quot;mtime&quot;: 1731006114.5379694,</font>
+<font color="#26A269">+    &quot;atime&quot;: 1731006114.5385675,</font>
+<font color="#26A269">+    &quot;mtime&quot;: 1731006114.5385675,</font>
+      &quot;path&quot;: &quot;/etc/sudoers.d/ansible&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;absent&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;touch&quot;</font>
+  }
+
+<font color="#A2734C">changed: [vector-ubi-rhel9-podman]</font>
+
+TASK [Ensure ansible group is in sudoers] **************************************
+<font color="#C01C28">--- before: /etc/sudoers.d/ansible (content)</font>
+<font color="#26A269">+++ after: /etc/sudoers.d/ansible (content)</font>
+<font color="#2AA1B3">@@ -0,0 +1 @@</font>
+<font color="#26A269">+%vector ALL=(ALL) NOPASSWD:ALL</font>
+
+<font color="#A2734C">changed: [vector-ubi-rhel9-podman]</font>
+
+PLAY RECAP *********************************************************************
+<font color="#A2734C">vector-ubi-rhel9-podman</font>    : <font color="#26A269">ok=7   </font> <font color="#A2734C">changed=6   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">rhel9-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">converge</font>
+
+PLAY [Converge] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [Retrieve driver name (docker/podman)] ************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [Get clickhouse IP] *******************************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman -&gt; localhost]</font>
+
+TASK [Remember Clickhouse IP (1 address)] **************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [Test vector role] ********************************************************
+<font color="#2AA1B3">included: vector-role for vector-ubi-rhel9-podman</font>
+
+TASK [vector-role : Assert necessary variables are set] ************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [vector-role : Create download folder] ************************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,6 +1,6 @@</font>
+  {
+<font color="#C01C28">-    &quot;group&quot;: 0,</font>
+<font color="#C01C28">-    &quot;owner&quot;: 0,</font>
+<font color="#26A269">+    &quot;group&quot;: 1000,</font>
+<font color="#26A269">+    &quot;owner&quot;: 1000,</font>
+      &quot;path&quot;: &quot;/opt/binaries&quot;,
+<font color="#C01C28">-    &quot;state&quot;: &quot;absent&quot;</font>
+<font color="#26A269">+    &quot;state&quot;: &quot;directory&quot;</font>
+  }
+
+<font color="#A2734C">changed: [vector-ubi-rhel9-podman]</font>
+
+TASK [vector-role : Install vector] ********************************************
+<font color="#2AA1B3">included: /home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/vector-role/tasks/install/RedHat.yaml for vector-ubi-rhel9-podman</font>
+
+TASK [vector-role : ReadHat-based -- download vector package] ******************
+<font color="#A2734C">changed: [vector-ubi-rhel9-podman]</font>
+
+TASK [vector-role : RedHat-based -- Install vector package] ********************
+<font color="#A2734C">changed: [vector-ubi-rhel9-podman]</font>
+
+TASK [vector-role : Copy Clickhouse CA (Certificate Authority) certificate] ****
+<font color="#2AA1B3">skipping: [vector-ubi-rhel9-podman]</font>
+
+TASK [vector-role : Change vector directory permission] ************************
+<font color="#C01C28">--- before</font>
+<font color="#26A269">+++ after</font>
+<font color="#2AA1B3">@@ -1,6 +1,6 @@</font>
+  {
+<font color="#C01C28">-    &quot;group&quot;: 0,</font>
+<font color="#C01C28">-    &quot;mode&quot;: &quot;0755&quot;,</font>
+<font color="#C01C28">-    &quot;owner&quot;: 0,</font>
+<font color="#26A269">+    &quot;group&quot;: 1000,</font>
+<font color="#26A269">+    &quot;mode&quot;: &quot;0751&quot;,</font>
+<font color="#26A269">+    &quot;owner&quot;: 1000,</font>
+      &quot;path&quot;: &quot;/etc/vector&quot;
+  }
+
+<font color="#A2734C">changed: [vector-ubi-rhel9-podman]</font>
+
+TASK [vector-role : Configuring Vector using template] *************************
+<font color="#C01C28">--- before: /etc/vector/vector.yaml</font>
+<font color="#26A269">+++ after: /home/user/.ansible/tmp/ansible-local-1062222968hda0u/tmphcxa7csh/vector.yaml.j2</font>
+<font color="#2AA1B3">@@ -20,7 +20,7 @@</font>
+    dummy_logs:
+      type: &quot;demo_logs&quot;
+      format: &quot;syslog&quot;
+<font color="#C01C28">-    interval: 1</font>
+<font color="#26A269">+    interval: 3</font>
+
+  # Parse Syslog logs
+  # See the Vector Remap Language reference for more info: https://vrl.dev
+<font color="#2AA1B3">@@ -29,21 +29,22 @@</font>
+      type: &quot;remap&quot;
+      inputs: [&quot;dummy_logs&quot;]
+      source: |
+<font color="#C01C28">-      . = parse_syslog!(string!(.message))</font>
+<font color="#26A269">+      . = parse_syslog!(.message)</font>
+<font color="#26A269">+      . |= set!(value: ., path: [&quot;hostname&quot;], data: get_hostname!())</font>
+<font color="#26A269">+      .timestamp = format_timestamp!(.timestamp, &quot;%F %T%.3f&quot;)</font>
+
+<font color="#C01C28">-# Print parsed logs to stdout</font>
+  sinks:
+<font color="#C01C28">-  print:</font>
+<font color="#C01C28">-    type: &quot;console&quot;</font>
+<font color="#C01C28">-    inputs: [&quot;parse_logs&quot;]</font>
+<font color="#C01C28">-    encoding:</font>
+<font color="#C01C28">-      codec: &quot;json&quot;</font>
+<font color="#C01C28">-      json:</font>
+<font color="#C01C28">-        pretty: true</font>
+<font color="#C01C28">-</font>
+<font color="#C01C28">-# Vector&apos;s GraphQL API (disabled by default)</font>
+<font color="#C01C28">-# Uncomment to try it out with the `vector top` command or</font>
+<font color="#C01C28">-# in your browser at http://localhost:8686</font>
+<font color="#C01C28">-# api:</font>
+<font color="#C01C28">-#   enabled: true</font>
+<font color="#C01C28">-#   address: &quot;127.0.0.1:8686&quot;</font>
+<font color="#26A269">+  clickhouse-1:</font>
+<font color="#26A269">+    type: clickhouse</font>
+<font color="#26A269">+    inputs:</font>
+<font color="#26A269">+      - parse_logs</font>
+<font color="#26A269">+    endpoint: http://192.168.62.226:8123</font>
+<font color="#26A269">+    database: logs</font>
+<font color="#26A269">+    table: datadog</font>
+<font color="#26A269">+    batch:</font>
+<font color="#26A269">+      timeout_secs: 1</font>
+<font color="#26A269">+    auth:</font>
+<font color="#26A269">+      strategy: &quot;basic&quot;</font>
+<font color="#26A269">+      user: vector</font>
+<font color="#26A269">+      password: secret</font>
+<font color="#26A269">+    </font>
+
+<font color="#A2734C">changed: [vector-ubi-rhel9-podman]</font>
+
+RUNNING HANDLER [vector-role : Start vector service] ***************************
+<font color="#A2734C">changed: [vector-ubi-rhel9-podman]</font>
+
+PLAY RECAP *********************************************************************
+<font color="#A2734C">vector-ubi-rhel9-podman</font>    : <font color="#26A269">ok=13  </font> <font color="#A2734C">changed=6   </font> unreachable=0    failed=0    <font color="#2AA1B3">skipped=1   </font> rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">rhel9-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">idempotence</font>
+
+PLAY [Converge] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [Retrieve driver name (docker/podman)] ************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [Get clickhouse IP] *******************************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman -&gt; localhost]</font>
+
+TASK [Remember Clickhouse IP (1 address)] **************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [Test vector role] ********************************************************
+<font color="#2AA1B3">included: vector-role for vector-ubi-rhel9-podman</font>
+
+TASK [vector-role : Assert necessary variables are set] ************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [vector-role : Create download folder] ************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [vector-role : Install vector] ********************************************
+<font color="#2AA1B3">included: /home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/vector-role/tasks/install/RedHat.yaml for vector-ubi-rhel9-podman</font>
+
+TASK [vector-role : ReadHat-based -- download vector package] ******************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [vector-role : RedHat-based -- Install vector package] ********************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [vector-role : Copy Clickhouse CA (Certificate Authority) certificate] ****
+<font color="#2AA1B3">skipping: [vector-ubi-rhel9-podman]</font>
+
+TASK [vector-role : Change vector directory permission] ************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [vector-role : Configuring Vector using template] *************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+PLAY RECAP *********************************************************************
+<font color="#26A269">vector-ubi-rhel9-podman</font>    : <font color="#26A269">ok=12  </font> changed=0    unreachable=0    failed=0    <font color="#2AA1B3">skipped=1   </font> rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> Idempotence completed successfully.
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">rhel9-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">verify</font>
+<font color="#12488B">INFO    </font> Running Ansible Verifier
+
+PLAY [Availability test routine for Lighthouse role] ***************************
+
+TASK [Prepare Molecule facts] **************************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [Get clickhouse IP] *******************************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman -&gt; localhost]</font>
+
+TASK [Remember Clickhouse IP (1 address)] **************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [Get hostname of vector] **************************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [ansible.builtin.set_fact] ************************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [Make a request to ClickHouse DB] *****************************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman]</font>
+
+TASK [Check that positive integer was returned] ********************************
+<font color="#26A269">ok: [vector-ubi-rhel9-podman] =&gt; {</font>
+<font color="#26A269">    &quot;changed&quot;: false,</font>
+<font color="#26A269">    &quot;msg&quot;: &quot;All assertions passed&quot;</font>
+<font color="#26A269">}</font>
+
+PLAY RECAP *********************************************************************
+<font color="#26A269">vector-ubi-rhel9-podman</font>    : <font color="#26A269">ok=7   </font> changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> Verifier completed successfully.
+<font color="#12488B">INFO    </font> <font color="#1C6B77">Running </font><font color="#196C46">rhel9-podman</font><font color="#1C6B77"> &gt; </font><font color="#196C46">destroy</font>
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Destroy molecule instance(s)] ********************************************
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/entrypoint.sh&apos;, &apos;env&apos;: {&apos;CLICKHOUSE_DB&apos;: &apos;logs&apos;}, &apos;extra_opts&apos;: [&apos;--memory=2G&apos;, &apos;--memory-swap=4G&apos;], &apos;groups&apos;: [&apos;none&apos;], &apos;image&apos;: &apos;docker.io/clickhouse/clickhouse-server:latest&apos;, &apos;ip&apos;: &apos;192.168.62.226&apos;, &apos;name&apos;: &apos;clickhouse-rhel9-podman-vector&apos;, &apos;network&apos;: &apos;vector-podman-rhel9&apos;, &apos;pre_build_image&apos;: True, &apos;subnet&apos;: &apos;192.168.62.224/28&apos;, &apos;volumes&apos;: [&apos;/home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/vector-role/molecule/resources/clickhouse-config/users.xml:/etc/clickhouse-server/users.d/users.xml&apos;, &apos;/home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/vector-role/molecule/resources/clickhouse-config/table.sh:/docker-entrypoint-initdb.d/table.sh&apos;]})</font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;command&apos;: &apos;/sbin/init&apos;, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;vector&apos;], &apos;hostname&apos;: &apos;vector-ubi-rhel9-podman&apos;, &apos;image&apos;: &apos;registry.access.redhat.com/ubi9/ubi-init&apos;, &apos;ip&apos;: &apos;192.168.62.227&apos;, &apos;name&apos;: &apos;vector-ubi-rhel9-podman&apos;, &apos;network&apos;: &apos;vector-podman-rhel9&apos;, &apos;pre_build_image&apos;: True, &apos;systemd&apos;: &apos;always&apos;})</font>
+
+TASK [Wait for instance(s) deletion to complete] *******************************
+<font color="#171421"><b>FAILED - RETRYING: [localhost]: Wait for instance(s) deletion to complete (300 retries left).</b></font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j706975766052.1068628&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j706975766052.1068628&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/entrypoint.sh&apos;, &apos;env&apos;: {&apos;CLICKHOUSE_DB&apos;: &apos;logs&apos;}, &apos;extra_opts&apos;: [&apos;--memory=2G&apos;, &apos;--memory-swap=4G&apos;], &apos;groups&apos;: [&apos;none&apos;], &apos;image&apos;: &apos;docker.io/clickhouse/clickhouse-server:latest&apos;, &apos;ip&apos;: &apos;192.168.62.226&apos;, &apos;name&apos;: &apos;clickhouse-rhel9-podman-vector&apos;, &apos;network&apos;: &apos;vector-podman-rhel9&apos;, &apos;pre_build_image&apos;: True, &apos;subnet&apos;: &apos;192.168.62.224/28&apos;, &apos;volumes&apos;: [&apos;/home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/vector-role/molecule/resources/clickhouse-config/users.xml:/etc/clickhouse-server/users.d/users.xml&apos;, &apos;/home/user/Projects/netology-devops/ansible/08-ansible-04-role/roles/vector-role/molecule/resources/clickhouse-config/table.sh:/docker-entrypoint-initdb.d/table.sh&apos;]}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+<font color="#171421"><b>FAILED - RETRYING: [localhost]: Wait for instance(s) deletion to complete (300 retries left).</b></font>
+<font color="#A2734C">changed: [localhost] =&gt; (item={&apos;failed&apos;: 0, &apos;started&apos;: 1, &apos;finished&apos;: 0, &apos;ansible_job_id&apos;: &apos;j215611563414.1068653&apos;, &apos;results_file&apos;: &apos;/home/user/.ansible_async/j215611563414.1068653&apos;, &apos;changed&apos;: True, &apos;item&apos;: {&apos;command&apos;: &apos;/sbin/init&apos;, &apos;extra_opts&apos;: [&apos;--memory=256M&apos;, &apos;--memory-swap=1G&apos;], &apos;groups&apos;: [&apos;vector&apos;], &apos;hostname&apos;: &apos;vector-ubi-rhel9-podman&apos;, &apos;image&apos;: &apos;registry.access.redhat.com/ubi9/ubi-init&apos;, &apos;ip&apos;: &apos;192.168.62.227&apos;, &apos;name&apos;: &apos;vector-ubi-rhel9-podman&apos;, &apos;network&apos;: &apos;vector-podman-rhel9&apos;, &apos;pre_build_image&apos;: True, &apos;systemd&apos;: &apos;always&apos;}, &apos;ansible_loop_var&apos;: &apos;item&apos;})</font>
+
+TASK [Delete podman network dedicated to this scenario] ************************
+<font color="#A2734C">changed: [localhost] =&gt; (item=clickhouse-rhel9-podman-vector: vector-podman-rhel9)</font>
+<font color="#26A269">ok: [localhost] =&gt; (item=vector-ubi-rhel9-podman: vector-podman-rhel9)</font>
+
+PLAY RECAP *********************************************************************
+<font color="#A2734C">localhost</font>                  : <font color="#26A269">ok=3   </font> <font color="#A2734C">changed=3   </font> unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+<font color="#12488B">INFO    </font> Pruning extra files from scenario ephemeral directory
+</pre>
+  </body>
+</html>
