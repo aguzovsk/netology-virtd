@@ -1,0 +1,12 @@
+---
+- name: Lighthouse (rhel9-podman), run availability test playbook
+  ansible.builtin.import_playbook: ../resources/playbooks/verify.yml
+
+- name: Rendering Ligthouse
+  ansible.builtin.import_playbook: ../resources/playbooks/splash-e2e.yml
+  vars:
+    splash_ip: 127.0.50.5
+
+# # Run only in privileged mode (as root)
+# - name: Import playwright playbook
+#   ansible.builtin.import_playbook: ../resources/playbooks/playwright.yml

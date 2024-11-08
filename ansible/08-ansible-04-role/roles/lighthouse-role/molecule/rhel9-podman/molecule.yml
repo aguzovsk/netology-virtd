@@ -1,0 +1,113 @@
+---
+role_name_check: 1
+dependency:
+  name: galaxy
+  options:
+    ignore-certs: True
+    role-file: requirements.yml
+driver:
+  name: podman
+  options:
+    D: true
+    vv: true
+scenario:
+  test_sequence:
+    - dependency
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - verify
+    - cleanup
+    - destroy
+platforms:
+  - name: clickhouse-rhel9-podman-lighthouse
+    image: debian:latest
+    groups: ["clickhouse"]
+    dockerfile: ../resources/Dockerfile.j2
+    command: /sbin/init
+    systemd: always
+    extra_opts:
+      - --pids-limit=-1
+      - --memory=2G
+      - --memory-swap=4G
+    capabilities:
+      - CAP_IPC_LOCK
+      - CAP_SYS_NICE
+    network: &network-name lighthouse-podman-rhel9
+    subnet: 192.168.62.192/28
+    ip: 192.168.62.194
+
+  # - name: clickhouse-rhel9-podman-lighthouse
+  #   image: docker.io/clickhouse/clickhouse-server:latest
+  #   groups: ["none"]
+  #   pre_build_image: True
+  #   # systemd: always
+  #   # privileged: True
+  #   network: &network-name lighthouse-podman-rhel9
+  #   subnet: 192.168.62.192/28
+  #   ip: 192.168.62.194
+  #   extra_opts:
+  #     - --memory=2G
+  #     - --memory-swap=4G
+  #   volumes:
+  #     - $PWD/molecule/resources/clickhouse-config/users.xml:/etc/clickhouse-server/users.d/users.xml
+  #     - $PWD/molecule/resources/clickhouse-config/table.sh:/docker-entrypoint-initdb.d/table.sh
+  #   env:
+  #     CLICKHOUSE_DB: logs
+  #   command: /entrypoint.sh
+      
+
+  - name: lighthouse-generator-rhel9-podman
+    image: registry.access.redhat.com/ubi9/ubi-init
+    pre_build_image: True
+    groups: ['vector']
+    systemd: always
+    command: /sbin/init
+    network: *network-name
+    # hostname: lighthouse-rhel9-vector-podman
+    ip: 192.168.62.195
+    extra_opts:
+      - --memory=256M
+      - --memory-swap=1G
+
+  - name: ligthouse-renderer-rhel9-podman
+    # Docker: redhat/ubi9-init / docker.io/redhat/ubi9-init
+    # RedHat/Podman: ubi9-init / registry.access.redhat.com/ubi9/ubi-init
+    image: registry.access.redhat.com/ubi9/ubi-init
+    pre_build_image: true
+    groups: ["lighthouse"]
+    systemd: always
+    command: /sbin/init
+    network: *network-name
+    ip: 192.168.62.196
+    extra_opts:
+      - --memory=256M
+      - --memory-swap=1G
+    
+provisioner:
+  name: ansible
+  # env:
+  #   ANSIBLE_SKIP_TAGS: podman
+  #   ANSIBLE_RUN_TAGS: untagged,docker
+  #   ANSIBLE_ROLES_PATH: ../../..
+  config_options:
+    tags:
+      skip: docker
+      # run: untagged,podman
+  options:
+    vv: true
+    D: true
+  inventory:
+    links:
+      # hosts: ../resources/inventory/hosts.yml
+      group_vars: ../resources/group_vars/
+      # host_vars: ../resources/inventory/host_vars/
+  playbooks:
+    prepare: ../resources/playbooks/prepare.yaml
+    converge: ../resources/playbooks/converge.yml
+    cleanup: ../resources/playbooks/cleanup.yml
+verifier:
+  name: ansible

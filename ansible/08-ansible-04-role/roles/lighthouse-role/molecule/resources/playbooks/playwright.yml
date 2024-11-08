@@ -1,0 +1,106 @@
+---
+- name: Run PlayWright End-to-End tests
+  hosts: localhost
+
+  handlers:
+  - name: Intialize Playwright
+    ansible.builtin.shell:
+      cmd: |
+        playwright install-deps
+        playwright install chromium
+    listen: playwright_installed
+
+  pre_tasks:
+  - name: Check OS is supported
+    ansible.builtin.meta: end_play
+    when: ansible_os_family != 'Debian'
+
+  - name: Ensure that playwright with pytest are installed
+    block:
+    - name: Install playwright and pytest
+      ansible.builtin.pip:
+        name:
+          - playwright
+          - pytest-playwright
+      notify: playwright_installed
+    rescue:
+    - name: Try to install playwright with uv
+      ansible.builtin.shell:
+        cmd: >
+          uv pip install playwright pytest-playwright ||
+          (uv tool install playwright; uv tool install pytest --with pytest-playwright)
+      notify: playwright_installed
+
+  tasks:
+  - name: Check OS is supported
+    ansible.builtin.meta: end_play
+    when: ansible_os_family != 'Debian'
+
+  - name: Retrieve facts
+    ansible.builtin.set_fact:
+      driver_name: "{{ lookup('env', 'MOLECULE_DRIVER_NAME') }}"
+      molecule_file: "{{ lookup('env', 'MOLECULE_FILE') }}"
+      molecule_yml: "{{ lookup('file', molecule_file) | from_yaml }}"
+      lighthouse_container_names: "{{ molecule_yml.platforms | selectattr('groups', 'search', 'lighthouse') | map(attribute='name') }}"
+
+  - name: Get clickhouse IP
+    ansible.builtin.shell:
+      cmd: > 
+        {{ driver_name }} inspect $({{ driver_name }} ps --format '{{ "{{" }} .Names {{ "}}" }}' | grep clickhouse | grep {{ driver_name }}) \
+          --format '{{ "{{" }} range $name, $value := .NetworkSettings.Networks {{ "}}{{" }} $value.IPAddress {{ "}}{{" }} end {{ "}}" }}'
+      executable: /bin/bash
+    check_mode: false
+    changed_when: false
+    delegate_to: localhost
+    run_once: true
+    register: docker_command
+
+  - name: Docker. Gather information about LightHouse containers
+    tags: docker
+    community.docker.docker_container_info:
+      name: "{{ container_name }}"
+    loop: "{{ lighthouse_container_names }}"
+    loop_control:
+      loop_var: container_name
+      label: "{{ container_name }}"
+    register: lighthouse_containers
+
+  - name: Podman. Gather information about LightHouse containers
+    tags: podman
+    containers.podman.podman_container_info:
+      name: "{{ container_name }}"
+    loop: "{{ lighthouse_container_names }}"
+    loop_control:
+      loop_var: container_name
+      label: "{{ container_name }}"
+    register: lighthouse_containers
+
+  - name: Find out IPs
+    ansible.builtin.set_fact:
+      lighthouse_endpoints: "{{
+          lighthouse_containers.results | map(attribute=((driver_name == 'docker') | ternary('container', 'containers'))) |
+          ansible.builtin.flatten | map(attribute='NetworkSettings.Networks') |
+          map('items') | ansible.builtin.flatten(levels=1) | map(attribute=1) | map(attribute='IPAddress')
+        }}"
+      clickhouse_ip: "{{ docker_command.stdout_lines | first }}"
+
+  - name: Run with pytest plugin
+    ansible.builtin.shell:
+      cmd: "pytest --url http://{{ lighthouse_ip }}:8090/#http://{{ clickhouse_ip }}:8123/?user=lighthouse ../playwright/"
+    loop: "{{ lighthouse_endpoints }}"
+    loop_control:
+      loop_var: lighthouse_ip
+      label: "{{ lighthouse_ip }}"
+    register: pytest_result
+    check_mode: False
+    changed_when: False
+
+  # # Not needed ansible.builtin.shell will fail on tests fail
+  # - name: Assert that Pytest were successful
+  #   ansible.builtin.assert:
+  #     that: "item.rc == 0"
+  #     fail_msg: "item.stderr_lines"
+  #     quiet: True
+  #   loop: "{{ pytest_result.results }}"
+  #   loop_control:
+  #     label: "{{ item.lighthouse_ip }}"

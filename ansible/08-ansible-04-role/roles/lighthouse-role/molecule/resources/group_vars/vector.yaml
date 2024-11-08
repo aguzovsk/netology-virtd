@@ -1,0 +1,6 @@
+# vector_user: vector
+clickhouse_password: secret
+clickhouse_hosts:
+  - "{{ clickhouse_ip }}"
+# Be aware that clickhouse_ip is not defined yet, and should be defined further in the script
+# See pre_tasks for vector hosts

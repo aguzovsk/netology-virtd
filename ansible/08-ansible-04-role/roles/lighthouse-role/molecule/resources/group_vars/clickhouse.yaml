@@ -1,0 +1,22 @@
+clickhouse_listen_host:
+  # - "::" # network should support ipv6
+  - "0.0.0.0"
+clickhouse_users_custom:
+  - { name: "vector",
+    password_sha256_hex: "2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b",
+    networks: { 192.168.62.0/24 },
+    profile: "default",
+    quota: "default",
+    dbs: [ logs ] ,
+    comment: "user for vector logs" }
+  - { name: "lighthouse",
+    password_sha256_hex: "2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b",
+    networks: { 192.168.62.0/24 },
+    profile: "default",
+    # profile: "readonly", # --> is not suitable for Lighthouse, you will get errors
+    # got status 500, error text: Code: 164. DB::Exception: Cannot modify 'readonly' setting in readonly mode. (READONLY) 
+    quota: "default",
+    dbs: [ logs ] ,
+    comment: "user for lighthouse logs" }
+clickhouse_dbs_custom:
+  - name: logs

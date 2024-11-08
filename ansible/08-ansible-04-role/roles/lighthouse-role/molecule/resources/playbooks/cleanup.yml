@@ -1,0 +1,22 @@
+---
+# Error may occur during Verify stage,
+# So clean up tasks were placed there
+- name: Cleanup - remove scrapinghub Splash containers
+  hosts: localhost
+  gather_facts: False
+  tasks:
+  - name: Set splash_name (name of Splash container)
+    ansible.builtin.set_fact:
+      splash_name: my-splash
+
+  - name: Docker - Remove scrapinghub Splash container
+    tags: docker
+    community.docker.docker_container:
+      name: "{{ splash_name }}"
+      state: absent
+
+  - name: Podman - Remove scrapinghub Splash container
+    tags: podman
+    containers.podman.podman_container:
+      name: "{{ splash_name }}"
+      state: absent

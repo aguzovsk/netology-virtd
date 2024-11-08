@@ -1,0 +1,59 @@
+<!--
+Only one of (no more) fields may be specified:
+- 'password'
++ 'password_sha256_hex'
+- 'password_double_sha1_hex'
+- 'no_password'
+- 'ldap'
+- 'kerberos'
+- 'ssl_certificates'
+- 'ssh_keys'
+- 'http_authentication'
+-->
+
+<clickhouse>
+  <users>
+    <default>
+      <networks>
+        <ip>::1</ip>
+        <ip>127.0.0.1/8</ip>
+      </networks>
+    </default>
+    <vector>
+      <password_sha256_hex>2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b</password_sha256_hex>
+      <networks>
+        <!-- <ip>::1</ip> -->
+        <ip>127.0.0.1</ip>
+        <ip>192.168.0.0/16</ip>
+      </networks>
+      <databases>
+        <logs>
+          <datadog>
+            <filter>1</filter>
+          </datadog>
+        </logs>
+      </databases>
+      <grants>
+        <query>GRANT INSERT ON logs.datadog</query>
+      </grants>
+    </vector>
+    <lighthouse>
+      <password_sha256_hex>2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b</password_sha256_hex>
+      <networks>
+        <!-- <ip>::1</ip> -->
+        <ip>127.0.0.1</ip>
+        <ip>192.168.0.0/16</ip>
+      </networks>
+      <databases>
+        <logs>
+          <datadog>
+            <filter>1</filter>
+          </datadog>
+        </logs>
+      </databases>
+      <grants>
+        <query>GRANT SELECT ON logs.datadog</query>
+      </grants>
+    </lighthouse>
+  </users>
+</clickhouse>

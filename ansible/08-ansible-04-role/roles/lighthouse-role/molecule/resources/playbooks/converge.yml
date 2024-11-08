@@ -1,0 +1,7 @@
+---
+- name: Install LightHouse on hosts
+  hosts: lighthouse
+  vars:
+    ansible_user: lighthouse
+  roles:
+    - role: lighthouse-role

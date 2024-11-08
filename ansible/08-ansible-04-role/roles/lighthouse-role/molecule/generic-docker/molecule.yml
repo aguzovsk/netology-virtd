@@ -1,0 +1,152 @@
+---
+role_name_check: 1
+driver:
+  name: docker
+  options:
+    D: true
+    vv: true
+scenario:
+  test_sequence:
+    - dependency
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - verify
+    - cleanup
+    - destroy
+dependency:
+  name: galaxy
+  options:
+    ignore-certs: True
+    role-file: requirements.yml
+platforms:
+  - name: clickhouse-generic-docker-lighthouse
+    image: debian:latest
+    groups: ['clickhouse']
+    dockerfile: ../resources/Dockerfile.j2
+    command: /sbin/init
+    env:
+      ANSIBLE_USER: some
+    memory: 2G
+    memory_swap: 4G
+    docker_networks:
+      - name: &network-name lighthouse-docker-generic
+        ipam_config:
+          - subnet: 192.168.62.144/28
+            gateway: 192.168.62.145
+    networks:
+      - name: *network-name
+        ipv4_address: 192.168.62.146
+    privileged: True
+
+  - name: lighthouse-generator-generic-docker
+    image: registry.access.redhat.com/ubi9/ubi-init
+    pre_build_image: true
+    groups: ['vector']
+    command: /sbin/init
+    # hostname: lighthouse-generator-generic-docker
+    memory: 256M
+    memory_swap: 1G
+    tmpfs:
+      - /tmp
+      - /run
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup
+    networks:
+      - name: *network-name
+        ipv4_address: 192.168.62.147
+
+  - name: lighthouse-alpine-docker
+    image: alpine:latest
+    dockerfile: ../resources/Dockerfile.j2
+    groups: ['lighthouse']
+    env:
+      ANSIBLE_USER: lighthouse
+    command: sh -c "rc-status; crond -f"
+    networks:
+      - name: *network-name
+        ipv4_address: 192.168.62.148
+    memory: 256M
+    memory_swap: 1G
+
+    # name: lighthouse-docker-suse-init
+    # image: registry.suse.com/bci/bci-init:15.5
+  - &docker-image
+    name: ligthhouse-tumbleweed-docker
+    image: opensuse/tumbleweed:latest
+    dockerfile: ../resources/Dockerfile.j2
+    groups: ['lighthouse']
+    command: /sbin/init
+    memory: 256M
+    memory_swap: 1G
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup
+    env:
+      ANSIBLE_USER: lighthouse
+    networks:
+      - name: *network-name
+        ipv4_address: 192.168.62.149
+
+  - <<: *docker-image
+    name: ligthhouse-ubuntu-docker
+    image: ubuntu:latest
+    tmpfs: &debian-tmpfs
+      - /run
+      - /run/lock
+      - /tmp
+    networks:
+      - name: *network-name
+        ipv4_address: 192.168.62.150
+
+  - <<: *docker-image
+    name: ligthhouse-fedora-docker
+    image: fedora:latest
+    networks:
+      - name: *network-name
+        ipv4_address: 192.168.62.151
+
+  - <<: *docker-image
+    name: ligthhouse-stream9-docker
+    image: quay.io/centos/centos:stream9
+    networks:
+      - name: *network-name
+        ipv4_address: 192.168.62.152
+
+  - <<: *docker-image
+    name: ligthhouse-debian-docker
+    image: debian:latest
+    tmpfs: *debian-tmpfs
+    networks:
+      - name: *network-name
+        ipv4_address: 192.168.62.153
+
+  - <<: *docker-image
+    name: lighthouse-leap-docker
+    image: opensuse/leap:latest
+    networks:
+      - name: *network-name
+        ipv4_address: 192.168.62.154
+
+provisioner:
+  name: ansible
+  config_options:
+    tags:
+      skip: podman
+  options:
+    vv: true
+    D: true
+  inventory:
+    links:
+      group_vars: ../resources/group_vars/
+  playbooks:
+    prepare: ../resources/playbooks/prepare.yaml
+    converge: ../resources/playbooks/converge.yml
+    cleanup: ../resources/playbooks/cleanup.yml
+verifier:
+  name: ansible

@@ -1,0 +1,61 @@
+---
+- name: Availability test routine for Lighthouse role
+  hosts: localhost
+  gather_facts: False
+  tasks:
+    - name: Prepare Molecule facts
+      ansible.builtin.set_fact:
+        driver_name: "{{ lookup('env', 'MOLECULE_DRIVER_NAME') }}"
+        molecule_file: "{{ lookup('env', 'MOLECULE_FILE') }}"
+        molecule_scenario_directory: "{{ lookup('env', 'MOLECULE_SCENARIO_DIRECTORY') }}"
+        molecule_yml: "{{ lookup('file', molecule_file) | from_yaml }}"
+        lighthouse_container_names: "{{ molecule_yml.platforms | selectattr('groups', 'search', 'lighthouse') | map(attribute='name') }}"
+
+    - name: Docker. Gather information about LightHouse containers
+      tags: docker
+      community.docker.docker_container_info:
+        name: "{{ container_name }}"
+      loop: "{{ lighthouse_container_names }}"
+      loop_control:
+        loop_var: container_name
+        label: "{{ container_name }}"
+      register: lighthouse_containers
+    - name: Podman. Gather information about LightHouse containers
+      tags: podman
+      containers.podman.podman_container_info:
+        name: "{{ container_name }}"
+      loop: "{{ lighthouse_container_names }}"
+      loop_control:
+        loop_var: container_name
+        label: "{{ container_name }}"
+      register: lighthouse_containers
+
+
+    - name: Find out LighHouse IPs
+      ansible.builtin.set_fact:
+        # selectattr('IPAddress', 'defined') -> selects object's value after items | flatten pipe,
+        # flatten levels=1 - erase only one level of array nesting
+        # map(attribute=1) - from an array select only 2nd element
+
+        # For single host
+        # lighthouse_endpoints: "{{
+        #   lighthouse_containers.results | map(attribute='container.NetworkSettings.Networks') |
+        #   map('items') | ansible.builtin.flatten(levels=1) | map(attribute=1) | map(attribute='IPAddress')
+        # }}"
+        lighthouse_endpoints: "{{
+            lighthouse_containers.results | map(attribute=((driver_name == 'docker') | ternary('container', 'containers'))) |
+            ansible.builtin.flatten | map(attribute='NetworkSettings.Networks') |
+            map('items') | ansible.builtin.flatten(levels=1) | map(attribute=1) | map(attribute='IPAddress')
+          }}"
+
+    - name: Check endpoint availability
+      ansible.builtin.uri:
+        url: "http://{{ endpoint }}:8090"
+        # status_code: [200]  # Default value, already set 
+        # return_content: true
+      register: availability_check
+      loop: "{{ lighthouse_endpoints }}"
+      loop_control:
+        loop_var: endpoint
+        label: "{{ endpoint }}"
+      delegate_to: "{{ groups['vector'] | first }}"

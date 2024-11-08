@@ -1,0 +1,155 @@
+---
+# Requires lxml to be installed
+- name: End-to-end LightHouse test
+  hosts: localhost
+  gather_facts: False
+  strategy: ansible.builtin.linear
+  serial: 1
+  tasks:
+  - name: Install lxml
+    block:
+    - name: Instal lxml with pip
+      ansible.builtin.pip:
+        name:
+          - lxml
+          - requests
+    rescue:
+    - name: Instal lxml with uv
+      ansible.builtin.shell: >
+        uv pip install lxml requests
+
+  - name: Retrieve information
+    ansible.builtin.set_fact:
+      driver_name: "{{ lookup('env', 'MOLECULE_DRIVER_NAME') }}"
+      molecule_file: "{{ lookup('env', 'MOLECULE_FILE') }}"
+      molecule_yml: "{{ lookup('file', molecule_file) | from_yaml }}"
+      splash_name: my-splash
+      splash_image: docker.io/scrapinghub/splash:latest
+      lighthouse_container_names: "{{ molecule_yml.platforms | selectattr('groups', 'search', 'lighthouse') | map(attribute='name') }}"
+
+  - name: Assert that driver name is docker or podman and splash_ip is defined
+    ansible.builtin.assert:
+      that:
+        - "driver_name in ['docker', 'podman']"
+        - "splash_ip is defined"
+      quiet: True
+
+  - name: Get clickhouse IP
+    ansible.builtin.shell:
+      cmd: > 
+        {{ driver_name }} inspect $({{ driver_name }} ps --format '{{ "{{" }} .Names {{ "}}" }}' | grep clickhouse | grep {{ driver_name }}) \
+          --format '{{ "{{" }} range $name, $value := .NetworkSettings.Networks {{ "}}{{" }} $value.IPAddress {{ "}}{{" }} end {{ "}}" }}'
+      executable: /bin/bash
+    check_mode: false
+    changed_when: false
+    delegate_to: localhost
+    run_once: true
+    register: docker_command
+  
+  - name: Docker routine
+    tags: docker
+    block:
+    - name: Docker. Gather information about LightHouse containers
+      community.docker.docker_container_info:
+        name: "{{ container_name }}"
+      loop: "{{ lighthouse_container_names }}"
+      loop_control:
+        loop_var: container_name
+        label: "{{ container_name }}"
+      register: lighthouse_containers
+    
+    - name: Docker - Ensure Splash image was pulled
+      community.docker.docker_image_pull:
+        name: "{{ splash_image }}"
+        timeout: 90
+  
+  - name: Podman routine
+    tags: podman
+    block:
+    - name: Podman. Gather information about LightHouse containers
+      containers.podman.podman_container_info:
+        name: "{{ container_name }}"
+      loop: "{{ lighthouse_container_names }}"
+      loop_control:
+        loop_var: container_name
+        label: "{{ container_name }}"
+      register: lighthouse_containers
+    
+    - name: Podman - Ensure Splash image was pulled
+      containers.podman.podman_image:
+        name: "{{ splash_image }}"
+        pull: True
+        pull_extra_args: "--retry=5"
+  
+  # - ansible.builtin.set_fact:
+  #     lighthouse_containers: "{{ (lighthouse_containers_docker is ansible.builtin.skipped) |
+  #         ansible.builtin.ternary(lighthouse_containers_podman, lighthouse_containers_docker) }}"
+      
+
+  - name: Find out IPs
+    ansible.builtin.set_fact:
+      # selectattr('IPAddress', 'defined') -> selects object's value after items | flatten pipe,
+      # flatten levels=1 - erase only one level of array nesting
+      # map(attribute=1) - from an array select only 2nd element
+      lighthouse_endpoints: "{{
+          lighthouse_containers.results | map(attribute=((driver_name == 'docker') | ternary('container', 'containers'))) |
+          ansible.builtin.flatten | map(attribute='NetworkSettings.Networks') |
+          map('items') | ansible.builtin.flatten(levels=1) | map(attribute=1) | map(attribute='IPAddress')
+        }}"
+      network_names: "{{
+          lighthouse_containers.results | map(attribute=((driver_name == 'docker') | ternary('container', 'containers'))) |
+          ansible.builtin.flatten | map(attribute='NetworkSettings.Networks') |
+          map('items') | ansible.builtin.flatten(levels=1) | map(attribute=0) | unique
+        }}"
+      clickhouse_ip: "{{ docker_command.stdout_lines | first }}"
+
+  - name: Docker - Start scrapinghub Splash container
+    tags: docker
+    community.docker.docker_container:
+      image: "{{ splash_image }}"
+      name: "{{ splash_name }}"
+      # networks: "{{ network_names | community.general.json_query('[].{\"name\": @}') }}"
+      networks: '{%- set docker_nets = [] -%}
+        {%- for net_name in network_names -%}
+          {%- set _ = docker_nets.append(dict(name=net_name)) -%}
+        {%- endfor -%}
+        {{ docker_nets }}'
+      published_ports:
+        - "{{ splash_ip }}:8050:8050"
+      # network_mode: host
+      privileged: false
+      state: started
+      recreate: False
+
+  - name: Podman - Start scrapinghub Splash container
+    tags: podman
+    containers.podman.podman_container:
+      image: "{{ splash_image }}"
+      name: "{{ splash_name }}"
+      network: "{{ network_names }}"
+      publish:
+        - "{{ splash_ip }}:8050:8050"
+      systemd: False
+      state: started
+      recreate: False
+      rm: true
+
+  - name: Render Lighthouse Application
+    ansible.builtin.script:
+      cmd: "../splash/render-script.py {{ splash_ip }} http://{{ lighthouse_ip }}:8090/#http://{{ clickhouse_ip }}:8123/?user=lighthouse"
+    loop: "{{ lighthouse_endpoints }}"
+    loop_control:
+      loop_var: lighthouse_ip
+      label: "{{ lighthouse_ip }}"
+    register: render_result
+    check_mode: False
+    changed_when: False
+  
+  - name: Test that Quantity is non-negative
+    ansible.builtin.assert:
+      that: "item.stdout | trim | int(-1) >= 0"
+      quiet: True
+    loop: "{{ render_result.results }}"
+    loop_control:
+      label: "{{ item.lighthouse_ip }}, quantity={{ item.stdout | trim }}."
+

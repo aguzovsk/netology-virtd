@@ -1,0 +1,123 @@
+---
+role_name_check: 1
+driver:
+  name: docker
+  options:
+    D: true
+    vv: true
+scenario:
+  test_sequence:
+    - dependency
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - verify
+    - cleanup
+    - destroy
+dependency:
+  name: galaxy
+  options:
+    ignore-certs: True
+    role-file: requirements.yml
+platforms:
+  - name: clickhouse-rhel9-docker-lighthouse
+    image: debian:latest
+    groups: ['clickhouse']
+    dockerfile: ../resources/Dockerfile.j2
+    command: /sbin/init
+    env:
+      ANSIBLE_USER: some
+    memory: 2G
+    memory_swap: 4G
+    docker_networks:
+      - name: &network-name lighthouse-docker-rhel9
+        ipam_config:
+          - subnet: 192.168.62.128/28
+            gateway: 192.168.62.129
+    networks:
+      - name: *network-name
+        ipv4_address: 192.168.62.130
+    privileged: True
+
+  # - name: clickhouse-rhel9-docker-lighthouse
+  #   image: docker.io/clickhouse/clickhouse-server:latest
+  #   pre_build_image: True
+  #   groups: ['none']  # required for logic in verify.yml
+  #   docker_networks:
+  #     - name: &network-name lighthouse-docker-rhel9
+  #       ipam_config:
+  #         - subnet: 192.168.62.128/28
+  #           gateway: 192.168.62.129
+  #   networks:
+  #     - name: *network-name
+  #       ipv4_address: 192.168.62.130
+  #   extra_opts:
+  #     - --memory=2G
+  #     - --memory-swap=4G
+  #   volumes:
+  #     - $PWD/molecule/resources/clickhouse-config/users.xml:/etc/clickhouse-server/users.d/users.xml
+  #     - $PWD/molecule/resources/clickhouse-config/table.sh:/docker-entrypoint-initdb.d/table.sh
+  #   env:
+  #     CLICKHOUSE_DB: logs
+  #   command: /entrypoint.sh
+
+  - name: lighthouse-generator-rhel9-docker
+    image: registry.access.redhat.com/ubi9/ubi-init
+    pre_build_image: true
+    groups: ['vector']
+    command: /sbin/init
+    # hostname: lighthouse-generator-rhel9-docker
+    memory: 256M
+    memory_swap: 1G
+    tmpfs:
+      - /tmp
+      - /run
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup
+    networks:
+      - name: *network-name
+        ipv4_address: 192.168.62.131
+
+  - name: lighthouse-renderer-rhel9-docker
+    # Docker: redhat/ubi9-init / docker.io/redhat/ubi9-init
+    # RedHat/Podman: ubi9-init / registry.access.redhat.com/ubi9/ubi-init
+    image: registry.access.redhat.com/ubi9/ubi-init
+    pre_build_image: true
+    groups: ['lighthouse']
+    command: /sbin/init
+    tmpfs:
+      - /tmp
+      - /run
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup
+    memory: 256M
+    memory_swap: 1G
+    networks:
+      - name: *network-name
+        ipv4_address: 192.168.62.132
+
+provisioner:
+  name: ansible
+  # env:
+  #   ANSIBLE_SKIP_TAGS: podman
+  #   ANSIBLE_RUN_TAGS: untagged,docker
+  #   ANSIBLE_ROLES_PATH: ../../..
+  config_options:
+    tags:
+      skip: podman
+      # run: untagged,docker
+  options:
+    vv: true
+    D: true
+  inventory:
+    links:
+      group_vars: ../resources/group_vars/
+  playbooks:
+    prepare: ../resources/playbooks/prepare.yaml
+    converge: ../resources/playbooks/converge.yml
+    cleanup: ../resources/playbooks/cleanup.yml
+verifier:
+  name: ansible
