@@ -1,0 +1,115 @@
+---
+role_name_check: 1
+dependency:
+  name: galaxy
+  enabled: False
+driver:
+  name: podman
+  options:
+    D: true
+    vv: true
+scenario:
+  test_sequence:
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - verify
+    - destroy
+platforms:
+  - name: clickhouse-generic-podman-vector
+    image: docker.io/clickhouse/clickhouse-server:latest
+    groups: ["none"]
+    pre_build_image: True
+    network: &network-name vector-podman-generic
+    subnet: 192.168.62.240/28
+    ip: 192.168.62.242
+    extra_opts:
+      - --memory=2G
+      - --memory-swap=4G
+    volumes:
+      - $PWD/molecule/resources/clickhouse-config/users.xml:/etc/clickhouse-server/users.d/users.xml
+      - $PWD/molecule/resources/clickhouse-config/table.sh:/docker-entrypoint-initdb.d/table.sh
+    env:
+      CLICKHOUSE_DB: logs
+    command: /entrypoint.sh
+
+  - name: &alpine-name vector-alpine-podman
+    image: alpine:latest
+    groups: ['vector']
+    dockerfile: ../resources/Dockerfile.j2
+    env:
+      ANSIBLE_USER: vector
+    # command: sh -c 'rc-status; cron -f' # will not work
+    command: /sbin/init
+    hostname: *alpine-name
+    network: *network-name
+    privileged: True
+    systemd: always
+    ip: 192.168.62.243
+    extra_opts:
+      - --memory=256M
+      - --memory-swap=1G
+
+  - &podman-image
+    name: &tumbleweed-name vector-tumbleweed-podman
+    image: opensuse/tumbleweed:latest
+    groups: ['vector']
+    dockerfile: ../resources/Dockerfile.j2
+    command: /sbin/init
+    systemd: always
+    env:
+      ANSIBLE_USER: vector
+    hostname: *tumbleweed-name
+    network: *network-name
+    ip: 192.168.62.244
+    extra_opts:
+      - --memory=256M
+      - --memory-swap=1G
+
+  - <<: *podman-image
+    name: &ubuntu-name vector-ubuntu-podman
+    image: ubuntu:latest
+    hostname: *ubuntu-name
+    ip: 192.168.62.245
+
+  # - <<: *podman-image
+  #   name: &fedora-name vector-fedora-podman
+  #   image: fedora:latest
+  #   hostname: *fedora-name
+  #   ip: 192.168.62.246
+
+  - <<: *podman-image
+    name: &stream9-name vector-stream9-podman
+    image: quay.io/centos/centos:stream9
+    hostname: *stream9-name
+    ip: 192.168.62.247
+
+  - <<: *podman-image
+    name: &debian-name vector-debian-podman
+    image: debian:latest
+    hostname: *debian-name
+    ip: 192.168.62.248
+
+  - <<: *podman-image
+    name: &leap-name vector-leap-podman
+    image: opensuse/leap:latest
+    hostname: *leap-name
+    ip: 192.168.62.249
+
+provisioner:
+  name: ansible
+  log: true
+  options:
+    vv: true
+    D: true
+  inventory:
+    links:
+      group_vars: ../resources/group_vars/
+  playbooks:
+    prepare: ../resources/playbooks/prepare.yaml
+    converge: ../resources/playbooks/converge.yml
+verifier:
+  name: ansible

@@ -1,0 +1,65 @@
+---
+role_name_check: 1
+driver:
+  name: podman
+  options:
+    D: true
+    vv: true
+scenario:
+  test_sequence:
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - verify
+    - destroy
+platforms:
+  - name: clickhouse-rhel9-podman-vector
+    image: docker.io/clickhouse/clickhouse-server:latest
+    pre_build_image: True
+    groups: ['none']
+    network: &network-name vector-podman-rhel9
+    subnet: 192.168.62.224/28
+    ip: 192.168.62.226
+    extra_opts:
+      - --memory=2G
+      - --memory-swap=4G
+    volumes:
+      - $PWD/molecule/resources/clickhouse-config/users.xml:/etc/clickhouse-server/users.d/users.xml
+      - $PWD/molecule/resources/clickhouse-config/table.sh:/docker-entrypoint-initdb.d/table.sh
+    env:
+      CLICKHOUSE_DB: logs
+    command: /entrypoint.sh
+
+  - name: &name-rhel vector-ubi-rhel9-podman
+    # Docker: redhat/ubi9-init / docker.io/redhat/ubi9-init
+    # RedHat/Podman: ubi9-init / registry.access.redhat.com/ubi9/ubi-init
+    image: registry.access.redhat.com/ubi9/ubi-init
+    pre_build_image: True
+    groups: ['vector']
+    hostname: *name-rhel
+    systemd: always
+    command: /sbin/init
+    network: *network-name
+    ip: 192.168.62.227
+    extra_opts:
+      - --memory=256M
+      - --memory-swap=1G
+    
+provisioner:
+  name: ansible
+  options:
+    vv: true
+    D: true
+  inventory:
+    links:
+      # hosts: ../resources/inventory/hosts.yml
+      group_vars: ../resources/group_vars/
+      # host_vars: ../resources/inventory/host_vars/
+  playbooks:
+    prepare: ../resources/playbooks/prepare.yaml
+    converge: ../resources/playbooks/converge.yml
+verifier:
+  name: ansible

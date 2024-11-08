@@ -1,0 +1,26 @@
+---
+- name: Converge
+  hosts: vector
+  # gather_facts: false
+  tasks:
+    - name: Retrieve driver name (docker/podman)
+      ansible.builtin.set_fact:
+        driver_name: "{{ lookup('env', 'MOLECULE_DRIVER_NAME') }}"
+    - name: Get clickhouse IP
+      ansible.builtin.shell:
+        cmd: > 
+          {{ driver_name }} inspect $({{ driver_name }} ps --format '{{ "{{" }} .Names {{ "}}" }}' | \
+            grep clickhouse | grep {{ driver_name }} | grep vector) \
+            --format '{{ "{{" }} range $name, $value := .NetworkSettings.Networks {{ "}}{{" }} $value.IPAddress {{ "}}{{" }} end {{ "}}" }}'
+        executable: /bin/bash
+      check_mode: false
+      changed_when: false
+      delegate_to: localhost
+      run_once: true
+      register: docker_command
+    - name: Remember Clickhouse IP (1 address)
+      ansible.builtin.set_fact:
+        clickhouse_ip: "{{ docker_command.stdout_lines | first }}"
+    - name: "Test vector role"
+      include_role:
+        name: vector-role

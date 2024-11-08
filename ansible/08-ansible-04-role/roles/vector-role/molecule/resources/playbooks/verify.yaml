@@ -1,0 +1,49 @@
+- name: Availability test routine for Lighthouse role
+  hosts: vector
+  gather_facts: False
+  tasks:
+    - name: Prepare Molecule facts
+      ansible.builtin.set_fact:
+        driver_name: "{{ lookup('env', 'MOLECULE_DRIVER_NAME') }}"
+        molecule_file: "{{ lookup('env', 'MOLECULE_FILE') }}"
+        molecule_yml: "{{ lookup('file', molecule_file) | from_yaml }}"
+        vector_container_names: "{{ molecule_yml.platforms | selectattr('groups', 'search', 'vector') | map(attribute='name') }}"
+
+    - name: Get clickhouse IP
+      ansible.builtin.shell:
+        cmd: > 
+          {{ driver_name }} inspect $({{ driver_name }} ps --format '{{ "{{" }} .Names {{ "}}" }}' | grep clickhouse | grep {{ driver_name }}) \
+            --format '{{ "{{" }} range $name, $value := .NetworkSettings.Networks {{ "}}{{" }} $value.IPAddress {{ "}}{{" }} end {{ "}}" }}'
+        executable: /bin/bash
+      check_mode: false
+      changed_when: false
+      delegate_to: localhost
+      run_once: true
+      register: docker_command
+    - name: Remember Clickhouse IP (1 address)
+      ansible.builtin.set_fact:
+        clickhouse_ip: "{{ docker_command.stdout_lines | first }}"
+
+    - name: Get hostname of vector
+      ansible.builtin.shell:
+        cmd: echo $HOSTNAME
+        # cmd: hostnamectl | grep hostname | awk '{print $3}'
+      register: hostname
+      check_mode: False
+      changed_when: False
+    - ansible.builtin.set_fact:
+        clickhouse_query: "SELECT COUNT(*) FROM logs.datadog WHERE hostname = '{{ hostname.stdout }}' GROUP BY hostname"
+
+    - name: Make a request to ClickHouse DB
+      ansible.builtin.uri:
+        url: "http://{{ clickhouse_ip }}:8123/?query={{ clickhouse_query | urlencode }}"
+        headers:
+          X-ClickHouse-User: lighthouse
+          X-ClickHouse-Key: secret
+        return_content: true
+      register: sum_check
+
+    - name: Check that positive integer was returned
+      ansible.builtin.assert:
+        that: "sum_check.content | int > 0"
+

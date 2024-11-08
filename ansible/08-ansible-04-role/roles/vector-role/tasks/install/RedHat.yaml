@@ -1,8 +1,9 @@
 ---
 - name: ReadHat-based -- download vector package
   ansible.builtin.get_url:
-    url: "https://packages.timber.io/vector/{{ vector_version }}/vector-1.{{ arch_reverse[ ansible_architecture ] }}.rpm"
+    url: "https://packages.timber.io/vector/{{ vector_version }}/vector-1.{{ arch_reverse[ansible_architecture] }}.rpm"
     dest: "{{ save_at }}"
+    mode: "751"
   register: vector_pkg
 - name: RedHat-based -- Install vector package
   become: true

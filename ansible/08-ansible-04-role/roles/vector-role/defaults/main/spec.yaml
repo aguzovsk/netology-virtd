@@ -1,0 +1,38 @@
+required_data:
+    clickhouse_hosts:
+      short_description: ClickHouse hosts to connect to
+      type: list
+      elements: str
+      required: True
+    clickhouse_connection:
+      short_description: Communication protocol (HTTP(S))
+      type: str
+      choices:
+        - http
+        - https
+      default: http
+    clickhouse_port:
+      short_description: ClickHouse port where it listens for connection
+      type: int
+      default: 8123
+    clickhouse_db:
+      short_description: Database name inside ClickHouse
+      type: str
+      required: True
+    clickhouse_table:
+      short_description: Name of table inside clickhouse_db
+      type: str
+      required: True
+    clickhouse_user:
+      short_description: >
+        ClickHouse user on which behalf Vector will be operate with ClickHouse
+      type: str
+      default: vector
+    clickhouse_password:
+      description: >
+        ClickHouse User password, may not be specified,
+        if other means of authentication was used. 
+      short_description: Password of clickhouse_user
+      type: str
+      no_log: True
+      required: False

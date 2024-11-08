@@ -1,0 +1,2 @@
+- name: Perform verification
+  ansible.builtin.import_playbook: ../resources/playbooks/verify.yaml

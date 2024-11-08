@@ -1,0 +1,26 @@
+---
+extends: default
+rules:
+  truthy:
+    allowed-values:
+      - 'true'
+      - 'false'
+      - 'yes'
+      - 'no'
+  indentation:
+    spaces: consistent
+    indent-sequences: whatever
+    check-multi-line-strings: true
+  line-length:
+    max: 160
+    allow-non-breakable-words: true
+    allow-non-breakable-inline-mappings: false
+# WARNING  Found incompatible custom yamllint configuration (.yamllint), please either remove the file or edit it to comply with:
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: false
+  braces:
+    max-spaces-inside: 1
+  octal-values:
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true

@@ -1,0 +1,11 @@
+# master_ca_cert_path: "~/clickhouse-tls/clickhouse-01/etc/clickhouse-server/certs/ca_cert.crt"
+clickhouse_hosts:
+  - "{{ clickhouse_ip }}"  # will be determined later
+  # - 192.168.61.11
+clickhouse_password: secret
+
+clickhouse_user: vector
+vector_user: vector
+clickhouse_connection: http  # https
+clickhouse_port: 8123  # 8443
+

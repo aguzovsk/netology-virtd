@@ -2,28 +2,24 @@
 - name: Alpine -- downlaod archive
   become: true
   ansible.builtin.get_url:
-    url: "https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-{{ arch_reverse[ ansible_architecture ] }}-unknown-linux-musl.tar.gz"
+    # yamllint disable-line rule:line-length
+    url: "https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-{{ arch_reverse[ansible_architecture] }}-unknown-linux-musl.tar.gz"
     dest: "{{ save_at }}"
     owner: "{{ vector_user }}"
     group: "{{ vector_user }}"
+    mode: "751"
   register: vector_arch
 - name: Alpine -- unarchive tar.gz
   ansible.builtin.command:
     cmd: "tar -xzf {{ vector_arch.dest }} -C {{ save_at }}"
-    creates: "{{ save_at }}/vector-{{ arch_reverse[ ansible_architecture ] }}-unknown-linux-musl/bin/vector" 
+    creates: "{{ save_at }}/vector-{{ arch_reverse[ansible_architecture] }}-unknown-linux-musl/bin/vector"
+  tags:
+    - skip_ansible_lint
 
-# - name: Alpine -- Install vector package
-#   ansible.builtin.unarchive:
-#     src: "https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-{{ arch_reverse[ ansible_architecture ] }}-unknown-linux-musl.tar.gz"
-#     dest: "{{ save_at }}"
-#     remote_src: true
-#     owner: "{{ vector_user }}"
-#     group: "{{ vector_user }}"
-#     creates: "{{ save_at }}/vector-{{ arch_reverse[ ansible_architecture ] }}-unknown-linux-musl/bin/vector"
 - name: Alpine -- Symlink for binary
   become: true
   ansible.builtin.file:
-    src: "{{ save_at }}/vector-{{ arch_reverse[ ansible_architecture ] }}-unknown-linux-musl/bin/vector"
+    src: "{{ save_at }}/vector-{{ arch_reverse[ansible_architecture] }}-unknown-linux-musl/bin/vector"
     dest: "/bin/vector"
     state: "link"
     owner: "{{ vector_user }}"
@@ -35,7 +31,7 @@
     state: "directory"
     owner: "{{ vector_user }}"
     group: "{{ vector_user }}"
-  notify: Start vector service
+    mode: "751"
 - name: Alpine -- Create OpenRC config
   become: true
   ansible.builtin.copy:
@@ -44,3 +40,4 @@
     owner: "{{ vector_user }}"
     group: "{{ vector_user }}"
     mode: "755"
+  notify: vector service

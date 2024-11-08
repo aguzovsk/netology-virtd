@@ -1,0 +1,38 @@
+---
+- name: Prepare users and groups
+  hosts:
+    - clickhouse
+    - vector
+  gather_facts: False
+  tasks:
+    - ansible.builtin.set_fact:
+        gname: "{{ (group_names | first) if (group_names | first) != 'clickhouse' else 'some' }}"
+    - name: "Ensure ansible group is present"
+      ansible.builtin.group:
+        name: "{{ gname }}"
+        state: present
+    - name: "Ensure ansible user is created"
+      ansible.builtin.user:
+        name: "{{ gname }}"
+        shell: /bin/bash
+        group: "{{ gname }}"
+    - name: "install required packages"
+      ansible.builtin.package:
+        name:
+          - sudo
+    - name: Ensure sudoers folder exists
+      ansible.builtin.file:
+        path: /etc/sudoers.d
+        state: directory
+        mode: "0755"
+    - name: Ensure ansible sudoers file exists
+      ansible.builtin.file:
+        path: /etc/sudoers.d/ansible
+        state: touch
+        owner: "root"
+        group: "root"
+        mode: "0644"
+    - name: "Ensure ansible group is in sudoers"
+      ansible.builtin.lineinfile:
+        line: "%{{ gname }} ALL=(ALL) NOPASSWD:ALL"
+        path: /etc/sudoers.d/ansible

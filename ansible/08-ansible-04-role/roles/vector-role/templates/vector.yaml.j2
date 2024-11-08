@@ -20,7 +20,7 @@ sources:
   dummy_logs:
     type: "demo_logs"
     format: "syslog"
-    interval: 12
+    interval: 3
 
 # Parse Syslog logs
 # See the Vector Remap Language reference for more info: https://vrl.dev
@@ -43,7 +43,7 @@ sinks:
     database: {{ clickhouse_db }}
     table: {{ clickhouse_table }}
     batch:
-      timeout_secs: 12
+      timeout_secs: 1
     auth:
       strategy: "basic"
       user: {{ clickhouse_user }}
