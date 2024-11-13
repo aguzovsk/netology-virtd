@@ -1,0 +1,73 @@
+#cloud-config
+users:
+- name: admin
+  primary_group: admin
+  groups:
+  - sudo
+  passwd: $6$Uc1wG6hEP0PNtr8h$xkwH0Y8LPS0QeujPQrQv3/9gDZm6AvhKApDEkcuDOscwhMtgIwsTdQ7N4J0h/WrkiuCYMDqXwY2NGRuL7Dvmz.
+  lock_passwd: false
+  sudo: ALL=(ALL) NOPASSWD:ALL
+- name: ${user_name}
+  primary_group: ${user_name}
+  groups:
+  - sudo
+  %{~ if os == "alpine" ~}
+  # In order to connect via ssh to an alpine, the user should be unlocked,
+  # despite statements in shadow(5)
+  # some passwd should be provided, otherwise user will be locked, regardless lock_passwd value
+  passwd: $6$j212wezy$7H/1LT4f9/N3wpgNunhsIqtMj62OKiS3nyNwuizouQc3u7MbYCarYeAHWYPYb2FT
+  lock_passwd: false
+  shell: /bin/sh
+  %{~ else ~}
+  lock_passwd: true
+  shell: /bin/bash
+  %{~ endif ~}
+  sudo: ALL=(ALL) NOPASSWD:ALL
+  ssh_authorized_keys:
+  - ${ssh_key}
+package_update: true
+package_upgrade: false
+# NOTE: assembled list should contain at least one element, so there is no error 
+packages:
+  %{~ if os == "opensuse" ~}
+  # is not installed in opensuse
+  - python3
+  %{~ endif }
+  %{~ if os == "debian" ~}
+  - openssh-server # is not installed in debian
+  %{~ else ~}
+  # debian has no vi but vim
+  # opensuse has no vi preinstalled
+  - vi
+  %{~ endif}
+  %{~ if os == "alpine" ~}
+  # sudo should be as package, but no DNS available in 3.20
+  # Will be added with cmd
+  # - sudo
+runcmd:
+  - echo "RESOLV_CONF=no" >> /etc/udhcpc/udhcpc.conf
+  - echo 'nameserver 8.8.4.4' > /etc/resolv.conf
+  - apk add sudo
+  %{~ endif}
+
+  %{~ if os == "centos" ~}
+  # No systemd-resolved on centos (i.e. no resolvectl)
+  # nameserver can be set with network-data
+  # Set generic nameserver
+runcmd:
+  - echo 'nameserver 8.8.4.4' > /etc/resolv.conf
+  %{~ endif ~}
+
+# Resolver/nameservers should be specified in network-data
+  # man 5 resolv.conf
+  # man 3 resolver
+# manage-resolv-conf: true
+# resolv_conf:
+#   nameservers: ['8.8.4.4', '8.8.8.8']
+#   searchdomains:
+#     - foo.example.com
+#     - bar.example.com
+#   domain: example.com
+#   options:
+#     rotate: true
+#     timeout: 1

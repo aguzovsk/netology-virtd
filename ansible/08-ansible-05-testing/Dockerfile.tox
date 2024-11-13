@@ -1,0 +1,22 @@
+# Docker: redhat/ubi9 / docker.io/redhat/ubi9
+# RedHat/Podman: ubi9 / registry.access.redhat.com/ubi9/ubi
+FROM registry.access.redhat.com/ubi9/ubi
+
+ARG HOME=/root
+
+# uv is rapidly evolving.
+# You need to source env variables while installing tox
+# Now, source ${HOME}/.local/bin/env -> 0.5.0
+# Previously it was: ${HOME}/.cargo/env;
+RUN  dnf install --skip-broken -y curl podman rsync; \
+  curl -LsSf https://astral.sh/uv/install.sh | sh; \
+  dnf clean all; source /root/.local/bin/env; \
+  uv tool install tox --with tox-uv; \
+  echo "link-mode = 'symlink'" > ${HOME}/uv.toml
+
+# Unnecessary step. You don't need to install different Python binaries ahead-of-time. 
+# uv (invoked by tox-uv plugin) will install needed Python versions "on the fly".
+# See how: https://www.youtube.com/live/oj8yk0Y-Ky0?si=PpNpYR0ovsGKkSNE&t=2160
+# RUN source ${HOME}/.cargo/env; uv python install 3.10 3.11 3.12 3.13; uv cache prune;
+
+ENV UV_CONFIG_FILE=${HOME}/uv.toml

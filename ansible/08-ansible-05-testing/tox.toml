@@ -1,0 +1,73 @@
+requires = ['tox>=4.21', 'tox-uv>=1.16']
+env_list = [
+  "lint",
+  "py310-ansible215",
+  "py312-ansible216",
+  "py313-ansible216",
+  "py312-ansible217",
+  "py313-ansible217"
+  ]
+skipdist = true
+
+[env_run_base]
+description = 'Base configuration for tox (testenv analogue in ini format)'
+pass_env = ['UV_CONFIG_FILE', 'PWD']
+deps = [
+    "molecule==24.*",
+    "molecule-plugins[podman]==23.5.*"
+  ]
+commands = [
+  [
+    "molecule", "test", "-s",
+    { replace = "posargs", default = ["rhel9-podman"], extend = true },
+    "--destroy", "always"
+    ]
+  ]
+
+[env_run_base.set_env]
+PY_COLORS = '1'
+ANSIBLE_FORCE_COLOR = '1'
+PODMAN_IGNORE_CGROUPSV1_WARNING = '1'
+
+[env.lint]
+base_python = ['python3.13']
+description = 'run linters'
+deps = ['yamllint', 'ansible-lint']
+commands = [
+  ['ansible-lint', '.' ]
+]
+
+[env.py310-ansible215]
+base_python = ['python3.10']
+deps = [
+  { replace = 'ref', of = ['env_run_base', 'deps'], extend = true },
+  'ansible==8.*'
+]
+
+[env.py312-ansible216]
+base_python = ['python3.12']
+deps = [
+  { replace = 'ref', of = ['env_run_base', 'deps'], extend = true },
+  'ansible==9.*'
+]
+
+[env.py313-ansible216]
+base_python = ['python3.13']
+deps = [
+  { replace = 'ref', of = ['env_run_base', 'deps'], extend = true },
+  'ansible==9.*'
+]
+
+[env.py312-ansible217]
+base_python = ['python3.12']
+deps = [
+  { replace = 'ref', of = ['env_run_base', 'deps'], extend = true },
+  'ansible==10.*'
+]
+
+[env.py313-ansible217]
+base_python = ['python3.13']
+deps = [
+  { replace = 'ref', of = ['env_run_base', 'deps'], extend = true },
+  'ansible==10.*'
+]
