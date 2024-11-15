@@ -1,0 +1,4 @@
+- name: Test playbook
+  hosts: all
+  roles:
+    - some_dummy_er2341.dummy_collection.dummy_role
