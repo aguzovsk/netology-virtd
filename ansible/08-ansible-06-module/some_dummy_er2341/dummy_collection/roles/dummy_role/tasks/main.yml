@@ -1,0 +1,5 @@
+---
+- name: Create a file with content
+  some_dummy_er2341.dummy_collection.dummy_module:
+    path: "{{ path }}"
+    content: "{{ content }}"

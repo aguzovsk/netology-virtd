@@ -1,0 +1,4 @@
+---
+# defaults file for dummy_role
+path: new-folder/new-file.txt
+content: 'Some content passed by'
